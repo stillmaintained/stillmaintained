@@ -6,12 +6,12 @@ require 'omniauth'
 require 'mongoid'
 require 'httparty'
 
-require 'lib/user'
-require 'lib/project'
+require File.join(File.dirname(__FILE__), 'lib', 'user')
+require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
 
-  config = YAML::load_file('config/settings.yml')
+  config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
 
   configure do
     Mongoid.database = Mongo::Connection.new(
