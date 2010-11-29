@@ -46,8 +46,10 @@ class Application < Sinatra::Base
     result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{user.login}")
 
     result['repositories'].select{ |repository| !repository['fork'] }.each do |repository|
-      unless Project.first(:conditions => {:name => repository['name'], :user => user.login})
-        Project.create!(:name => repository['name'], :user => user.login, :visible => false)
+      if project = Project.first(:conditions => {:name => repository['name'], :user => user.login})
+        project.update_attributes(:description => repository['description'])
+      else
+        Project.create!(:name => repository['name'], :description => repository['description'], :user => user.login, :visible => false)
       end
     end
 
