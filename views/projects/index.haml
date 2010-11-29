@@ -1,4 +1,4 @@
-%h1= "#{@projects.count} projects by #{params['user']}"
+%h1= "#{@projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
 %ul
   - @projects.each do |project|

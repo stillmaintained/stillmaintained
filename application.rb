@@ -30,6 +30,12 @@ class Application < Sinatra::Base
     <a href="/auth/github">Log in via Github</a>'
   end
 
+  get '/projects' do
+    @projects = Project.all(:conditions => {:visible => true})
+
+    haml :'projects/index'
+  end
+
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']
     user = User.find_or_create_by(:login => login)
