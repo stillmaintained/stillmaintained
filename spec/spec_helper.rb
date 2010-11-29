@@ -7,4 +7,9 @@ require 'rspec'
 set :environment, :test
 
 Rspec.configure do |config|
+
+  config.before(:each) do
+    [User, Project].each { |model| model.delete_all }
+  end
+
 end
