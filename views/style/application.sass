@@ -8,6 +8,8 @@ div#container
   padding: 10px
   margin: 50px auto
   color: #222
+  position: relative
+  z-index: 1
 
 a
   color: #222
@@ -40,17 +42,21 @@ fieldset
   margin: 10px 0
   padding: 10px
 
-div#ad
+div#ad, div#footer
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   position: fixed
   bottom: 10px
-  left: 10px
   font-size: 11px
-  z-index: -1
   color: #888
 
   a
     color: #888
+
+div#ad
+  left: 10px
+
+div#footer
+  right: 10px
 
 h1
   .maintained, .searching, .abandoned
