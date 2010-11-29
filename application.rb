@@ -25,9 +25,7 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    '<h1>Still Maintained?</h1>
-
-    <a href="/auth/github">Log in via Github</a>'
+    haml :home
   end
 
   get '/projects' do
