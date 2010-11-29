@@ -42,4 +42,10 @@ feature 'Users', %q{
     page.should have_content 'still being maintained'
   end
 
+  scenario 'return to the user update form' do
+    Project.first.update_attributes(:state => 'maintained')
+    visit "/users/#{@user.id}/edit"
+    body.should include '<input checked=\'checked\' id=\'project1_maintained\''
+  end
+
 end
