@@ -18,12 +18,17 @@ GEM
     diff-lcs (1.1.2)
     ffi (0.6.3)
       rake (>= 0.8.7)
+    fuubar (0.0.1)
+      progressbar (~> 0.9)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.1)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
     nokogiri (1.4.4)
+    progressbar (0.9.0)
     rack (1.2.1)
     rack-test (0.5.6)
       rack (>= 1.0)
@@ -35,6 +40,7 @@ GEM
     rspec-core (2.2.0)
     rspec-expectations (2.2.0)
       diff-lcs (~> 1.1.2)
+    rspec-instafail (0.1.4)
     rspec-mocks (2.2.0)
     rubyzip (0.9.4)
     selenium-webdriver (0.1.0)
@@ -56,6 +62,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  fuubar
   launchy
   rack-test
   rspec

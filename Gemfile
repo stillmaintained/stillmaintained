@@ -8,4 +8,5 @@ group :test do
   gem 'steak', '~> 1.0'
   gem 'capybara'
   gem 'launchy'
+  gem 'fuubar'
 end
