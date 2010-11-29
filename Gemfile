@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'omniauth'
 gem 'mongoid'
 gem 'httparty'
+gem 'haml'
 
 group :test do
   gem 'rspec', '2.1'

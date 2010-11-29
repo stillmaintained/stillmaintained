@@ -31,6 +31,7 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.4)
       ruby-progressbar (~> 0.0.9)
+    haml (3.0.23)
     httparty (0.5.0)
       crack (>= 0.1.1)
     json_pure (1.4.6)
@@ -129,6 +130,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   fuubar
+  haml
   httparty
   launchy
   mongoid

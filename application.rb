@@ -42,7 +42,31 @@ class Application < Sinatra::Base
       end
     end
 
-    redirect "/user/#{user.id}/edit"
+    redirect "/users/#{user.id}/edit"
+  end
+
+  get '/users/:id/edit' do
+    @user = User.find(params[:id])
+    @projects = Project.all(:conditions => {:user => @user.login})
+
+    haml :'users/edit'
+  end
+
+  post '/users/:id' do
+    @user = User.find(params[:id])
+
+    params['projects'].each do |name, state|
+      project = Project.first(:conditions => {:user => @user.login, :name => name})
+      project.update_attributes(:visible => true)
+    end
+
+    redirect "/#{@user.login}"
+  end
+
+  get '/:user' do
+    @projects = Project.all(:conditions => {:user => params[:user], :visible => true})
+
+    haml :'projects/index'
   end
 
 end
