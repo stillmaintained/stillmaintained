@@ -23,11 +23,21 @@ h1
   font-size: 32px
 
 h2, h2 a
-  color: #888
   font-size: 20px
+
+h2, h2 a, .lighter, .description
+  color: #888
 
 h2 a:hover
   color: #666
+
+.lighter, .description
+  font-weight: 500
+
+.description
+  font-size: 12px
+  display: block
+  margin: 5px 5px 0 15px
 
 a
   font-weight: 900
@@ -72,12 +82,22 @@ h1
     background-color: #ff7f7f
 
 ul
+  text-align: left
+
+  .maintained, .searching, .abandoned
+    margin: 0 5px 0 0
+
   .maintained
     color: #7fc07f
+
 
   .searching
     color: #ffff7f
 
   .abandoned
     color: #ff7f7f
+
+  li
+    padding: 10px 0px
+    border-bottom: 1px dotted #666
 

@@ -4,5 +4,7 @@
   - @projects.each do |project|
     %li
       %a{:href => "/#{project.user}/#{project.name}"}
-        = "#{project.user}/#{project.name}"
         %span{:class => project.state} &bull;
+        :erb
+          <span class = "lighter"><%= project.user %>/</span><%= project.name %>
+        %span{:class => 'description'}= project.description
