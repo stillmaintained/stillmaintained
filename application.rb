@@ -6,8 +6,8 @@ require 'omniauth'
 require 'mongoid'
 require 'httparty'
 
-require 'lib/user'
-require 'lib/project'
+require File.join(File.dirname(__FILE__), 'lib', 'user')
+require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
 
