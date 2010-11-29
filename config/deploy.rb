@@ -20,6 +20,8 @@ role :app, domain
 role :web, domain
 role :db, domain, :primary => true
 
+after 'deploy:update_code', 'deploy:symlink_settings'
+
 namespace :deploy do
   task :start, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"
@@ -32,5 +34,10 @@ namespace :deploy do
   desc 'Restart Application'
   task :restart, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"
+  end
+
+  desc 'Symlink the settings file'
+  task :symlink_settings, :roles => :app do
+    run "ln -s #{shared_path}/settings.yml #{current_release}/config/settings.yml"
   end
 end
