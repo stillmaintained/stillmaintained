@@ -34,6 +34,11 @@ class Application < Sinatra::Base
     haml :'projects/index'
   end
 
+  get '/application.css' do
+    sass :'style/application'
+  end
+
+
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']
     user = User.find_or_create_by(:login => login)
@@ -78,5 +83,4 @@ class Application < Sinatra::Base
 
     haml :"projects/show/#{@project.state}"
   end
-
 end
