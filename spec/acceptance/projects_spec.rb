@@ -11,8 +11,11 @@ feature 'Projects', %q{
   end
 
   context 'global project index' do
+    before do
+      Project.create!(:name => "project1", :state => 'maintained', :user => 'alice', :visible => true)
+    end
+
     scenario 'show every project in a list' do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true)
       Project.create!(:name => "project2", :user => 'bob', :visible => true)
 
       visit '/projects'
@@ -23,7 +26,6 @@ feature 'Projects', %q{
     end
 
     scenario 'do not show any invisible projects' do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true)
       Project.create!(:name => "project2", :user => 'bob', :visible => false)
 
       visit '/projects'
@@ -32,11 +34,22 @@ feature 'Projects', %q{
       page.should have_content "alice/project1"
       page.should have_no_content "bob/project2"
     end
+
+    scenario 'click on a project name' do
+      visit '/projects'
+
+      click_link 'alice/project1'
+
+      page.should have_content 'project1 is still being maintained'
+    end
   end
 
   context 'user specific project index' do
-    scenario 'Show the projects in a list per user' do
+    before do
       Project.create!(:name => "project1", :user => 'alice', :visible => true)
+    end
+
+    scenario 'Show the projects in a list per user' do
       Project.create!(:name => "project2", :user => 'alice', :visible => true)
 
       visit '/alice'
@@ -47,7 +60,6 @@ feature 'Projects', %q{
     end
 
     scenario 'Do not show any projects by different users' do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true)
       Project.create!(:name => "project2", :user => 'bob', :visible => true)
 
       visit '/alice'
@@ -58,7 +70,6 @@ feature 'Projects', %q{
     end
 
     scenario 'Do not show any invisible projects' do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true)
       Project.create!(:name => "project2", :user => 'alice')
 
       visit '/alice'
@@ -66,6 +77,14 @@ feature 'Projects', %q{
       page.should have_content '1 projects by alice'
       page.should have_content "alice/project1"
       page.should have_no_content "alice/project2"
+    end
+
+    scenario 'click on a project name' do
+      visit '/alice'
+
+      click_link 'alice/project1'
+
+      page.should have_content 'project1 is still being maintained'
     end
   end
 
