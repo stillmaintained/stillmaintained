@@ -63,7 +63,7 @@ class Application < Sinatra::Base
 
     params['projects'].each do |name, state|
       project = Project.first(:conditions => {:user => @user.login, :name => name})
-      project.update_attributes(:visible => true)
+      project.update_attributes(:state => state, :visible => true)
     end
 
     redirect "/#{@user.login}"

@@ -104,10 +104,10 @@ feature 'Projects', %q{
     end
 
     scenario 'show a searching project page' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'searching', :visible => true)
+      Project.create!(:name => "project1", :user => 'alice', :state => 'abandoned', :visible => true)
       visit '/alice/project1'
 
-      page.should have_content 'Sorry, project1 abandoned.'
+      page.should have_content 'Sorry, project1 is abandoned.'
     end
 
   end
