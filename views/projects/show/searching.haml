@@ -1,0 +1,8 @@
+%h1
+  Hey!
+  %a{:href => "https://github.com/#{@project.user}/#{@project.name}", :class => 'searching'}= @project.name
+  is looking for a new maintainer.
+
+%h2
+  :textile
+    Want to help out? Send "#{@project.user}":/#{@project.user} a "message via Github":https://github.com/inbox/new/#{@project.user}.

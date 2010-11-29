@@ -75,4 +75,10 @@ class Application < Sinatra::Base
     haml :'projects/index'
   end
 
+  get '/:user/:project' do
+    @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
+
+    haml :"projects/show/#{@project.state}"
+  end
+
 end

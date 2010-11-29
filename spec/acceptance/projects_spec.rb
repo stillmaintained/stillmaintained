@@ -69,4 +69,28 @@ feature 'Projects', %q{
     end
   end
 
+  context 'project pages' do
+    scenario 'show a maintained project page' do
+      Project.create!(:name => "project1", :user => 'alice', :state => 'maintained', :visible => true)
+      visit '/alice/project1'
+
+      page.should have_content 'Yay! project1 is still being maintained.'
+    end
+
+    scenario 'show a searching project page' do
+      Project.create!(:name => "project1", :user => 'alice', :state => 'searching', :visible => true)
+      visit '/alice/project1'
+
+      page.should have_content 'Hey! project1 is looking for a new maintainer.'
+    end
+
+    scenario 'show a searching project page' do
+      Project.create!(:name => "project1", :user => 'alice', :state => 'searching', :visible => true)
+      visit '/alice/project1'
+
+      page.should have_content 'Sorry, project1 abandoned.'
+    end
+
+  end
+
 end
