@@ -1,3 +1,4 @@
 capybara-*.html
 .bundle
 log
+config/settings.yml
