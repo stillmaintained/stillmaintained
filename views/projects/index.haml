@@ -3,4 +3,6 @@
 %ul
   - @projects.each do |project|
     %li
-      %a{:href => "/#{project.user}/#{project.name}"}= "#{project.user}/#{project.name}"
+      %a{:href => "/#{project.user}/#{project.name}"}
+        = "#{project.user}/#{project.name}"
+        %span{:class => project.state} &bull;
