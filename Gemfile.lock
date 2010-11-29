@@ -1,10 +1,33 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    capybara (0.4.0)
+      celerity (>= 0.7.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.27)
+      xpath (~> 0.1.2)
+    celerity (0.8.4)
+    childprocess (0.1.4)
+      ffi (~> 0.6.3)
+    configuration (1.1.0)
+    culerity (0.2.12)
     diff-lcs (1.1.2)
+    ffi (0.6.3)
+      rake (>= 0.8.7)
+    json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    mime-types (1.16)
+    nokogiri (1.4.4)
     rack (1.2.1)
     rack-test (0.5.6)
       rack (>= 1.0)
+    rake (0.8.7)
     rspec (2.2.0)
       rspec-core (~> 2.2)
       rspec-expectations (~> 2.2)
@@ -13,15 +36,28 @@ GEM
     rspec-expectations (2.2.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.2.0)
+    rubyzip (0.9.4)
+    selenium-webdriver (0.1.0)
+      childprocess (= 0.1.4)
+      ffi (~> 0.6.3)
+      json_pure
+      rubyzip
     sinatra (1.1.0)
       rack (~> 1.1)
       tilt (~> 1.1)
+    steak (1.0.0)
+      rspec
     tilt (1.1)
+    xpath (0.1.2)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  capybara
+  launchy
   rack-test
   rspec
   sinatra
+  steak (~> 1.0)
