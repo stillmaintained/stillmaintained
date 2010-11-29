@@ -17,6 +17,7 @@ GEM
     childprocess (0.1.4)
       ffi (~> 0.6.3)
     configuration (1.2.0)
+    crack (0.1.7)
     culerity (0.2.12)
     diff-lcs (1.1.2)
     durran-validatable (2.0.1)
@@ -30,6 +31,8 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.4)
       ruby-progressbar (~> 0.0.9)
+    httparty (0.5.0)
+      crack (>= 0.1.1)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
@@ -126,6 +129,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   fuubar
+  httparty
   launchy
   mongoid
   omniauth

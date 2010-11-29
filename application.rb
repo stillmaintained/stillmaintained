@@ -4,8 +4,10 @@ Bundler.setup
 require 'sinatra'
 require 'omniauth'
 require 'mongoid'
+require 'httparty'
 
 require 'lib/user'
+require 'lib/project'
 
 class Application < Sinatra::Base
 
@@ -31,6 +33,11 @@ class Application < Sinatra::Base
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']
     user = User.find_or_create_by(:login => login)
+
+    result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{user.login}")
+    result['repositories'].each do |repository|
+      Project.create!(:name => repository['name'], :user => user.login, :visible => false)
+    end
 
     redirect "/user/#{user.id}/edit"
   end

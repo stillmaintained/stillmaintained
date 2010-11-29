@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'sinatra'
 gem 'omniauth'
 gem 'mongoid'
+gem 'httparty'
 
 group :test do
   gem 'rspec', '2.1'
