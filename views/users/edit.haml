@@ -1,3 +1,8 @@
+%h1 Adding your work
+%h2= "Hi #{@user.login}, here's a list of every Github project you started."
+
+If you have a project you don't want to have listed, just skip it. Also, you can always come back later and edit your project's states.
+
 %form{:action => "/users/#{@user.id}", :method => 'post'}
 
   - @projects.each do |project|
