@@ -1,7 +1,6 @@
 %ul
   - @projects.each do |project|
     %li
-      %a{:href => "/#{project.user}/#{project.name}"}
-        %span{:class => project.state} &bull;
-        :erb
-          <span class = "lighter"><%= project.user %>/</span><%= project.name %>
+      %span{:class => project.state} &bull;
+      :erb
+        <a class="lighter" href="/<%= project.user %>"><%= project.user %></a>/<a href="/<%= "#{project.user}/#{project.name}" %>"><%= project.name %></a>

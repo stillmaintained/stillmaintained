@@ -50,7 +50,7 @@ feature 'Projects', %q{
     scenario 'click on a project name' do
       visit '/projects'
 
-      click_link 'alice/project1'
+      click_link 'project1'
 
       page.should have_content 'project1 is still being maintained'
     end
@@ -94,9 +94,17 @@ feature 'Projects', %q{
     scenario 'click on a project name' do
       visit '/alice'
 
-      click_link 'alice/project1'
+      click_link 'project1'
 
       page.should have_content 'project1 is still being maintained'
+    end
+
+    scenario 'click on a user name' do
+      visit '/alice'
+
+      click_link 'alice'
+
+      page.should have_content '1 projects by alice'
     end
   end
 

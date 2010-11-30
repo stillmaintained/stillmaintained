@@ -50,7 +50,7 @@ feature 'Homepage', %q{
     scenario 'click on a project name' do
       visit '/'
 
-      click_link 'alice/project1'
+      click_link 'project1'
 
       page.should have_content 'project1 is still being maintained'
     end

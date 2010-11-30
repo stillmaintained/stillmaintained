@@ -30,15 +30,15 @@ feature 'Users', %q{
     choose 'project3_maintained'
     click_button 'Submit'
 
-    click_link 'alice/project1'
+    click_link 'project1'
     page.should have_content 'abandoned'
 
     visit '/alice'
-    click_link 'alice/project2'
+    click_link 'project2'
     page.should have_content 'looking for a new maintainer'
 
     visit '/alice'
-    click_link 'alice/project3'
+    click_link 'project3'
     page.should have_content 'still being maintained'
   end
 
