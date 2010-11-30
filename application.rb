@@ -25,11 +25,17 @@ class Application < Sinatra::Base
   end
 
   get '/' do
+    @projects = Project.all(
+      :conditions => {:visible => true}
+    ).order_by([:updated_at, :desc]).limit(10)
+
     haml :home
   end
 
   get '/projects' do
-    @projects = Project.all(:conditions => {:visible => true}).order_by([:updated_at, :desc])
+    @projects = Project.all(
+      :conditions => {:visible => true}
+    ).order_by([:updated_at, :desc])
 
     haml :'projects/index'
   end
@@ -37,7 +43,6 @@ class Application < Sinatra::Base
   get '/application.css' do
     sass :'style/application'
   end
-
 
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']

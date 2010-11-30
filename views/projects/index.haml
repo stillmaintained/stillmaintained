@@ -1,9 +1,3 @@
 %h1= "#{@projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
-%ul
-  - @projects.each do |project|
-    %li
-      %a{:href => "/#{project.user}/#{project.name}"}
-        %span{:class => project.state} &bull;
-        :erb
-          <span class = "lighter"><%= project.user %>/</span><%= project.name %>
+= haml :projects
