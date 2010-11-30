@@ -27,7 +27,7 @@ class Application < Sinatra::Base
   get '/' do
     @projects = Project.all(
       :conditions => {:visible => true}
-    ).order_by([:updated_at, :desc]).limit(10)
+    ).order_by([:updated_at, :desc]).limit(25)
 
     haml :home
   end
