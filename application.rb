@@ -29,7 +29,7 @@ class Application < Sinatra::Base
   end
 
   get '/projects' do
-    @projects = Project.all(:conditions => {:visible => true})
+    @projects = Project.all(:conditions => {:visible => true}).order_by([:updated_at, :desc])
 
     haml :'projects/index'
   end
