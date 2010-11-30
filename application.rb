@@ -90,6 +90,6 @@ class Application < Sinatra::Base
     @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
     @title = "#{@project.name} by #{@project.user}"
 
-    haml :"projects/show/#{@project.state}"
+    haml :"projects/show"
   end
 end
