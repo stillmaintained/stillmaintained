@@ -35,7 +35,7 @@ class Application < Sinatra::Base
   get '/projects' do
     @projects = Project.all(
       :conditions => {:visible => true}
-    ).order_by([:updated_at, :desc])
+    ).order_by([:watchers, :desc])
 
     haml :'projects/index'
   end
@@ -52,9 +52,18 @@ class Application < Sinatra::Base
 
     result['repositories'].select{ |repository| !repository['fork'] }.each do |repository|
       if project = Project.first(:conditions => {:name => repository['name'], :user => user.login})
-        project.update_attributes(:description => repository['description'])
+        project.update_attributes(
+          :description => repository['description'],
+          :watchers => repository['watchers']
+        )
       else
-        Project.create!(:name => repository['name'], :description => repository['description'], :user => user.login, :visible => false)
+        Project.create!(
+          :name => repository['name'],
+          :description => repository['description'],
+          :watchers => repository['watchers'],
+          :user => user.login,
+          :visible => false,
+        )
       end
     end
 
