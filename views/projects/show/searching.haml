@@ -6,3 +6,5 @@
 %h2
   :textile
     Want to help out? Send "#{@project.user}":/#{@project.user} a "message via Github":https://github.com/inbox/new/#{@project.user}.
+
+%a{:href => "/#{@project.user}", :class => 'small'}= "show all projects by #{@project.user}"

@@ -2,3 +2,5 @@
   Yay!
   %a{:href => "https://github.com/#{@project.user}/#{@project.name}", :class => 'maintained'}= @project.name
   is still being maintained.
+
+%a{:href => "/#{@project.user}", :class => 'small'}= "show all projects by #{@project.user}"

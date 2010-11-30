@@ -122,6 +122,16 @@ feature 'Projects', %q{
       page.should have_content 'Sorry, project1 is abandoned.'
     end
 
+    scenario 'click the "show all projects by ..." link' do
+      Project.create!(:name => "project1", :user => 'alice', :state => 'abandoned', :visible => true)
+
+      visit '/alice/project1'
+      click_link 'show all projects by alice'
+
+      page.should have_content '1 projects by alice'
+    end
+
+
   end
 
 end
