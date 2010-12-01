@@ -41,7 +41,7 @@ feature 'Homepage', %q{
       page.should have_no_content "bob/project2"
     end
 
-    pending 'show the project descriptions' do
+    scenario 'show the project descriptions' do
       visit '/'
 
       page.should have_content 'project1 description'

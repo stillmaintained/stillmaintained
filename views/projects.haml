@@ -4,3 +4,4 @@
       %span{:class => project.state} &bull;
       :erb
         <a class="lighter" href="/<%= project.user %>"><%= project.user %></a>/<a href="/<%= "#{project.user}/#{project.name}" %>"><%= project.name %></a>
+      %span{:class => 'description'}= project.description
