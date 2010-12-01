@@ -89,7 +89,10 @@ class Application < Sinatra::Base
   end
 
   get '/:user' do
-    @projects = Project.all(:conditions => {:user => params[:user], :visible => true})
+    @projects = Project.all(
+      :conditions => {:user => params[:user], :visible => true}
+    ).order_by([:watchers, :desc])
+
     @title = params[:user]
 
     haml :'projects/index'
