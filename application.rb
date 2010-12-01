@@ -62,7 +62,7 @@ class Application < Sinatra::Base
           :description => repository['description'],
           :watchers => repository['watchers'],
           :user => user.login,
-          :visible => false,
+          :visible => false
         )
       end
     end
