@@ -5,6 +5,7 @@ GEM
     activesupport (2.3.10)
     addressable (2.2.2)
     bson (1.0.9)
+    builder (3.0.0)
     capybara (0.4.0)
       celerity (>= 0.7.9)
       culerity (>= 0.2.4)
@@ -33,6 +34,9 @@ GEM
       rspec-instafail (~> 0.1.4)
       ruby-progressbar (~> 0.0.9)
     haml (3.0.23)
+    hoptoad_notifier (2.3.12)
+      activesupport
+      builder
     httparty (0.5.0)
       crack (>= 0.1.1)
     json_pure (1.4.6)
@@ -133,6 +137,7 @@ DEPENDENCIES
   capybara
   fuubar
   haml
+  hoptoad_notifier
   httparty
   launchy
   mongoid

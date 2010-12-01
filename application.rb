@@ -5,13 +5,20 @@ require 'sinatra'
 require 'omniauth'
 require 'mongoid'
 require 'httparty'
+require 'hoptoad_notifier'
 
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
+  use HoptoadNotifier::Rack
+  enable :raise_errors
 
   config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
+
+  HoptoadNotifier.configure do |hoptoad|
+    hoptoad.api_key = config['hoptoad']['key']
+  end
 
   configure do
     Mongoid.database = Mongo::Connection.new(

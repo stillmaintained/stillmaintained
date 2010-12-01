@@ -5,6 +5,7 @@ gem 'omniauth'
 gem 'mongoid'
 gem 'httparty'
 gem 'haml'
+gem 'hoptoad_notifier'
 
 group :test do
   gem 'rspec', '2.1'
