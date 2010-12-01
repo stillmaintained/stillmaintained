@@ -3,6 +3,7 @@
   %a{:href => "https://github.com/#{@project.user}/#{@project.name}", :class => 'abandoned'}= @project.name
   is abandoned.
 
-%h2
-  :textile
-    This project is dead and "#{@project.user}":/#{@project.user} is not looking for a new maintainer.
+%h2= @project.description
+
+:textile
+  This project is dead and "#{@project.user}":/#{@project.user} is not looking for a new maintainer.
