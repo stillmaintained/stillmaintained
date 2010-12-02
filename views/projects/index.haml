@@ -1,3 +1,10 @@
-%h1= "#{@projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
+- if params[:user] && @projects.empty?
+  %h1= "Oh no! #{params[:user]} hasn't added any projects yet!"
+  %h2
+    Why don't you
+    %a{:href => "https://github.com/inbox/new/#{params[:user]}"} send them a message
+    about Still Maintained?
+-else
+  %h1= "#{@projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
-= haml :projects
+  = haml :projects

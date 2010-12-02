@@ -106,6 +106,14 @@ feature 'Projects', %q{
 
       page.should have_content '1 projects by alice'
     end
+
+    scenario 'go to a non-existing user page' do
+      visit '/bob'
+
+      page.should have_no_content '0 projects by bob'
+      page.should have_content 'Oh no! bob hasn\'t added any projects yet!'
+      page.should have_content 'Why don\'t you send them a message about Still Maintained?'
+    end
   end
 
   context 'project pages' do
