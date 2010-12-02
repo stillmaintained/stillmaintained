@@ -9,6 +9,8 @@ class Project
   field :state
   field :visible, :type => Boolean
 
+  scope :visible, where(:visible => true)
+
   def self.create_or_update_from_github_response(data)
     if project = first(:conditions => { :name => data['name'], :user => data['owner'] })
       project.update_attributes!(

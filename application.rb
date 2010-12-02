@@ -32,17 +32,13 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    @projects = Project.all(
-      :conditions => {:visible => true}
-    ).order_by([:created_at, :desc]).limit(25)
+    @projects = Project.visible.order_by([:created_at, :desc]).limit(25)
 
     haml :home
   end
 
   get '/projects' do
-    @projects = Project.all(
-      :conditions => {:visible => true}
-    ).order_by([:watchers, :desc])
+    @projects = Project.visible.order_by([:watchers, :desc])
 
     haml :'projects/index'
   end
