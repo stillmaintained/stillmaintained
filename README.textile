@@ -1,1 +1,29 @@
 h1. Still Maintained?
+
+Finally a place to mark your open source project as abandoned or looking for a new maintainer.
+
+Be sure to read the "announcement article":http://jeffkreeftmeijer.com/2010/finally-a-way-to-mark-your-github-project-as-abandoned/.
+
+h2. Contributing
+
+StillMaintained needs your help to become awesome. If you have a great idea, please create an "issue":https://github.com/jeffkreeftmeijer/stillmaintained/issues. It would be amazing if you forked the project, implemented your idea and sent me "a pull request":https://github.com/jeffkreeftmeijer/stillmaintained/pulls too. Just sayin'. ;)
+
+h3. Getting up and running
+
+To get StillMaintained running locally, the first thing you need to do is clone the repository and install the bundle:
+
+bc. $ git clone git://github.com/jeffkreeftmeijer/stillmaintained.git
+$ cd stillmaintained
+$ bundle install
+
+The next thing to do is to move the example settings file to @config/settings.yml@:
+
+bc. $ mv config/settings.yml.example config/settings.yml
+
+Now you need to fill in the github id and secret in @config/settings.yml@. To get those, "create an application on github":https://github.com/account/applications/new. The name and main url aren't really important, as long as you put @http://localhost:9292/auth/github/callback@ in the callback url field. You don't need to fill in the Hoptoad key.
+
+There. Now you should be able to start the app:
+
+bc. $ rackup
+
+Running into any issues? "Let me know":https://github.com/inbox/new/jeffkreeftmeijer. :)
