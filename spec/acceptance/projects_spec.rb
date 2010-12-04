@@ -31,6 +31,16 @@ feature 'Projects', %q{
       page.should have_content "bob/project2"
     end
 
+    scenario "show every project in json format" do
+      Project.create!(:name => "project2", :user => 'bob', :visible => true)
+
+      visit '/projects.json'
+
+      json = ActiveSupport::JSON.decode(page.body)
+      json.map {|j| j['name']}.should ==  ['project1', 'project2']
+      json.map {|j| j['user']}.should ==  ['alice', 'bob']
+    end
+
     scenario 'do not show any invisible projects' do
       Project.create!(:name => "project2", :user => 'bob', :visible => false)
 
@@ -58,7 +68,7 @@ feature 'Projects', %q{
 
   context 'user specific project index' do
     before do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true)
+      Project.create!(:name => "project1", :user => 'alice', :visible => true, :state => 'maintained')
     end
 
     scenario 'Show the projects in a list per user' do
@@ -69,6 +79,15 @@ feature 'Projects', %q{
       page.should have_content '2 projects by alice'
       page.should have_content "alice/project1"
       page.should have_content "alice/project2"
+    end
+
+    scenario 'Show the projects list per user in JSON format' do
+      visit '/alice.json'
+
+      json = ActiveSupport::JSON.decode(page.body)
+      json.length.should == 1
+      json.map {|j| j['name']}.should include 'project1'
+      json.map {|j| j['user']}.should include 'alice'
     end
 
     scenario 'Do not show any projects by different users' do
@@ -123,6 +142,16 @@ feature 'Projects', %q{
 
       page.should have_content 'Yay! project1 is still being maintained.'
       page.should have_content 'project1 description'
+    end
+
+    scenario 'show a maintained project page in JSON format' do
+      Project.create!(:name => "project1", :user => 'alice', :state => 'maintained', :visible => true, :description => 'project1 description')
+
+      visit '/alice/project1.json'
+
+      json = ActiveSupport::JSON.decode(page.body)
+      json['name'].should == 'project1'
+      json['user'].should == 'alice'
     end
 
     scenario 'show a searching project page' do

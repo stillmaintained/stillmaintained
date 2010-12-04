@@ -1,3 +1,11 @@
+GIT
+  remote: http://github.com/cehoffman/sinatra-respond_to.git
+  revision: 0fc8bce115954c810d82691f9451a0d422e7545f
+  tag: v0.6.0
+  specs:
+    sinatra-respond_to (0.6.0)
+      sinatra (~> 1.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -39,6 +47,7 @@ GEM
       builder
     httparty (0.5.0)
       crack (>= 0.1.1)
+    json (1.4.6)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
@@ -139,10 +148,12 @@ DEPENDENCIES
   haml
   hoptoad_notifier
   httparty
+  json
   launchy
   mongoid
   omniauth
   rack-test
   rspec (= 2.1)
   sinatra
+  sinatra-respond_to!
   steak (~> 1.0)
