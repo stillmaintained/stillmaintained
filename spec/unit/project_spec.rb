@@ -5,6 +5,36 @@ describe Project do
     lambda { Project.create }.should change(Project, :count).by(1)
   end
 
+  describe 'search' do
+    before do
+      @project1 = Project.create!(:name => "project2", :user => 'alice')
+      @project2 = Project.create!(:name => "project1", :user => 'bob')
+    end
+
+    it 'should find project by name' do
+      results = Project.search('project2')
+      results.should include(@project1)
+      results.should_not include(@project2)
+
+      results = Project.search('PROJECT2')
+      results.should include(@project1)
+      results.should_not include(@project2)
+
+
+      results = Project.search('project')
+      results.should include(@project1)
+      results.should include(@project2)
+
+      results = Project.search('proj')
+      results.should include(@project1)
+      results.should include(@project2)
+
+      results = Project.search('ject')
+      results.should include(@project1)
+      results.should include(@project2)
+    end
+  end
+
   describe '.create_or_update_from_github_response' do
 
     describe 'when this project does not exist yet' do

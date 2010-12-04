@@ -10,6 +10,10 @@ class Project
   field :visible, :type => Boolean
 
   scope :visible, where(:visible => true)
+  scope :search, lambda { |query|
+    query = /#{query}/i
+    where({:name => query})
+  }
 
   def self.create_or_update_from_github_response(data)
     if project = first(:conditions => { :name => data['name'], :user => data['owner'] })

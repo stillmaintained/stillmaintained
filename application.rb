@@ -51,6 +51,15 @@ class Application < Sinatra::Base
     end
   end
 
+  get '/search' do
+    @projects = Project.search(params[:q]).visible.order_by([:watchers, :desc])
+    respond_to do |wants|
+      wants.html { haml :'projects/index' }
+      wants.js { haml :'projects/projects' }
+    end
+
+  end
+
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']
     user = User.find_or_create_by(:login => login)
