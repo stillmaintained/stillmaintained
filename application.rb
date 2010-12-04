@@ -117,6 +117,7 @@ class Application < Sinatra::Base
     respond_to do |wants|
       wants.html { haml :"projects/show" }
       wants.json { @project.to_json }
+      wants.png { send_file("public/images/#{@project.state}.png") }
     end
 
   end
