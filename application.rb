@@ -1,13 +1,18 @@
 require 'sinatra'
+require 'sinatra/respond_to'
+
 require 'omniauth'
 require 'mongoid'
 require 'httparty'
 require 'hoptoad_notifier'
 
+
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
+  register Sinatra::RespondTo
+
   use HoptoadNotifier::Rack
   enable :raise_errors
 
@@ -34,6 +39,10 @@ class Application < Sinatra::Base
     haml :home
   end
 
+  get '/application' do
+    sass :'style/application'
+  end
+
   get '/projects' do
     @project_count = Project.visible.count
     @projects = Project.visible.order_by(
@@ -43,11 +52,10 @@ class Application < Sinatra::Base
       :page => params[:page]
     )
 
-    haml :'projects/index'
-  end
-
-  get '/application.css' do
-    sass :'style/application'
+    respond_to do |wants|
+      wants.html { haml :'projects/index' }
+      wants.json { @projects.to_json }
+    end
   end
 
   get '/auth/github/callback' do
@@ -87,14 +95,20 @@ class Application < Sinatra::Base
     ).order_by([:watchers, :desc])
 
     @title = params[:user]
-
-    haml :'projects/index'
+    respond_to do |wants|
+      wants.html { haml :'projects/index' }
+      wants.json { @projects.to_json }
+    end
   end
 
   get '/:user/:project' do
     @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
     @title = "#{@project.name} by #{@project.user}"
 
-    haml :"projects/show"
+    respond_to do |wants|
+      wants.html { haml :"projects/show" }
+      wants.json { @project.to_json }
+    end
+
   end
 end
