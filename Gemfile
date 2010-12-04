@@ -6,6 +6,7 @@ gem 'mongoid'
 gem 'httparty'
 gem 'haml'
 gem 'hoptoad_notifier'
+gem 'will_paginate'
 
 group :test do
   gem 'rspec', '2.1'

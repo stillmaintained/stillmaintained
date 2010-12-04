@@ -146,3 +146,4 @@ DEPENDENCIES
   rspec (= 2.1)
   sinatra
   steak (~> 1.0)
+  will_paginate

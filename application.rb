@@ -35,7 +35,13 @@ class Application < Sinatra::Base
   end
 
   get '/projects' do
-    @projects = Project.visible.order_by([:watchers, :desc])
+    @project_count = Project.visible.count
+    @projects = Project.visible.order_by(
+      [:watchers, :desc]
+    ).paginate(
+      :per_page => 100,
+      :page => params[:page]
+    )
 
     haml :'projects/index'
   end

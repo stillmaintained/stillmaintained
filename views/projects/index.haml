@@ -5,6 +5,12 @@
     %a{:href => "https://github.com/inbox/new/#{params[:user]}"} send them a message
     about Still Maintained?
 -else
-  %h1= "#{@projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
+  %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
   = haml :projects
+
+  - unless params[:user]
+    #pagination
+      - (1..@projects.total_pages).each do |page|
+        %a{:href => "?page=#{page}"}= page
+
