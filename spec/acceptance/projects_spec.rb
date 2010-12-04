@@ -182,4 +182,33 @@ feature 'Projects', %q{
 
   end
 
+  context 'search' do
+    before do
+      Project.create!(
+        :name => "project1",
+        :state => 'maintained',
+        :user => 'alice',
+        :visible => true,
+        :description => 'project1 description'
+      )
+    end
+
+    scenario 'for project' do
+      visit '/search?q=project1'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+    end
+
+    scenario 'for project with form' do
+      visit '/'
+
+      fill_in 'q', :with => 'project'
+      click_button 'Search'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+    end
+  end
+
 end

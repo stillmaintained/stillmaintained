@@ -4,6 +4,12 @@
 :textile
   "Log in via Github":/auth/github to add your work or check out the "projects":/projects we know about already.
 
+#search
+  %form{:action => '/search', :method => 'GET'}
+    %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+    %input{:type => 'submit', :value => 'Search'}
+
+
 #new
   %h2 Newly added
 
