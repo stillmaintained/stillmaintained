@@ -7,9 +7,14 @@
 -else
   %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
+  #search
+    %form{:action => '/search', :method => 'GET'}
+      %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+      %input{:type => 'submit', :value => 'Search'}
+
   = haml :projects
 
-  - unless params[:user]
+  - unless params[:user] || params[:q]
     #pagination
       - (1..@projects.total_pages).each do |page|
         %a{:href => "?page=#{page}"}= page

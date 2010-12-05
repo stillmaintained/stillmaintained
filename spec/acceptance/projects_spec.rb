@@ -201,7 +201,7 @@ feature 'Projects', %q{
     end
 
     scenario 'for project with form' do
-      visit '/'
+      visit '/projects'
 
       fill_in 'q', :with => 'project'
       click_button 'Search'
