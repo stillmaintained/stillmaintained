@@ -14,7 +14,7 @@ set :use_sudo, false
 set :runner, 'deploy'
 set :deploy_to, "/home/#{application}"
 set :app_server, :passenger
-set :domain, '67.23.79.60'
+set :domain, '67.23.79.117'
 
 role :app, domain
 role :web, domain
