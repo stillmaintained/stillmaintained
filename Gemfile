@@ -18,4 +18,5 @@ group :test do
   gem 'launchy'
   gem 'fuubar'
   gem 'RedCloth'
+  gem 'fakeweb'
 end

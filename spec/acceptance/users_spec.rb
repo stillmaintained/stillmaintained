@@ -13,6 +13,14 @@ feature 'Users', %q{
     Project.create!(:name => 'project3', :user => 'alice')
   end
 
+  scenario 'log in via Github' do
+    FakeWeb.register_uri(:post, 'https://github.com/login/oauth/access_token', :body => 'access_token=github')
+    FakeWeb.register_uri(:get, 'https://github.com/api/v2/json/user/show?access_token=github', :body => '{"user": {"login": "alice"}}')
+
+    visit '/auth/github/callback'
+    page.should have_content 'Hi alice, here\'s a list of every Github project you started.'
+  end
+
   scenario 'Fill in the edit user form' do
     visit "/users/#{@user.id}/edit"
 
