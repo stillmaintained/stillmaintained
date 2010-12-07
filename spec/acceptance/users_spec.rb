@@ -23,29 +23,58 @@ feature 'Users', %q{
 
   context 'getting the projects from github' do
     background do
-      HTTParty.should_receive(:get).and_return(
+      HTTParty.stub!(:get).with('http://github.com/api/v2/json/repos/show/alice').and_return(
         'repositories' => [
           {'name' => 'fetched_project', 'owner' => 'alice'},
           {'name' => 'forked_project', 'owner' => 'alice', 'fork' => true}
         ]
       )
+
+      HTTParty.stub!(:get).with('http://github.com/api/v2/json/user/show/alice/organizations').and_return(
+        'organizations' => [{'login' => 'organization'}]
+      )
+
+      HTTParty.stub!(:get).with('http://github.com/api/v2/json/organizations/organization/public_repositories').and_return(
+        'repositories' => [
+          {'name' => 'organization_project', 'owner' => 'organization'},
+          {'name' => 'forked_organization_project', 'owner' => 'organization', 'fork' => true}
+        ]
+      )
+
+      visit '/auth/github/callback'
     end
 
     scenario 'show the projects in the form' do
-      visit '/auth/github/callback'
       page.should have_content 'fetched_project'
     end
 
     scenario 'do not show forked projects in the form' do
-      visit '/auth/github/callback'
       page.should have_no_content 'forked_project'
+    end
+
+    scenario 'show the organization projects in the form' do
+      page.should have_content 'organization_project'
+    end
+
+    scenario 'do not show forked organization projects in the form' do
+      page.should have_no_content 'forked_organization_project'
+    end
+
+    scenario 'successfully save the form' do
+      choose 'fetched_project_abandoned'
+      choose 'organization_project_abandoned'
+      click_button 'Submit'
+
+      page.should have_content '1 projects by alice'
+
+      visit '/organization'
+      page.should have_content '1 projects by organization'
     end
 
   end
 
   scenario 'Fill in the edit user form' do
     visit "/users/#{@user.id}/edit"
-
     choose 'project1_maintained'
     click_button 'Submit'
 
