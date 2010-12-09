@@ -1,11 +1,3 @@
-GIT
-  remote: http://github.com/cehoffman/sinatra-respond_to.git
-  revision: 0fc8bce115954c810d82691f9451a0d422e7545f
-  tag: v0.6.0
-  specs:
-    sinatra-respond_to (0.6.0)
-      sinatra (~> 1.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -157,6 +149,5 @@ DEPENDENCIES
   rack-test
   rspec (= 2.1)
   sinatra
-  sinatra-respond_to!
   steak (~> 1.0)
   will_paginate
