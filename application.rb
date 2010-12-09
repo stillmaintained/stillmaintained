@@ -14,7 +14,6 @@ class Application < Sinatra::Base
   register Sinatra::RespondTo
 
   use HoptoadNotifier::Rack
-  enable :raise_errors
 
   config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
 
@@ -32,6 +31,8 @@ class Application < Sinatra::Base
   use OmniAuth::Builder do
     provider :github, config['github']['id'], config['github']['secret']
   end
+
+  error { haml :error }
 
   get '/' do
     @projects = Project.visible.order_by([:created_at, :desc]).limit(25)
