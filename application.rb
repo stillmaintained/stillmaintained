@@ -133,14 +133,14 @@ class Application < Sinatra::Base
   ['/:user/:project.png', '/:user/:project.json', '/:user/:project'].each do |path|
     get path do
       @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
-      @title = "#{@project.name} by #{@project.user}"
 
       case path
       when /\.png$/
-        send_file("public/images/#{@project.state}.png")
+        send_file("public/images/#{@project ? @project.state : 'unknown'}.png")
       when /\.json$/
         @project.to_json
       else
+        @title = "#{@project.name} by #{@project.user}"
         haml :"projects/show"
       end
 
