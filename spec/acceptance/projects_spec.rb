@@ -179,7 +179,6 @@ feature 'Projects', %q{
       page.should have_content '1 projects by alice'
     end
 
-
   end
 
   context 'search' do
@@ -194,7 +193,7 @@ feature 'Projects', %q{
     end
 
     scenario 'for project' do
-      visit '/search?q=project1'
+      visit '/projects?q=project1'
 
       page.should have_content '1 projects'
       page.should have_content "alice/project1"

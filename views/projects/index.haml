@@ -8,7 +8,7 @@
   %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
   #search
-    %form{:action => '/search', :method => 'GET'}
+    %form{:action => '/projects', :method => 'GET'}
       %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
       %input{:type => 'submit', :value => 'Search'}
 

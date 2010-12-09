@@ -42,26 +42,28 @@ class Application < Sinatra::Base
 
   ['/projects.json', '/projects'].each do |path|
     get path do
-      @project_count = Project.visible.count
-      @projects = Project.visible.order_by(
-        [:watchers, :desc]
-      ).paginate(
-        :per_page => 100,
-        :page => params[:page]
-      )
+      if params[:q]
+        @projects = Project.search(
+          params[:q]
+        ).visible.order_by(
+          [:watchers, :desc]
+        )
+        @project_count = @projects.count
+      else
+        @project_count = Project.visible.count
+        @projects = Project.visible.order_by(
+          [:watchers, :desc]
+        ).paginate(
+          :per_page => 100,
+          :page => params[:page]
+        )
+      end
 
       case path
         when /\.json$/ then @projects.to_json
         else haml :"projects/index"
       end
     end
-  end
-
-
-  get '/search' do
-    @projects = Project.search(params[:q]).visible.order_by([:watchers, :desc])
-
-    haml :'projects/index'
   end
 
   get '/auth/github/callback' do
