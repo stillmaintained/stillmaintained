@@ -50,10 +50,15 @@ class Application < Sinatra::Base
         )
         @project_count = @projects.count
       else
-        @project_count = Project.visible.count
-        @projects = Project.visible.order_by(
-          [:watchers, :desc]
-        ).paginate(
+        @projects = Project.visible.order_by([:watchers, :desc])
+
+        if params[:state] && %w{maintained searching abandoned}.include?(params[:state])
+          @projects = @projects.where(:state => params[:state])
+        end
+
+        @project_count = @projects.count
+
+        @projects = @projects.paginate(
           :per_page => 100,
           :page => params[:page]
         )

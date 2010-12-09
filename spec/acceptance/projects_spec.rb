@@ -64,6 +64,39 @@ feature 'Projects', %q{
 
       page.should have_content 'project1 is still being maintained'
     end
+
+    context 'state filtering' do
+      before do
+        %w{maintained searching abandoned}.each do |state|
+          Project.create!(
+            :name => state,
+            :state => state,
+            :user => 'alice',
+            :visible => true
+          )
+        end
+      end
+
+      scenario 'show all by default' do
+        visit '/projects'
+
+        %w{maintained searching abandoned}.each do |state|
+          page.should have_content state
+        end
+      end
+
+      scenario 'only show abandoned projects' do
+        visit '/projects?state=abandoned'
+
+        page.should have_content '1 projects'
+
+        within :css, 'ul' do
+          page.should have_no_content 'maintained'
+          page.should have_no_content 'searching'
+          page.should have_content 'abandoned'
+        end
+      end
+    end
   end
 
   context 'user specific project index' do

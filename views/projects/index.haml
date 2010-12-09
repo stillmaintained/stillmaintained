@@ -7,14 +7,25 @@
 -else
   %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
-  #search
-    %form{:action => '/projects', :method => 'GET'}
-      %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
-      %input{:type => 'submit', :value => 'Search'}
+  - unless params[:user]
+    #search
+      Filter:
+      %select{:id => 'state_filter', :onchange => 'window.location="?state=" + this.options[this.selectedIndex].value'}
+        %option{:value => ''} All
+        %option{:value => 'maintained', :selected => params[:state] == 'maintained'} Maintained
+        %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
+        %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
+
+      %br
+
+      Search:
+      %form{:action => '/projects', :method => 'GET'}
+        %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+        %input{:type => 'submit', :value => 'Search'}
 
   = haml :projects
 
-  - unless params[:user] || params[:q]
+  - unless params[:user] || params[:q] || params[:state]
     #pagination
       - (1..@projects.total_pages).each do |page|
         %a{:href => "?page=#{page}"}= page
