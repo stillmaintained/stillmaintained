@@ -22,5 +22,9 @@ If you have a project you don't want to have listed, just skip it. Also, you can
 
       %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
       %label No, the project is abandoned.
+      %br
+
+      %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
+      %label Don't list this project
 
   %input{:type => 'submit', :value => 'Submit'}

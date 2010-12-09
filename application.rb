@@ -101,7 +101,7 @@ class Application < Sinatra::Base
     params['projects'].each do |user, projects|
       projects.each do |name, state|
         project = Project.first(:conditions => {:user => user, :name => name})
-        project.update_attributes(:state => state, :visible => true)
+        project.update_attributes(:state => state, :visible => state != 'hide')
       end
     end
 

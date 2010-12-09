@@ -11,6 +11,7 @@ feature 'Users', %q{
     Project.create!(:name => 'project1', :user => 'alice')
     Project.create!(:name => 'project2', :user => 'alice')
     Project.create!(:name => 'project3', :user => 'alice')
+    Project.create!(:name => 'project4', :user => 'alice')
 
     FakeWeb.register_uri(:post, 'https://github.com/login/oauth/access_token', :body => 'access_token=github')
     FakeWeb.register_uri(:get, 'https://github.com/api/v2/json/user/show?access_token=github', :body => '{"user": {"login": "alice"}}')
@@ -87,7 +88,10 @@ feature 'Users', %q{
     choose 'project1_abandoned'
     choose 'project2_searching'
     choose 'project3_maintained'
+    choose 'project4_hide'
     click_button 'Submit'
+
+    page.should have_no_content 'project4'
 
     click_link 'project1'
     page.should have_content 'abandoned'
