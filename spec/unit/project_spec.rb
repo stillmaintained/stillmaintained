@@ -7,8 +7,8 @@ describe Project do
 
   describe 'search' do
     before do
-      @project1 = Project.create!(:name => "project2", :user => 'alice')
-      @project2 = Project.create!(:name => "project1", :user => 'bob')
+      @project1 = Project.make(:name => "project2", :user => 'alice')
+      @project2 = Project.make(:name => "project1", :user => 'bob')
     end
 
     it 'should find project by name' do
@@ -72,7 +72,7 @@ describe Project do
 
     describe 'when this project already exists' do
       before do
-        Project.create!(:name => 'project1', :user => 'alice')
+        Project.make(:name => 'project1', :user => 'alice')
       end
 
       it 'should not create a new project' do

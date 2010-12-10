@@ -7,11 +7,11 @@ feature 'Users', %q{
 } do
 
   background do
-    @user = User.create!(:login => 'alice')
-    Project.create!(:name => 'project1', :user => 'alice')
-    Project.create!(:name => 'project2', :user => 'alice')
-    Project.create!(:name => 'project3', :user => 'alice')
-    Project.create!(:name => 'project4', :user => 'alice')
+    @user = User.make(:login => 'alice')
+    Project.make(:name => 'project1', :user => 'alice', :visible => false)
+    Project.make(:name => 'project2', :user => 'alice', :visible => false)
+    Project.make(:name => 'project3', :user => 'alice', :visible => false)
+    Project.make(:name => 'project4', :user => 'alice', :visible => false)
 
     FakeWeb.register_uri(:post, 'https://github.com/login/oauth/access_token', :body => 'access_token=github')
     FakeWeb.register_uri(:get, 'https://github.com/api/v2/json/user/show?access_token=github', :body => '{"user": {"login": "alice"}}')
@@ -106,7 +106,7 @@ feature 'Users', %q{
   end
 
   scenario 'return to the user update form' do
-    Project.first.update_attributes(:state => 'maintained')
+    Project.first.update_attributes(:state => 'maintained', :visible => false)
     visit "/users/#{@user.id}/edit"
     body.should include '<input checked=\'checked\' id=\'project1_maintained\''
   end

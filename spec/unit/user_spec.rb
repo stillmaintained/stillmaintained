@@ -7,12 +7,12 @@ describe User do
 
   describe '#organizations' do
     it 'should return an array or organization namese' do
-      user = User.create(:organizations => %w{one two three})
+      user = User.make(:organizations => %w{one two three})
       user.organizations.should == %w{one two three}
     end
 
     it 'should return an empty array if there are none' do
-      User.create.organizations.should == []
+      User.make.organizations.should == []
     end
   end
 

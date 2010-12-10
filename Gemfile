@@ -18,4 +18,5 @@ group :test do
   gem 'fuubar'
   gem 'RedCloth'
   gem 'fakeweb'
+  gem 'machinist_mongo'
 end

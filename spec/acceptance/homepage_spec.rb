@@ -9,7 +9,7 @@ feature 'Homepage', %q{
   context 'the homepage' do
 
     before do
-      Project.create!(
+      Project.make(
         :name => "project1",
         :state => 'maintained',
         :user => 'alice',
@@ -24,7 +24,7 @@ feature 'Homepage', %q{
     end
 
     scenario 'show every project in a list' do
-      Project.create!(:name => "project2", :user => 'bob', :visible => true)
+      Project.make(:name => "project2", :user => 'bob')
 
       visit '/'
 
@@ -33,7 +33,7 @@ feature 'Homepage', %q{
     end
 
     scenario 'do not show any invisible projects' do
-      Project.create!(:name => "project2", :user => 'bob', :visible => false)
+      Project.make(:name => "project2", :user => 'bob', :visible => false)
 
       visit '/'
 
