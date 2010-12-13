@@ -26,8 +26,7 @@ feature 'Users', %q{
     background do
       HTTParty.stub!(:get).with('http://github.com/api/v2/json/repos/show/alice').and_return(
         'repositories' => [
-          {'name' => 'fetched_project', 'owner' => 'alice'},
-          {'name' => 'forked_project', 'owner' => 'alice', 'fork' => true}
+          {'name' => 'fetched_project', 'owner' => 'alice'}
         ]
       )
 
@@ -37,8 +36,7 @@ feature 'Users', %q{
 
       HTTParty.stub!(:get).with('http://github.com/api/v2/json/organizations/organization/public_repositories').and_return(
         'repositories' => [
-          {'name' => 'organization_project', 'owner' => 'organization'},
-          {'name' => 'forked_organization_project', 'owner' => 'organization', 'fork' => true}
+          {'name' => 'organization_project', 'owner' => 'organization'}
         ]
       )
 
@@ -49,16 +47,8 @@ feature 'Users', %q{
       page.should have_content 'fetched_project'
     end
 
-    scenario 'do not show forked projects in the form' do
-      page.should have_no_content 'forked_project'
-    end
-
     scenario 'show the organization projects in the form' do
       page.should have_content 'organization_project'
-    end
-
-    scenario 'do not show forked organization projects in the form' do
-      page.should have_no_content 'forked_organization_project'
     end
 
     scenario 'successfully save the form' do

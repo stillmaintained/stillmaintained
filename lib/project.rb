@@ -6,10 +6,15 @@ class Project
   field :name
   field :description
   field :watchers, :type => Integer
+  field :fork, :type => Boolean
+  field :source
+  field :parent
   field :state
   field :visible, :type => Boolean
 
   scope :visible, where(:visible => true)
+  scope :no_forks, where(:fork => nil)
+
   scope :search, lambda { |query|
     query = /#{query}/i
     where({:name => query})
@@ -26,7 +31,10 @@ class Project
         :name => data['name'],
         :user => data['owner'],
         :description => data['description'],
-        :watchers => data['watchers']
+        :watchers => data['watchers'],
+        :fork => data['fork'],
+        :source => data['source'],
+        :parent => data['parent']
       )
     end
     project

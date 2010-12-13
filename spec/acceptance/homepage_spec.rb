@@ -41,6 +41,15 @@ feature 'Homepage', %q{
       page.should have_no_content "bob/project2"
     end
 
+    scenario 'do not show any forks' do
+      Project.make(:name => "project2", :user => 'bob', :fork => true)
+
+      visit '/'
+
+      page.should have_content "alice/project1"
+      page.should have_no_content "bob/project2"
+    end
+
     scenario 'show the project descriptions' do
       visit '/'
 
@@ -61,10 +70,10 @@ feature 'Homepage', %q{
 
       page.should have_content '1 projects'
     end
-    
+
     scenario 'search a project' do
       visit '/'
-      
+
       fill_in 'q', :with => 'project1'
       click_button 'Search'
       page.should have_content '1 projects'

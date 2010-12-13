@@ -68,6 +68,30 @@ describe Project do
         project.watchers.should == 123
       end
 
+      describe 'when the project is a fork' do
+        before do
+          @project = Project.create_or_update_from_github_response({
+            'owner' => 'alice',
+            'name' => 'project1',
+            'fork' => true,
+            'source' => 'source/project1',
+            'parent' => 'parent/project1'
+          })
+        end
+
+        it 'should set the fork boolean' do
+          @project.fork.should be_true
+        end
+
+        it 'should store the source' do
+          @project.source.should == 'source/project1'
+        end
+
+        it 'should store the parent' do
+          @project.parent.should == 'parent/project1'
+        end
+      end
+
     end
 
     describe 'when this project already exists' do

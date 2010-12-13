@@ -31,7 +31,7 @@ class Application < Sinatra::Base
   error { haml :error }
 
   get '/' do
-    @projects = Project.visible.order_by([:created_at, :desc]).limit(25)
+    @projects = Project.visible.no_forks.order_by([:created_at, :desc]).limit(25)
 
     haml :home
   end
@@ -45,12 +45,12 @@ class Application < Sinatra::Base
       if params[:q]
         @projects = Project.search(
           params[:q]
-        ).visible.order_by(
+        ).visible.no_forks.order_by(
           [:watchers, :desc]
         )
         @project_count = @projects.count
       else
-        @projects = Project.visible.order_by([:watchers, :desc])
+        @projects = Project.visible.no_forks.order_by([:watchers, :desc])
 
         if params[:state] && %w{maintained searching abandoned}.include?(params[:state])
           @projects = @projects.where(:state => params[:state])
@@ -76,7 +76,7 @@ class Application < Sinatra::Base
 
     result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{login}")
 
-    result['repositories'].select{ |repo| !repo['fork'] }.each do |repo|
+    result['repositories'].each do |repo|
       Project.create_or_update_from_github_response(repo)
     end
 
@@ -86,7 +86,7 @@ class Application < Sinatra::Base
     organizations.each do |organization|
       result = HTTParty.get("http://github.com/api/v2/json/organizations/#{organization}/public_repositories")
 
-      result['repositories'].select{ |repo| !repo['fork'] }.each do |repo|
+      result['repositories'].each do |repo|
         Project.create_or_update_from_github_response(repo)
       end
     end
@@ -118,8 +118,8 @@ class Application < Sinatra::Base
   ['/:user.json', '/:user'].each do |path|
     get path do
       @projects = Project.all(
-        :conditions => {:user => params[:user], :visible => true}
-      ).order_by([:watchers, :desc])
+        :conditions => {:user => params[:user]}
+      ).visible.no_forks.order_by([:watchers, :desc])
 
       @title = params[:user]
 

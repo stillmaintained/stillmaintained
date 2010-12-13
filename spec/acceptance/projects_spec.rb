@@ -50,6 +50,15 @@ feature 'Projects', %q{
       page.should have_no_content "bob/project2"
     end
 
+    scenario 'do not show any forked projects' do
+      Project.make(:name => "project2", :user => 'bob', :fork => true)
+      visit '/projects'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+      page.should have_no_content "bob/project2"
+    end
+
     scenario 'show the project descriptions' do
       visit '/projects'
 
@@ -163,6 +172,15 @@ feature 'Projects', %q{
       page.should have_content 'Oh no! bob hasn\'t added any projects yet!'
       page.should have_content 'Why don\'t you send them a message about Still Maintained?'
     end
+
+    scenario 'do not show any forked projects' do
+      Project.make(:name => "project2", :user => 'alice', :fork => true)
+      visit '/alice'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+      page.should have_no_content "alice/project2"
+    end
   end
 
   context 'project pages' do
@@ -237,6 +255,16 @@ feature 'Projects', %q{
       page.should have_content '1 projects'
       page.should have_content "alice/project1"
     end
+
+    scenario 'do not show any forked projects' do
+      Project.make(:name => "project2", :user => 'bob', :fork => true)
+      visit '/projects?q=project'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+      page.should have_no_content "bob/project2"
+    end
+
   end
 
 end
