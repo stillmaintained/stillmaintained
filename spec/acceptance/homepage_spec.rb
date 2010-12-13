@@ -61,6 +61,14 @@ feature 'Homepage', %q{
 
       page.should have_content '1 projects'
     end
+    
+    scenario 'search a project' do
+      visit '/'
+      
+      fill_in 'q', :with => 'project1'
+      click_button 'Search'
+      page.should have_content '1 projects'
+    end
 
   end
 
