@@ -173,13 +173,13 @@ feature 'Projects', %q{
       page.should have_content 'Why don\'t you send them a message about Still Maintained?'
     end
 
-    scenario 'do not show any forked projects' do
+    scenario 'show forked projects' do
       Project.make(:name => "project2", :user => 'alice', :fork => true)
       visit '/alice'
 
-      page.should have_content '1 projects'
+      page.should have_content '2 projects'
       page.should have_content "alice/project1"
-      page.should have_no_content "alice/project2"
+      page.should have_content "alice/project2 (fork)"
     end
   end
 

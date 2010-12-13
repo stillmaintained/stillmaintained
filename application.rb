@@ -119,7 +119,7 @@ class Application < Sinatra::Base
     get path do
       @projects = Project.all(
         :conditions => {:user => params[:user]}
-      ).visible.no_forks.order_by([:watchers, :desc])
+      ).visible.order_by([:watchers, :desc])
 
       @title = params[:user]
 
