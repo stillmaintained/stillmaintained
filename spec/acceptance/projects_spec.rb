@@ -7,22 +7,21 @@ feature 'Projects', %q{
 } do
 
   background do
-    @user = User.create!(:login => 'alice')
+    @user = User.make(:login => 'alice')
   end
 
   context 'global project index' do
     before do
-      Project.create!(
+      Project.make(
         :name => "project1",
         :state => 'maintained',
         :user => 'alice',
-        :visible => true,
         :description => 'project1 description'
       )
     end
 
     scenario 'show every project in a list' do
-      Project.create!(:name => "project2", :user => 'bob', :visible => true)
+      Project.make(:name => "project2", :user => 'bob')
 
       visit '/projects'
 
@@ -32,7 +31,7 @@ feature 'Projects', %q{
     end
 
     scenario "show every project in json format" do
-      Project.create!(:name => "project2", :user => 'bob', :visible => true)
+      Project.make(:name => "project2", :user => 'bob')
 
       visit '/projects.json'
 
@@ -42,8 +41,17 @@ feature 'Projects', %q{
     end
 
     scenario 'do not show any invisible projects' do
-      Project.create!(:name => "project2", :user => 'bob', :visible => false)
+      Project.make(:name => "project2", :user => 'bob', :visible => false)
 
+      visit '/projects'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+      page.should have_no_content "bob/project2"
+    end
+
+    scenario 'do not show any forked projects' do
+      Project.make(:name => "project2", :user => 'bob', :fork => true)
       visit '/projects'
 
       page.should have_content '1 projects'
@@ -64,15 +72,47 @@ feature 'Projects', %q{
 
       page.should have_content 'project1 is still being maintained'
     end
+
+    context 'state filtering' do
+      before do
+        %w{maintained searching abandoned}.each do |state|
+          Project.make(
+            :name => state,
+            :state => state,
+            :user => 'alice'
+          )
+        end
+      end
+
+      scenario 'show all by default' do
+        visit '/projects'
+
+        %w{maintained searching abandoned}.each do |state|
+          page.should have_content state
+        end
+      end
+
+      scenario 'only show abandoned projects' do
+        visit '/projects?state=abandoned'
+
+        page.should have_content '1 projects'
+
+        within :css, 'ul' do
+          page.should have_no_content 'maintained'
+          page.should have_no_content 'searching'
+          page.should have_content 'abandoned'
+        end
+      end
+    end
   end
 
   context 'user specific project index' do
     before do
-      Project.create!(:name => "project1", :user => 'alice', :visible => true, :state => 'maintained')
+      Project.make(:name => "project1", :user => 'alice', :state => 'maintained')
     end
 
     scenario 'Show the projects in a list per user' do
-      Project.create!(:name => "project2", :user => 'alice', :visible => true)
+      Project.make(:name => "project2", :user => 'alice')
 
       visit '/alice'
 
@@ -91,7 +131,7 @@ feature 'Projects', %q{
     end
 
     scenario 'Do not show any projects by different users' do
-      Project.create!(:name => "project2", :user => 'bob', :visible => true)
+      Project.make(:name => "project2", :user => 'bob')
 
       visit '/alice'
 
@@ -101,10 +141,9 @@ feature 'Projects', %q{
     end
 
     scenario 'Do not show any invisible projects' do
-      Project.create!(:name => "project2", :user => 'alice')
+      Project.make(:name => "project2", :user => 'alice', :visible => false)
 
       visit '/alice'
-
       page.should have_content '1 projects by alice'
       page.should have_content "alice/project1"
       page.should have_no_content "alice/project2"
@@ -133,11 +172,20 @@ feature 'Projects', %q{
       page.should have_content 'Oh no! bob hasn\'t added any projects yet!'
       page.should have_content 'Why don\'t you send them a message about Still Maintained?'
     end
+
+    scenario 'show forked projects' do
+      Project.make(:name => "project2", :user => 'alice', :fork => true)
+      visit '/alice'
+
+      page.should have_content '2 projects'
+      page.should have_content "alice/project1"
+      page.should have_content "alice/project2 (fork)"
+    end
   end
 
   context 'project pages' do
     scenario 'show a maintained project page' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'maintained', :visible => true, :description => 'project1 description')
+      Project.make(:name => "project1", :user => 'alice', :state => 'maintained', :description => 'project1 description')
       visit '/alice/project1'
 
       page.should have_content 'Yay! project1 is still being maintained.'
@@ -145,7 +193,7 @@ feature 'Projects', %q{
     end
 
     scenario 'show a maintained project page in JSON format' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'maintained', :visible => true, :description => 'project1 description')
+      Project.make(:name => "project1", :user => 'alice', :state => 'maintained', :description => 'project1 description')
 
       visit '/alice/project1.json'
 
@@ -155,7 +203,7 @@ feature 'Projects', %q{
     end
 
     scenario 'show a searching project page' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'searching', :visible => true, :description => 'project1 description')
+      Project.make(:name => "project1", :user => 'alice', :state => 'searching', :description => 'project1 description')
       visit '/alice/project1'
 
       page.should have_content 'Hey! project1 is looking for a new maintainer.'
@@ -163,7 +211,7 @@ feature 'Projects', %q{
     end
 
     scenario 'show a searching project page' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'abandoned', :visible => true, :description => 'project1 description')
+      Project.make(:name => "project1", :user => 'alice', :state => 'abandoned', :description => 'project1 description')
       visit '/alice/project1'
 
       page.should have_content 'Sorry, project1 is abandoned.'
@@ -171,7 +219,7 @@ feature 'Projects', %q{
     end
 
     scenario 'click the "show all projects by ..." link' do
-      Project.create!(:name => "project1", :user => 'alice', :state => 'abandoned', :visible => true)
+      Project.make(:name => "project1", :user => 'alice', :state => 'abandoned')
 
       visit '/alice/project1'
       click_link 'show all projects by alice'
@@ -179,22 +227,20 @@ feature 'Projects', %q{
       page.should have_content '1 projects by alice'
     end
 
-
   end
 
   context 'search' do
     before do
-      Project.create!(
+      Project.make(
         :name => "project1",
         :state => 'maintained',
         :user => 'alice',
-        :visible => true,
         :description => 'project1 description'
       )
     end
 
     scenario 'for project' do
-      visit '/search?q=project1'
+      visit '/projects?q=project1'
 
       page.should have_content '1 projects'
       page.should have_content "alice/project1"
@@ -209,6 +255,16 @@ feature 'Projects', %q{
       page.should have_content '1 projects'
       page.should have_content "alice/project1"
     end
+
+    scenario 'do not show any forked projects' do
+      Project.make(:name => "project2", :user => 'bob', :fork => true)
+      visit '/projects?q=project'
+
+      page.should have_content '1 projects'
+      page.should have_content "alice/project1"
+      page.should have_no_content "bob/project2"
+    end
+
   end
 
 end

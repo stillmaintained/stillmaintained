@@ -7,8 +7,8 @@ describe Project do
 
   describe 'search' do
     before do
-      @project1 = Project.create!(:name => "project2", :user => 'alice')
-      @project2 = Project.create!(:name => "project1", :user => 'bob')
+      @project1 = Project.make(:name => "project2", :user => 'alice')
+      @project2 = Project.make(:name => "project1", :user => 'bob')
     end
 
     it 'should find project by name' do
@@ -68,11 +68,35 @@ describe Project do
         project.watchers.should == 123
       end
 
+      describe 'when the project is a fork' do
+        before do
+          @project = Project.create_or_update_from_github_response({
+            'owner' => 'alice',
+            'name' => 'project1',
+            'fork' => true,
+            'source' => 'source/project1',
+            'parent' => 'parent/project1'
+          })
+        end
+
+        it 'should set the fork boolean' do
+          @project.fork.should be_true
+        end
+
+        it 'should store the source' do
+          @project.source.should == 'source/project1'
+        end
+
+        it 'should store the parent' do
+          @project.parent.should == 'parent/project1'
+        end
+      end
+
     end
 
     describe 'when this project already exists' do
       before do
-        Project.create!(:name => 'project1', :user => 'alice')
+        Project.make(:name => 'project1', :user => 'alice')
       end
 
       it 'should not create a new project' do

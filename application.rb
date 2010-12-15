@@ -1,20 +1,15 @@
 require 'sinatra'
-require 'sinatra/respond_to'
-
 require 'omniauth'
 require 'mongoid'
 require 'httparty'
 require 'hoptoad_notifier'
 
-
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
-  register Sinatra::RespondTo
 
   use HoptoadNotifier::Rack
-  enable :raise_errors
 
   config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
 
@@ -33,92 +28,123 @@ class Application < Sinatra::Base
     provider :github, config['github']['id'], config['github']['secret']
   end
 
+  error { haml :error }
+
   get '/' do
-    @projects = Project.visible.order_by([:created_at, :desc]).limit(25)
+    @projects = Project.visible.no_forks.order_by([:created_at, :desc]).limit(25)
 
     haml :home
   end
 
-  get '/application' do
+  get '/application.css' do
     sass :'style/application'
   end
 
-  get '/projects' do
-    @project_count = Project.visible.count
-    @projects = Project.visible.order_by(
-      [:watchers, :desc]
-    ).paginate(
-      :per_page => 100,
-      :page => params[:page]
-    )
+  ['/projects.json', '/projects'].each do |path|
+    get path do
+      if params[:q]
+        @projects = Project.search(
+          params[:q]
+        ).visible.no_forks.order_by(
+          [:watchers, :desc]
+        )
+        @project_count = @projects.count
+      else
+        @projects = Project.visible.no_forks.order_by([:watchers, :desc])
 
-    respond_to do |wants|
-      wants.html { haml :'projects/index' }
-      wants.json { @projects.to_json }
+        if params[:state] && %w{maintained searching abandoned}.include?(params[:state])
+          @projects = @projects.where(:state => params[:state])
+        end
+
+        @project_count = @projects.count
+
+        @projects = @projects.paginate(
+          :per_page => 100,
+          :page => params[:page]
+        )
+      end
+
+      case path
+        when /\.json$/ then @projects.to_json
+        else haml :"projects/index"
+      end
     end
-  end
-
-  get '/search' do
-    @projects = Project.search(params[:q]).visible.order_by([:watchers, :desc])
-    respond_to do |wants|
-      wants.html { haml :'projects/index' }
-      wants.js { haml :'projects/projects' }
-    end
-
   end
 
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['user_info']['nickname']
-    user = User.find_or_create_by(:login => login)
 
-    result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{user.login}")
+    result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{login}")
 
-    result['repositories'].select{ |repo| !repo['fork'] }.each do |repo|
+    result['repositories'].each do |repo|
       Project.create_or_update_from_github_response(repo)
     end
 
+    result = HTTParty.get("http://github.com/api/v2/json/user/show/#{login}/organizations")
+    organizations = result['organizations'].map{|organization| organization['login'] }
+
+    organizations.each do |organization|
+      result = HTTParty.get("http://github.com/api/v2/json/organizations/#{organization}/public_repositories")
+
+      result['repositories'].each do |repo|
+        Project.create_or_update_from_github_response(repo)
+      end
+    end
+
+    user = User.find_or_create_by(:login => login, :organizations => organizations)
     redirect "/users/#{user.id}/edit"
   end
 
   get '/users/:id/edit' do
     @user = User.find(params[:id])
     @projects = Project.all(:conditions => {:user => @user.login})
-
+    @user.organizations.each do |organization|
+      @projects |= Project.all(:conditions => {:user => organization})
+    end
     haml :'users/edit'
   end
 
   post '/users/:id' do
-    @user = User.find(params[:id])
-
-    params['projects'].each do |name, state|
-      project = Project.first(:conditions => {:user => @user.login, :name => name})
-      project.update_attributes(:state => state, :visible => true)
+    params['projects'].each do |user, projects|
+      projects.each do |name, state|
+        project = Project.first(:conditions => {:user => user, :name => name})
+        project.update_attributes(:state => state, :visible => state != 'hide')
+      end
     end
 
-    redirect "/#{@user.login}"
+    redirect "/#{User.find(params[:id]).login}"
   end
 
-  get '/:user' do
-    @projects = Project.all(
-      :conditions => {:user => params[:user], :visible => true}
-    ).order_by([:watchers, :desc])
+  ['/:user.json', '/:user'].each do |path|
+    get path do
+      @projects = Project.all(
+        :conditions => {:user => params[:user]}
+      ).visible.order_by([:watchers, :desc])
 
-    @title = params[:user]
-    respond_to do |wants|
-      wants.html { haml :'projects/index' }
-      wants.json { @projects.to_json }
+      @title = params[:user]
+
+      case path
+        when /\.json$/ then @projects.to_json
+        else haml :"projects/index"
+      end
     end
   end
 
-  get '/:user/:project' do
-    @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
-    @title = "#{@project.name} by #{@project.user}"
+  ['/:user/:project.png', '/:user/:project.json', '/:user/:project'].each do |path|
+    get path do
+      @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
 
-    respond_to do |wants|
-      wants.html { haml :"projects/show" }
-      wants.json { @project.to_json }
-      wants.png { send_file("public/images/#{@project.state}.png") }
+      case path
+      when /\.png$/
+        send_file("public/images/#{@project ? @project.state : 'unknown'}.png")
+      when /\.json$/
+        @project.to_json
+      else
+        @title = "#{@project.name} by #{@project.user}"
+        haml :"projects/show"
+      end
+
     end
-
   end
+
 end
