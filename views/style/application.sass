@@ -1,60 +1,91 @@
 @import reset.sass
 
+$dark: #214379
+$light: #3c5f96
+
 body
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: 14px
+  line-height: 20px
   background: #b8e4fd
 
+// Basics
+h1
+  text-shadow: 1px 1px #fff
+  font-size: 50px
+  line-height: 1
+  color: $dark
+
+h2
+  line-height: 30px
+  font-size: 20px
+  color: $light
+
+a
+  color: #00255e
+  font-weight: bold
+  text-decoration: none
+
+ul
+  list-style: none
+
+#container
+  background: url(/images/header.png) no-repeat top center
+
+.button
+  text-align: center
+  border: none
+  color: #fff
+  cursor: pointer
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+  background: $dark
+
+  &:hover
+    background: $light
+
+// Wrap and header
 .wrap
   width: 480px
   margin: 0 auto
 
 header
   text-align: center
-  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif
-  color: #3c5f96
+  color: $light
+
+  h1
+    padding-top: 260px
+    margin-bottom: 35px
 
   a#login
-    width: 345px
+    width: 340px
     height: 60px
     display: block
-    margin: 45px auto 0
+    margin: 35px auto 0
     font-size: 18px
     font-weight: normal
     text-align: center
     text-decoration: none
-    color: #3c5f96
+    line-height: 50px
+    color: $light
     background: url(/images/b_login.png) no-repeat
 
-h1
-  text-shadow: 1px 1px #fff
-  font-size: 50px
-  color: #214379
+#search
+  margin: 40px 0
 
-h2
-  line-height: 30px
-  font-size: 20px
-  color: #3c5f96
+  input[type="text"]
+    width: 285px
+    height: 28px
+    border: none
+    line-height: 28px
 
-a
-  color: #00255e
-  font-weight: bold
+  input[type="submit"]
+    width: 84px
+    height: 29px
 
-#forkme
-  width: 142px
-  height: 142px
-  font-weight: 900
-  text-decoration: none
-
-form
-  display: inline-block
-  padding: 10px
-
-fieldset
-  text-align: left
-  border: 1px dotted #666
-  margin: 10px 0
-  padding: 10px
-
-div#ad, div#footer
+// Fixed
+div#ad
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   position: fixed
   bottom: 10px
@@ -64,24 +95,60 @@ div#ad, div#footer
   a
     color: #888
 
-div#ad
-  left: 10px
-
-div#footer
-  right: 10px
-
-div#pagination
-  margin: 20px 0 0 0
-  font-size: 14px
-
-div#search
-  margin: 20px 0
-
-img#forkme
-  position: absolute
+#forkme
+  width: 142px
+  height: 142px
   top: 0
   right: 0
+  position: absolute
+  text-indent: -9999px
   background: url("images/fork_me.png") no-repeat
 
+// Contents
 #new
+  padding: 40px 0 180px
   background: url("images/bg_new.png") repeat-x #e7f6ff
+
+  ul
+    margin: 30px 0
+    color: $light
+
+  li
+    margin-bottom: 20px
+
+  a
+    font-size: 16px
+    font-weight: normal
+    color: #00255e
+
+    &.small
+      float: right
+      padding: 5px 10px
+      font-size: 12px
+      color: #fff
+
+  .lighter
+    font-size: 14px
+    color: $light
+
+  span.description
+    display: block
+    margin-left: 13px
+    font-size: 12px
+
+.abandoned, .maintained, .searching
+  margin-right: 5px
+  color: green
+
+.abondoned
+  color: red
+
+.searching
+  color: yellow
+
+footer p
+  right: 0
+  bottom: 10px
+  position: fixed
+  text-align: right
+

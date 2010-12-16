@@ -9,6 +9,8 @@ require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
 
+  set :root, File.dirname(__FILE__)
+
   use HoptoadNotifier::Rack
 
   config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
