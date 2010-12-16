@@ -8,6 +8,7 @@ require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
 
 class Application < Sinatra::Base
+  set :root, File.dirname(__FILE__)
 
   use HoptoadNotifier::Rack
 
