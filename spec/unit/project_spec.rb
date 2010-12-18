@@ -123,4 +123,24 @@ describe Project do
     end
   end
 
+  describe '.no_forks' do
+    before do
+      @projects = [
+        Project.make(:fork => true),
+        Project.make(:fork => nil),
+        Project.make(:fork => false)
+      ]
+    end
+
+    it 'should not return any forked projects' do
+      Project.no_forks.should_not include @projects[0]
+    end
+
+    it 'should return any projects where fork == nil' do
+      projects = Project.no_forks
+      projects.should include @projects[1]
+      projects.should include @projects[2]
+    end
+  end
+
 end

@@ -13,7 +13,7 @@ class Project
   field :visible, :type => Boolean
 
   scope :visible, where(:visible => true)
-  scope :no_forks, where(:fork => nil)
+  scope :no_forks, where(:fork.ne => true)
 
   scope :search, lambda { |query|
     query = /#{query}/i
