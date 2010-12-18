@@ -1,9 +1,0 @@
-database:
-  host: localhost
-  port: 27017
-  database: stillmaintained
-github:
-  id: github_oauth_id
-  secret: github_oauth_secret
-hoptoad:
-  key: hoptoad_api_key

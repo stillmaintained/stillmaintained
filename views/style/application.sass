@@ -1,68 +1,111 @@
 @import reset.sass
 
-div#container
-  background-color: #fff
+$dark: #214379
+$light: #3c5f96
+
+body
   font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif
-  text-align: center
-  width: 480px
-  padding: 10px
-  margin: 50px auto
-  color: #222
-  position: relative
-  z-index: 1
+  font-size: 14px
+  line-height: 20px
+  background: #b8e4fd
 
-a
-  color: #222
-  &:hover
-    color: #444
+// Mixin
+@mixin b_small
+  padding: 5px 10px
+  font-size: 12px
+  font-weight: normal
+  color: #fff
 
-h1, h2
-  margin: 10px 0px
-
+// Basics
 h1
-  font-size: 32px
+  text-shadow: 1px 1px #fff
+  font-size: 50px
+  line-height: 1
+  color: $dark
 
 h2
+  line-height: 30px
   font-size: 20px
-
-h2, h2 a, .lighter, .description, .small
-  color: #888
-
-h2 a:hover
-  color: #666
-
-.lighter, .description, #pagination a
-  font-weight: 500
-
-.small, .description
-  font-size: 12px
-
-.description
-  display: block
-  margin: 5px 5px 0 15px
-
-#new
-  margin: 50px 0
-  text-align: left
-
-  ul
-    margin: 0 0 10px 0
+  color: $light
 
 a
-  font-weight: 900
+  color: #00255e
+  font-weight: bold
   text-decoration: none
 
-form
-  display: inline-block
-  padding: 10px
-
-fieldset
+ul
+  list-style: none
   text-align: left
-  border: 1px dotted #666
-  margin: 10px 0
-  padding: 10px
 
-div#ad, div#footer
+#container
+  #homepage
+    background: url(/images/header.png) no-repeat top center
+
+.button
+  text-align: center
+  border: none
+  color: #fff
+  cursor: pointer
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+  background: $dark
+
+  &:hover
+    background: $light
+
+// Wrap and header
+.wrap
+  width: 400px
+  margin: 0 auto
+
+  h1
+    margin-top: 65px
+    text-align: center
+    font-size: 32px
+    line-height: 40px
+
+header
+  text-align: center
+  color: $light
+
+  h1
+    padding-top: 260px
+    margin-bottom: 35px
+
+  a#login
+    width: 340px
+    height: 60px
+    display: block
+    margin: 35px auto 0
+    font-size: 18px
+    font-weight: normal
+    text-align: center
+    text-decoration: none
+    line-height: 50px
+    color: $light
+    background: url(/images/b_login.png) no-repeat
+
+#search
+  margin: 40px 0
+
+  input[type="text"]
+    width: 285px
+    height: 28px
+    border: none
+    line-height: 28px
+
+  input[type="submit"]
+    width: 84px
+    height: 29px
+
+  p
+    margin: 30px 0 5px
+    padding-top: 25px
+    border-top: dashed 1px #E7F6FF
+
+// Fixed
+div#ad
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   position: fixed
   bottom: 10px
@@ -72,56 +115,90 @@ div#ad, div#footer
   a
     color: #888
 
-div#ad
-  left: 10px
-
-div#footer
-  right: 10px
-
-div#pagination
-  margin: 20px 0 0 0
-  font-size: 14px
-
-div#search
-  margin: 20px 0
-
-img#forkme
-  position: absolute
+#forkme
+  width: 142px
+  height: 142px
   top: 0
   right: 0
-  z-index: 2
+  position: absolute
+  text-indent: -9999px
+  background: url("images/fork_me.png") no-repeat
 
+// Contents
+#new
+  padding: 40px 0 180px
+  background: url("images/bg_new.png") repeat-x #e7f6ff
 
-h1
-  .maintained, .searching, .abandoned
-    padding: 1px 5px
+  a
+    font-size: 16px
+    font-weight: normal
+    color: #00255e
 
-  .maintained
-    background-color: #7fc07f
+    &.small
+      @include b_small
+      float: right
 
-  .searching
-    background-color: #ffff7f
-
-  .abandoned
-    background-color: #ff7f7f
-
-ul
-  text-align: left
-
-  .maintained, .searching, .abandoned
-    margin: 0 5px 0 0
-
-  .maintained
-    color: #7fc07f
-
-
-  .searching
-    color: #ffff7f
-
-  .abandoned
-    color: #ff7f7f
+ul#projects
+  margin: 30px 0 30px
+  color: $light
 
   li
-    padding: 10px 0px
-    border-bottom: 1px dotted #666
+    margin-bottom: 20px
 
+  .lighter
+    font-size: 14px
+    font-weight: normal
+    color: $light
+
+  span.description
+    display: block
+    margin-left: 13px
+    font-size: 12px
+
+.abandoned, .maintained, .searching
+  margin-right: 5px
+  color: green
+
+.abondoned
+  color: red
+
+.searching
+  color: yellow
+
+footer
+  p
+    right: 0
+    bottom: 10px
+    position: fixed
+    text-align: right
+
+  a
+    color: $light
+
+// Single page
+.single
+  width: 480px
+  margin-top: 65px
+  text-align: center
+
+  h2
+    margin: 20px 0
+
+  p
+    margin-bottom: 30px
+
+  a
+    padding: 0 5px
+    color: #222
+
+    &.maintained
+      background: #7fc07f
+
+    &.abandoned
+      background: #ff7f7f
+
+    &.searching
+      background: #eefe65
+
+    &.small
+      @include b_small
