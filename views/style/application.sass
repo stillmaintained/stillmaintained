@@ -105,15 +105,22 @@ header
     border-top: dashed 1px #E7F6FF
 
 // Fixed
-div#ad
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+div#ad, footer
   position: fixed
   bottom: 10px
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   font-size: 11px
-  color: #888
+  color: $light
+  line-height: 120%
 
   a
-    color: #888
+    color: $dark
+
+div#ad
+
+
+  left: 10px
+
 
 #forkme
   width: 142px
@@ -166,14 +173,9 @@ ul#projects
   color: yellow
 
 footer
-  p
-    right: 0
-    bottom: 10px
-    position: fixed
-    text-align: right
+  right: 10px
+  text-align: right
 
-  a
-    color: $light
 
 // Single page
 .single
