@@ -7,7 +7,8 @@ body
   font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif
   font-size: 14px
   line-height: 20px
-  background: #b8e4fd
+  background: #e7f6ff
+  /*background: #b8e4fd*/
 
 // Mixin
 @mixin b_small
@@ -39,7 +40,7 @@ ul
 
 #container
   #homepage
-    background: url(/images/header.png) no-repeat top center
+    background: url(/images/header.png) no-repeat top center #b8e4fd
 
 .button
   text-align: center
@@ -117,8 +118,6 @@ div#ad, footer
     color: $dark
 
 div#ad
-
-
   left: 10px
 
 
@@ -134,7 +133,7 @@ div#ad
 // Contents
 #new
   padding: 40px 0 180px
-  background: url("images/bg_new.png") repeat-x #e7f6ff
+  background: url("images/bg_new.png") repeat-x
 
   a
     font-size: 16px
@@ -204,3 +203,7 @@ footer
 
     &.small
       @include b_small
+
+hr
+  margin: 0px
+  visibility: hidden
