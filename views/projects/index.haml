@@ -10,12 +10,13 @@
 
     - unless params[:user]
       #search
-        Filter:
-        %select{:id => 'state_filter', :onchange => 'window.location="?state=" + this.options[this.selectedIndex].value'}
-          %option{:value => ''} All
-          %option{:value => 'maintained', :selected => params[:state] == 'maintained'} Maintained
-          %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
-          %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
+        %p
+          Filter:
+          %select{:id => 'state_filter', :onchange => 'window.location="?state=" + this.options[this.selectedIndex].value'}
+            %option{:value => ''} All
+            %option{:value => 'maintained', :selected => params[:state] == 'maintained'} Maintained
+            %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
+            %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
 
         %p
           Search:

@@ -8,7 +8,6 @@ body
   font-size: 14px
   line-height: 20px
   background: #e7f6ff
-  /*background: #b8e4fd*/
 
 // Mixin
 @mixin b_small
@@ -88,22 +87,27 @@ header
     background: url(/images/b_login.png) no-repeat
 
 #search
-  margin: 40px 0
+  margin: 20px 0 20px 0
 
   input[type="text"]
-    width: 285px
+    width: 280px
     height: 28px
     border: none
+    padding: 0 10px
     line-height: 28px
+    -moz-border-radius: 5px
+    -webkit-border-radius: 5px
 
   input[type="submit"]
-    width: 84px
+    width: 97px
     height: 29px
 
   p
-    margin: 30px 0 5px
-    padding-top: 25px
+    margin-bottom: 10px
     border-top: dashed 1px #E7F6FF
+
+  select
+    width: 400px
 
 // Fixed
 div#ad, footer
