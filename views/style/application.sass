@@ -9,6 +9,13 @@ body
   line-height: 20px
   background: #b8e4fd
 
+// Mixin
+@mixin b_small
+  padding: 5px 10px
+  font-size: 12px
+  font-weight: normal
+  color: #fff
+
 // Basics
 h1
   text-shadow: 1px 1px #fff
@@ -28,9 +35,11 @@ a
 
 ul
   list-style: none
+  text-align: left
 
 #container
-  background: url(/images/header.png) no-repeat top center
+  #homepage
+    background: url(/images/header.png) no-repeat top center
 
 .button
   text-align: center
@@ -47,8 +56,14 @@ ul
 
 // Wrap and header
 .wrap
-  width: 480px
+  width: 400px
   margin: 0 auto
+
+  h1
+    margin-top: 65px
+    text-align: center
+    font-size: 32px
+    line-height: 40px
 
 header
   text-align: center
@@ -84,6 +99,11 @@ header
     width: 84px
     height: 29px
 
+  p
+    margin: 30px 0 5px
+    padding-top: 25px
+    border-top: dashed 1px #E7F6FF
+
 // Fixed
 div#ad
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
@@ -109,26 +129,25 @@ div#ad
   padding: 40px 0 180px
   background: url("images/bg_new.png") repeat-x #e7f6ff
 
-  ul
-    margin: 30px 0
-    color: $light
-
-  li
-    margin-bottom: 20px
-
   a
     font-size: 16px
     font-weight: normal
     color: #00255e
 
     &.small
+      @include b_small
       float: right
-      padding: 5px 10px
-      font-size: 12px
-      color: #fff
+
+ul#projects
+  margin: 30px 0 30px
+  color: $light
+
+  li
+    margin-bottom: 20px
 
   .lighter
     font-size: 14px
+    font-weight: normal
     color: $light
 
   span.description
@@ -146,9 +165,40 @@ div#ad
 .searching
   color: yellow
 
-footer p
-  right: 0
-  bottom: 10px
-  position: fixed
-  text-align: right
+footer
+  p
+    right: 0
+    bottom: 10px
+    position: fixed
+    text-align: right
 
+  a
+    color: $light
+
+// Single page
+.single
+  width: 480px
+  margin-top: 65px
+  text-align: center
+
+  h2
+    margin: 20px 0
+
+  p
+    margin-bottom: 30px
+
+  a
+    padding: 0 5px
+    color: #222
+
+    &.maintained
+      background: #7fc07f
+
+    &.abandoned
+      background: #ff7f7f
+
+    &.searching
+      background: #eefe65
+
+    &.small
+      @include b_small

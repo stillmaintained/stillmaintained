@@ -1,3 +1,4 @@
-= haml :"projects/show/#{@project.state}"
+.wrap.single
+  = haml :"projects/show/#{@project.state}"
 
-%a{:href => "/#{@project.user}", :class => 'small'}= "show all projects by #{@project.user}"
+  %a{:href => "/#{@project.user}", :class => 'small button'}= "show all projects by #{@project.user}"

@@ -17,12 +17,11 @@
           %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
           %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
 
-        %br
-
-        Search:
-        %form{:action => '/projects', :method => 'GET'}
-          %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
-          %input{:type => 'submit', :value => 'Search'}
+        %p
+          Search:
+          %form{:action => '/projects', :method => 'GET'}
+            %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+            %input{:type => 'submit', :value => 'Search', :class => "button"}
 
     = haml :projects
 

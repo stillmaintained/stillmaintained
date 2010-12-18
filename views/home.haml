@@ -1,18 +1,19 @@
-%header
-  %h1 Still Maintained?
-  %h2
-    Finally a place to mark your open source project
-    %br as abandoned or looking for a new maintainer.
+#homepage
+  %header
+    %h1 Still Maintained?
+    %h2
+      Finally a place to mark your open source project
+      %br as abandoned or looking for a new maintainer.
 
-  %a{:href =>'/auth/github', :id => 'login'} Log in via Github to add your work
-  %p
-    :textile
-      *or check out the "projects":/projects we know about already.
+    %a{:href =>'/auth/github', :id => 'login'} Log in via Github to add your work
+    %p
+      :textile
+        *or check out the "projects":/projects we know about already.
 
-  #search
-    %form{:action => '/projects', :method => 'GET'}
-      %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
-      %input{:type => 'submit', :value => 'Search', :class => "button"}
+    #search
+      %form{:action => '/projects', :method => 'GET'}
+        %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+        %input{:type => 'submit', :value => 'Search', :class => "button"}
 
 #new
   .wrap
