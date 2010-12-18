@@ -9,6 +9,7 @@ body
   line-height: 20px
   background: #e7f6ff
   color: $light
+  text-align: center
 
 // Mixin
 @mixin b_small
@@ -50,6 +51,7 @@ ul
   -webkit-border-radius: 5px
   border-radius: 5px
   background: $dark
+  padding: 6px 10px
 
   &:hover
     background: $light
@@ -61,12 +63,10 @@ ul
 
   h1
     margin-top: 65px
-    text-align: center
     font-size: 32px
     line-height: 40px
 
 header
-  text-align: center
 
   h1
     padding-top: 260px
@@ -79,7 +79,6 @@ header
     margin: 35px auto 0
     font-size: 18px
     font-weight: normal
-    text-align: center
     text-decoration: none
     line-height: 50px
     background: url(/images/b_login.png) no-repeat
@@ -95,11 +94,6 @@ header
     line-height: 28px
     -moz-border-radius: 5px
     -webkit-border-radius: 5px
-
-  input[type="submit"]
-    width: 97px
-    height: 29px
-
   p
     margin-bottom: 10px
     border-top: dashed 1px #E7F6FF
@@ -136,6 +130,7 @@ div#ad
 #new
   padding: 40px 0 180px
   background: url("images/bg_new.png") repeat-x
+  text-align: left
 
   a
     font-size: 16px
@@ -182,7 +177,6 @@ footer
 .single
   width: 480px
   margin-top: 65px
-  text-align: center
 
   h1 a
     padding: 0 5px
@@ -207,6 +201,15 @@ footer
   a
     &.small
       @include b_small
+
+form
+  display: inline-block
+  padding: 10px
+
+fieldset
+  text-align: left
+  margin: 10px 0
+  padding: 10px
 
 hr
   margin: 0px
