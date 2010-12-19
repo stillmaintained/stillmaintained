@@ -1,30 +1,30 @@
-%h1 Adding your work
-%h2= "Hi #{@user.login}, here's a list of every Github project you started."
+.wrap
+  %h1 Adding your work
+  %h2= "Hi #{@user.login}, here's a list of every Github project you started."
+  %p If you have a project you don't want to have listed, just skip it. Also, you can always come back later and edit your project's states.
 
-If you have a project you don't want to have listed, just skip it. Also, you can always come back later and edit your project's states.
+  %form{:action => "/users/#{@user.id}", :method => 'post'}
 
-%form{:action => "/users/#{@user.id}", :method => 'post'}
+    - @projects.each do |project|
+      %fieldset
+        %h2
+          Is
+          %a{:href => "https://github.com/#{project.user}/#{project.name}"}= project.name
+          still being maintained?
 
-  - @projects.each do |project|
-    %fieldset
-      %h2
-        Is
-        %a{:href => "https://github.com/#{project.user}/#{project.name}"}= project.name
-        still being maintained?
+        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
+        %label Yes.
+        %br
 
-      %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
-      %label Yes.
-      %br
+        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
+        %label No, I'm looking for a new maintainer.
+        %br
 
-      %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
-      %label No, I'm looking for a new maintainer.
-      %br
+        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
+        %label No, the project is abandoned.
+        %br
 
-      %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
-      %label No, the project is abandoned.
-      %br
+        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
+        %label Don't list this project
 
-      %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
-      %label Don't list this project
-
-  %input{:type => 'submit', :value => 'Submit'}
+    %input{:type => 'submit', :value => 'Submit', :class => 'small button'}

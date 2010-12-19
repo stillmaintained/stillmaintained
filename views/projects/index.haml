@@ -1,32 +1,33 @@
-- if params[:user] && @projects.empty?
-  %h1= "Oh no! #{params[:user]} hasn't added any projects yet!"
-  %h2
-    Why don't you
-    %a{:href => "https://github.com/inbox/new/#{params[:user]}"} send them a message
-    about Still Maintained?
--else
-  %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
+.wrap
+  - if params[:user] && @projects.empty?
+    %h1= "Oh no! #{params[:user]} hasn't added any projects yet!"
+    %h2
+      Why don't you
+      %a{:href => "https://github.com/inbox/new/#{params[:user]}"} send them a message
+      about Still Maintained?
+  -else
+    %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"
 
-  - unless params[:user]
-    #search
-      Filter:
-      %select{:id => 'state_filter', :onchange => 'window.location="?state=" + this.options[this.selectedIndex].value'}
-        %option{:value => ''} All
-        %option{:value => 'maintained', :selected => params[:state] == 'maintained'} Maintained
-        %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
-        %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
+    - unless params[:user]
+      #search
+        %p
+          Filter:
+          %select{:id => 'state_filter', :onchange => 'window.location="?state=" + this.options[this.selectedIndex].value'}
+            %option{:value => ''} All
+            %option{:value => 'maintained', :selected => params[:state] == 'maintained'} Maintained
+            %option{:value => 'searching', :selected => params[:state] == 'searching'} Looking for a new maintainer
+            %option{:value => 'abandoned', :selected => params[:state] == 'abandoned'} Abandoned
 
-      %br
+        %p
+          Search:
+          %form{:action => '/projects', :method => 'GET'}
+            %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
+            %input{:type => 'submit', :value => 'Search', :class => "button"}
 
-      Search:
-      %form{:action => '/projects', :method => 'GET'}
-        %input{:type => 'text', :name => 'q', :value => '', :placeholder => 'find a project'}
-        %input{:type => 'submit', :value => 'Search'}
+    = haml :projects
 
-  = haml :projects
-
-  - unless params[:user] || params[:q] || params[:state]
-    #pagination
-      - (1..@projects.total_pages).each do |page|
-        %a{:href => "?page=#{page}"}= page
+    - unless params[:user] || params[:q] || params[:state]
+      #pagination
+        - (1..@projects.total_pages).each do |page|
+          %a{:href => "?page=#{page}"}= page
 
