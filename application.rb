@@ -144,8 +144,14 @@ class Application < Sinatra::Base
       when /\.json$/
         @project.to_json
       else
-        @title = "#{@project.name} by #{@project.user}"
-        haml :"projects/show"
+        if @project
+          @title = "#{@project.name} by #{@project.user}"
+          haml :"projects/show"
+        elsif Project.where(:user => params[:user]).count > 0
+          haml :project_missing
+        else
+          haml :not_found
+        end
       end
 
     end

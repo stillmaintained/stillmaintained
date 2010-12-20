@@ -1,5 +1,5 @@
 - if params[:user] && @projects.empty?
-  = haml :notfound
+  = haml :not_found
 -else
   .wrap
     %h1= "#{@project_count || @projects.count} projects #{(params[:user] ? "by " + params[:user] : '')}"

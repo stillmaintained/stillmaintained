@@ -227,6 +227,19 @@ feature 'Projects', %q{
       page.should have_content '1 projects by alice'
     end
 
+    scenario 'show a nice error page when the user does not exist' do
+      visit '/bob/project1'
+
+      page.should have_content 'Oh no! bob hasn\'t added any projects yet!'
+    end
+
+    scenario 'show a nice error page when the project does not exist' do
+      Project.make(:name => "project1", :user => 'alice', :state => 'searching', :description => 'project1 description')
+      visit '/alice/project2'
+
+      page.should have_content 'Oh no! alice hasn\'t added that project yet!'
+    end
+
   end
 
   context 'search' do
