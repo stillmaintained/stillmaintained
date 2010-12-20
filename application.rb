@@ -6,7 +6,8 @@ require 'hoptoad_notifier'
 
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
-Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/octet-stream")
+Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
+
 
 class Application < Sinatra::Base
   set :root, File.dirname(__FILE__)
