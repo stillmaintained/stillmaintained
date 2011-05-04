@@ -214,3 +214,62 @@ hr
   margin: 0px
   visibility: hidden
   clear: both
+
+@mixin background-size($size)
+  -moz-background-size: $size
+  -webkit-background-size: $size
+  background-size: $size
+
+@media screen and (max-width: 480px)
+  #container
+    #homepage
+      @include background-size(100% auto)
+      padding-top: 120px
+
+  h1
+    font-size: 25px
+    height: 25px
+
+  h2
+    font-size: 12px
+
+  footer
+    position: relative
+    text-align: center
+    bottom: none
+    left: none
+    margin-top: 1em
+
+  div#ad
+    position: relative
+    bottom: none
+    left: none
+    max-width: 310px
+    height: 100px
+
+  .wrap
+    width: 100%
+    margin: 25px auto
+
+  #forkme
+    height: 71px
+    width: 71px
+    @include background-size(auto 100%)
+
+  #search
+    select
+      width: 300px
+      display: block
+      margin: auto auto
+    input
+      display: block
+
+    input.button
+      margin: 1em auto
+
+@media screen and (max-width: 320px)
+  header
+    a#login
+      @include background-size(100% auto)
+      width: 300px
+      font-size: 16px
