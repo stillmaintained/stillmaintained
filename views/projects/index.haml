@@ -22,8 +22,8 @@
 
     = haml :projects
 
-    - unless params[:user] || params[:q] || params[:state]
+    - unless params[:user] || params[:q]
       #pagination
         - (1..@projects.total_pages).each do |page|
-          %a{:href => "?page=#{page}"}= page
+          %a{:href => "?page=#{page}#{params[:state] ? "&amp;state=" + params[:state] : ''}"}= page
 
