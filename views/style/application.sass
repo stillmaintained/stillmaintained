@@ -223,15 +223,21 @@ hr
 @media screen and (max-width: 480px)
   #container
     #homepage
-      @include background-size(100% auto)
-      padding-top: 120px
+      padding-top: 24px
+      background-image: none
 
-  h1
-    font-size: 25px
-    height: 25px
+  header
+    h1
+      font-size: 25px
+      height: 25px
+      padding-top: 0px
+    h2
+      font-size: 13px
 
-  h2
-    font-size: 12px
+  #new
+    padding: 10px 0
+    h2
+      text-align: center
 
   footer
     position: relative
@@ -257,6 +263,8 @@ hr
     @include background-size(auto 100%)
 
   #search
+    form
+      padding: 0
     select
       width: 300px
       display: block
@@ -265,7 +273,16 @@ hr
       display: block
 
     input.button
-      margin: 1em auto
+      margin: 1em auto 0
+
+  ul#projects
+    margin: 15px 10px
+
+  #pagination
+    a
+      font-size: 18px
+      display: inline-block
+      margin: 6px
 
 @media screen and (max-width: 320px)
   header
@@ -273,3 +290,6 @@ hr
       @include background-size(100% auto)
       width: 300px
       font-size: 16px
+
+  ul#projects
+    margin: 15px 5px
