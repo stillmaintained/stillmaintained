@@ -6,7 +6,7 @@
   %title
     = "#{@title} - " if @title
     Still Maintained?
-%body{ :onclick => "document.scrollTo(0,1)" }
+%body{ :onclick => "window.scrollTo(0,1)" }
   %div{:id => 'container'}
     = yield
 
