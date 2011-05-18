@@ -285,6 +285,27 @@ hr
       margin: 6px
 
 @media screen and (max-width: 320px)
+  #container
+    #homepage
+      padding-top: 24px
+      background-image: none
+
+  .wrap
+    h1
+      font-size: 25px
+      height: 25px
+      padding-top: 0px
+      margin-bottom: 20px
+    h2
+      font-size: 13px
+      line-height: 20px
+
+  .wrap.single
+    width: 100%
+    h1
+      font-size: 23px
+      height: auto
+
   header
     a#login
       @include background-size(100% auto)
@@ -293,3 +314,15 @@ hr
 
   ul#projects
     margin: 15px 5px
+
+@media screen and (max-width: 768px)
+  footer
+    position: relative
+    text-align: center
+    margin-top: 1em
+
+  div#ad
+    position: relative
+    margin: auto auto
+    max-width: 310px
+    height: 100px
