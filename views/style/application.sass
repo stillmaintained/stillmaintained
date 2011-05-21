@@ -239,19 +239,22 @@ hr
     h2
       text-align: center
 
-  footer
+  //footer
     position: relative
     text-align: center
     bottom: none
     left: none
     margin-top: 1em
 
-  div#ad
+  //div#ad
     position: relative
     bottom: none
     left: none
     max-width: 310px
     height: 100px
+
+  footer, div#ad
+    display: none
 
   .wrap
     width: 100%
@@ -315,14 +318,17 @@ hr
   ul#projects
     margin: 15px 5px
 
-@media screen and (max-width: 768px)
-  footer
+@media screen and (max-width: 1024px)
+  //footer
     position: relative
     text-align: center
     margin-top: 1em
 
-  div#ad
+  //div#ad
     position: relative
     margin: auto auto
     max-width: 310px
     height: 100px
+
+  footer, div#ad
+    display: none !important
