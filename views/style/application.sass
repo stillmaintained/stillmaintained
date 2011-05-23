@@ -220,6 +220,40 @@ hr
   -webkit-background-size: $size
   background-size: $size
 
+@media screen and (max-width: 320px)
+  #container
+    #homepage
+      padding-top: 84px
+
+      h2
+        padding: 0 1em
+        font-size: 18px
+
+  .wrap
+    h1
+      font-size: 25px
+      height: 25px
+      padding-top: 0px
+      margin-bottom: 20px
+    h2
+      font-size: 13px
+      line-height: 20px
+
+  .wrap.single
+    width: 100%
+    h1
+      font-size: 23px
+      height: auto
+
+  header
+    a#login
+      @include background-size(100% auto)
+      width: 300px
+      font-size: 16px
+
+  ul#projects
+    margin: 15px 5px
+
 @media screen and (max-width: 480px)
   #container
     #homepage
@@ -288,40 +322,6 @@ hr
       font-size: 18px
       display: inline-block
       margin: 6px
-
-@media screen and (max-width: 320px)
-  #container
-    #homepage
-      padding-top: 84px
-
-      h2
-        padding: 0 1em
-        font-size: 18px
-
-  .wrap
-    h1
-      font-size: 25px
-      height: 25px
-      padding-top: 0px
-      margin-bottom: 20px
-    h2
-      font-size: 13px
-      line-height: 20px
-
-  .wrap.single
-    width: 100%
-    h1
-      font-size: 23px
-      height: auto
-
-  header
-    a#login
-      @include background-size(100% auto)
-      width: 300px
-      font-size: 16px
-
-  ul#projects
-    margin: 15px 5px
 
 @media screen and (max-width: 1024px)
   //footer
