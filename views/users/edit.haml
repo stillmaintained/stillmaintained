@@ -12,19 +12,23 @@
           %a{:href => "https://github.com/#{project.user}/#{project.name}"}= project.name
           still being maintained?
 
-        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
-        %label Yes.
+        %label
+          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
+          Yes.
         %br
 
-        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
-        %label No, I'm looking for a new maintainer.
+        %label
+          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
+          No, I'm looking for a new maintainer.
         %br
 
-        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
-        %label No, the project is abandoned.
+        %label
+          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
+          No, the project is abandoned.
         %br
 
-        %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
-        %label Don't list this project
+        %label
+          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
+          Don't list this project
 
     %input{:type => 'submit', :value => 'Submit', :class => 'small button'}
