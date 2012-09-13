@@ -4,7 +4,7 @@ default_run_options[:pty] = true
 
 set :scm, :git
 set :git_enable_submodules, 1
-set :repository, 'git@github.com:jeffkreeftmeijer/stillmaintained.git'
+set :repository, 'git@github.com:stillmaintained/stillmaintained.git'
 set :branch, 'master'
 set :ssh_options, { :forward_agent => true }
 
