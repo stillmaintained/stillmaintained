@@ -10,18 +10,7 @@
   %div{:id => 'container'}
     = yield
 
-  %div{:id => 'ad'}
-    %div{:id => 'adzerk_ad_div'}
-      %script{:type => 'text/javascript', :src => 'http://engine.rubyrow.net/Server/RUBY/JK/HORIZ'}
-    %p{:id => 'adzerk_by'}
-      Ads from
-      %a{:href => 'http://rubyrow.net'} Rubyrow
-
-  %footer
-    %a{:href => 'http://webbynode.com'}
-      %img{:src => '/images/webbynode.png'}
-
-  %a{:href => 'http://github.com/jeffkreeftmeijer/stillmaintained', :id => 'forkme'} Fork me on GitHub
+  %a{:href => 'http://github.com/stillmaintained/stillmaintained', :id => 'forkme'} Fork me on GitHub
 
   :javascript
     var woo_settings = {idle_timeout:'300000', domain:'stillmaintained.com'};
