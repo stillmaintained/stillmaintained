@@ -2,7 +2,9 @@ require 'sinatra'
 require 'omniauth'
 require 'mongoid'
 require 'httparty'
-require 'hoptoad_notifier'
+require 'airbrake'
+require 'will_paginate'
+require 'will_paginate/array'
 
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
@@ -12,14 +14,12 @@ Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
 class Application < Sinatra::Base
   set :root, File.dirname(__FILE__)
 
-  set :root, File.dirname(__FILE__)
-
-  use HoptoadNotifier::Rack
+  use Airbrake::Rack
 
   config = YAML::load_file(File.join(File.dirname(__FILE__), 'config/settings.yml'))
 
-  HoptoadNotifier.configure do |hoptoad|
-    hoptoad.api_key = config['hoptoad']['key']
+  Airbrake.configure do |airbrake_config|
+    airbrake_config.api_key = config['airbrake']['key']
   end
 
   configure do
@@ -29,6 +29,8 @@ class Application < Sinatra::Base
     ).db(config['database']['database'])
   end
 
+  use Rack::Session::Cookie
+  use OmniAuth::Strategies::Developer
   use OmniAuth::Builder do
     provider :github, config['github']['id'], config['github']['secret']
   end
@@ -77,21 +79,21 @@ class Application < Sinatra::Base
   end
 
   get '/auth/github/callback' do
-    login = request.env['omniauth.auth']['user_info']['nickname']
+    login = request.env['omniauth.auth']['info']['nickname']
 
-    result = HTTParty.get("http://github.com/api/v2/json/repos/show/#{login}")
+    result = HTTParty.get("https://api.github.com/users/#{login}/repos")
 
-    result['repositories'].each do |repo|
+    result.each do |repo|
       Project.create_or_update_from_github_response(repo)
     end
 
-    result = HTTParty.get("http://github.com/api/v2/json/user/show/#{login}/organizations")
-    organizations = result['organizations'].map{|organization| organization['login'] }
+    result = HTTParty.get("https://api.github.com/users/#{login}/orgs")
+    organizations = result.map{|organization| organization['login'] }
 
     organizations.each do |organization|
-      result = HTTParty.get("http://github.com/api/v2/json/organizations/#{organization}/public_repositories")
+      result = HTTParty.get("https://api.github.com/orgs/#{organization}/repos")
 
-      result['repositories'].each do |repo|
+      result.each do |repo|
         Project.create_or_update_from_github_response(repo)
       end
     end

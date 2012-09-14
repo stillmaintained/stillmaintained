@@ -5,5 +5,5 @@ database:
 github:
   id: github_oauth_id
   secret: github_oauth_secret
-hoptoad:
-  key: hoptoad_api_key
+airbrake:
+  key: airbrake_api_key

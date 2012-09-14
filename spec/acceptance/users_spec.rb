@@ -13,31 +13,27 @@ feature 'Users', %q{
     Project.make(:name => 'project3', :user => 'alice', :visible => false)
     Project.make(:name => 'project4', :user => 'alice', :visible => false)
 
-    FakeWeb.register_uri(:post, 'https://github.com/login/oauth/access_token', :body => 'access_token=github')
-    FakeWeb.register_uri(:get, 'https://github.com/api/v2/json/user/show?access_token=github', :body => '{"user": {"login": "alice"}}')
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.add_mock(:github, {'info' => {'nickname' => 'alice'}})
   end
 
   scenario 'log in via Github' do
-    visit '/auth/github/callback'
+    visit '/auth/github'
     page.should have_content 'Hi alice, here\'s a list of every Github project you started.'
   end
 
   context 'getting the projects from github' do
     background do
-      HTTParty.stub!(:get).with('http://github.com/api/v2/json/repos/show/alice').and_return(
-        'repositories' => [
-          {'name' => 'fetched_project', 'owner' => 'alice'}
-        ]
+      HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return(
+        [{'name' => 'fetched_project', 'owner' => {'login' => 'alice'}}]
       )
 
-      HTTParty.stub!(:get).with('http://github.com/api/v2/json/user/show/alice/organizations').and_return(
-        'organizations' => [{'login' => 'organization'}]
+      HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
+        [{'login' => 'organization'}]
       )
 
-      HTTParty.stub!(:get).with('http://github.com/api/v2/json/organizations/organization/public_repositories').and_return(
-        'repositories' => [
-          {'name' => 'organization_project', 'owner' => 'organization'}
-        ]
+      HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return(
+        [{'name' => 'organization_project', 'owner' => {'login' => 'organization'}}]
       )
 
       visit '/auth/github/callback'
@@ -98,7 +94,7 @@ feature 'Users', %q{
   scenario 'return to the user update form' do
     Project.first.update_attributes(:state => 'maintained', :visible => false)
     visit "/users/#{@user.id}/edit"
-    body.should include '<input checked=\'checked\' id=\'project1_maintained\''
+    page.should have_css('input#project1_maintained[checked]')
   end
 
 end
