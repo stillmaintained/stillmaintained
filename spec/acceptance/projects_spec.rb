@@ -35,7 +35,7 @@ feature 'Projects', %q{
 
       visit '/projects.json'
 
-      json = ActiveSupport::JSON.decode(page.body)
+      json = JSON.parse(page.source)
       json.map {|j| j['name']}.should ==  ['project1', 'project2']
       json.map {|j| j['user']}.should ==  ['alice', 'bob']
     end
@@ -124,7 +124,7 @@ feature 'Projects', %q{
     scenario 'Show the projects list per user in JSON format' do
       visit '/alice.json'
 
-      json = ActiveSupport::JSON.decode(page.body)
+      json = JSON.parse(page.source)
       json.length.should == 1
       json.map {|j| j['name']}.should include 'project1'
       json.map {|j| j['user']}.should include 'alice'
@@ -197,7 +197,7 @@ feature 'Projects', %q{
 
       visit '/alice/project1.json'
 
-      json = ActiveSupport::JSON.decode(page.body)
+      json = JSON.parse(page.source)
       json['name'].should == 'project1'
       json['user'].should == 'alice'
     end

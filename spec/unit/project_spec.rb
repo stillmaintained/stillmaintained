@@ -42,14 +42,14 @@ describe Project do
       it 'should create a new project' do
         lambda {
           Project.create_or_update_from_github_response({
-            'owner' => 'alice', 'name' => 'project1'
+            'owner' => {'login' => 'alice'}, 'name' => 'project1'
           })
         }.should change(Project, :count).by(1)
       end
 
       it 'should save the user and project names' do
         project = Project.create_or_update_from_github_response({
-          'owner' => 'alice', 'name' => 'project1'
+          'owner' => {'login' => 'alice'}, 'name' => 'project1'
         })
         project.reload
         project.user.should == 'alice'
@@ -58,7 +58,7 @@ describe Project do
 
       it 'should save the extra data from github' do
         project = Project.create_or_update_from_github_response({
-          'owner' => 'alice',
+          'owner' => {'login' => 'alice'},
           'name' => 'project1',
           'description' => 'description1',
           'watchers' => 123
@@ -71,7 +71,7 @@ describe Project do
       describe 'when the project is a fork' do
         before do
           @project = Project.create_or_update_from_github_response({
-            'owner' => 'alice',
+            'owner' => {'login' => 'alice'},
             'name' => 'project1',
             'fork' => true,
             'source' => 'source/project1',
@@ -102,14 +102,14 @@ describe Project do
       it 'should not create a new project' do
         lambda {
           Project.create_or_update_from_github_response({
-            'owner' => 'alice', 'name' => 'project1'
+            'owner' => {'login' => 'alice'}, 'name' => 'project1'
           })
         }.should_not change(Project, :count)
       end
 
       it 'should update the extra data from github' do
         project = Project.create_or_update_from_github_response({
-          'owner' => 'alice',
+          'owner' => {'login' => 'alice'},
           'name' => 'project1',
           'description' => 'description1',
           'watchers' => 123

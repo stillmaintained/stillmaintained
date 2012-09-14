@@ -3,9 +3,10 @@ require "steak"
 require 'capybara'
 require 'capybara/dsl'
 require 'fakeweb'
+require 'omniauth-github'
 
-Rspec.configure do |config|
-  config.include Capybara
+RSpec.configure do |config|
+  config.include Capybara::DSL
   Capybara.app = Application
 end
 

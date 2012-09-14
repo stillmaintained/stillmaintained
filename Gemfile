@@ -1,23 +1,27 @@
 source 'http://rubygems.org'
 
 gem 'sinatra'
-gem 'omniauth', '0.1.6'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'builder', '~> 3.0.0' # without this, bundler takes forever to resolve dependencies
 gem 'mongoid', '~> 2.0'
+gem 'bson_ext'
 gem 'httparty'
 gem 'haml'
-gem 'hoptoad_notifier'
-gem 'will_paginate', '~> 3.0.pre'
+gem 'airbrake'
+gem 'will_paginate'
 gem 'json'
 gem 'i18n'
+gem 'sass'
+gem 'RedCloth'
 
 group :test do
-  gem 'rspec', '2.1'
+  gem 'rspec'
   gem 'rack-test'
   gem 'steak', '~> 1.0'
   gem 'capybara'
-  gem 'launchy', '~> 0.3.5'
+  gem 'launchy'
   gem 'fuubar'
-  gem 'RedCloth'
   gem 'fakeweb'
   gem 'machinist_mongo'
 end

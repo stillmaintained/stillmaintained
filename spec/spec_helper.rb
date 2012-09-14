@@ -7,7 +7,7 @@ require File.join(File.dirname(__FILE__), '..', 'application.rb')
 
 set :environment, :test
 
-Rspec.configure do |config|
+RSpec.configure do |config|
 
   config.before(:each) do
     [User, Project].each { |model| model.delete_all }
