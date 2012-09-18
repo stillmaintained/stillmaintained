@@ -26,4 +26,4 @@ There. Now you should be able to start the app:
 
 bc. $ rackup
 
-Running into any issues? "Let me know":https://github.com/inbox/new/jeffkreeftmeijer. :)
+Running into any issues? "Let me know":https://github.com/jeffkreeftmeijer. :)
