@@ -20,7 +20,7 @@ The next thing to do is to move the example settings file to @config/settings.ym
 
 bc. $ mv config/settings.yml.example config/settings.yml
 
-Now you need to fill in the github id and secret in @config/settings.yml@. To get those, "create an application on github":https://github.com/account/applications/new. The name and main url aren't really important, as long as you put @http://localhost:9292/auth/github/callback@ in the callback url field. You don't need to fill in the Hoptoad key.
+Now you need to fill in the github id and secret in @config/settings.yml@. To get those, "create an application on github":https://github.com/account/applications/new. The name and main url aren't really important, as long as you put @http://localhost:9292/auth/github/callback@ in the callback url field. You don't need to fill in the Airbrake key.
 
 There. Now you should be able to start the app:
 
