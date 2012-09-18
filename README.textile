@@ -6,7 +6,7 @@ Be sure to read the "announcement article":http://jeffkreeftmeijer.com/2010/fina
 
 h2. Contributing
 
-StillMaintained needs your help to become awesome. If you have a great idea, please create an "issue":https://github.com/jeffkreeftmeijer/stillmaintained/issues. It would be amazing if you forked the project, implemented your idea and sent me "a pull request":https://github.com/jeffkreeftmeijer/stillmaintained/pulls too. Just sayin'. ;)
+StillMaintained needs your help to become awesome. If you have a great idea, please create an "issue":https://github.com/stillmaintained/stillmaintained/issues. It would be amazing if you forked the project, implemented your idea and sent me "a pull request":https://github.com/stillmaintained/stillmaintained/pulls too. Just sayin'. ;)
 
 h3. Getting up and running
 
