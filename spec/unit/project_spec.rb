@@ -12,24 +12,24 @@ describe Project do
     end
 
     it 'should find project by name' do
-      results = Project.search('project2')
+      results = Project.search_by_name('project2')
       results.should include(@project1)
       results.should_not include(@project2)
 
-      results = Project.search('PROJECT2')
+      results = Project.search_by_name('PROJECT2')
       results.should include(@project1)
       results.should_not include(@project2)
 
 
-      results = Project.search('project')
+      results = Project.search_by_name('project')
       results.should include(@project1)
       results.should include(@project2)
 
-      results = Project.search('proj')
+      results = Project.search_by_name('proj')
       results.should include(@project1)
       results.should include(@project2)
 
-      results = Project.search('ject')
+      results = Project.search_by_name('ject')
       results.should include(@project1)
       results.should include(@project2)
     end

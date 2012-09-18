@@ -15,7 +15,7 @@ class Project
   scope :visible, where(:visible => true)
   scope :no_forks, where(:fork.ne => true)
 
-  scope :search, lambda { |query|
+  scope :search_by_name, lambda { |query|
     query = /#{query}/i
     where({:name => query})
   }

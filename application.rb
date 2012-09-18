@@ -50,7 +50,7 @@ class Application < Sinatra::Base
   ['/projects.json', '/projects'].each do |path|
     get path do
       if params[:q]
-        @projects = Project.search(
+        @projects = Project.search_by_name(
           params[:q]
         ).visible.no_forks.order_by(
           [:watchers, :desc]
