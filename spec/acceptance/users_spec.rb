@@ -17,11 +17,6 @@ feature 'Users', %q{
     OmniAuth.config.add_mock(:github, {'info' => {'nickname' => 'alice'}})
   end
 
-  scenario 'log in via Github' do
-    visit '/auth/github'
-    page.should have_content 'Hi alice, here\'s a list of every Github project you started.'
-  end
-
   context 'getting the projects from github' do
     background do
       HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return(
@@ -37,6 +32,18 @@ feature 'Users', %q{
       )
 
       visit '/auth/github/callback'
+    end
+
+    scenario 'log in via Github' do
+      page.should have_content 'Hi alice, here\'s a list of every Github project you started.'
+    end
+
+    scenario 'log in via Github after new organizations are added' do
+      HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
+        [{'login' => 'organization'}, {'login' => 'other_organization'}]
+      )
+      visit '/auth/github/callback'
+      User.count.should == 1
     end
 
     scenario 'show the projects in the form' do
