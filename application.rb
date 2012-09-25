@@ -50,7 +50,7 @@ class Application < Sinatra::Base
   ['/projects.json', '/projects'].each do |path|
     get path do
       if params[:q]
-        @projects = Project.search(
+        @projects = Project.search_by_name(
           params[:q]
         ).visible.no_forks.order_by(
           [:watchers, :desc]
@@ -98,7 +98,9 @@ class Application < Sinatra::Base
       end
     end
 
-    user = User.find_or_create_by(:login => login, :organizations => organizations)
+    user = User.find_or_create_by(:login => login)
+    user.update_attributes(organizations: organizations)
+
     redirect "/users/#{user.id}/edit"
   end
 
