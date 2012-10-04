@@ -39,6 +39,7 @@ feature 'Users', %q{
     end
 
     scenario 'log in via Github after new organizations are added' do
+      HTTParty.stub!(:get).with('https://api.github.com/orgs/other_organization/repos').and_return([])
       HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
         [{'login' => 'organization'}, {'login' => 'other_organization'}]
       )
