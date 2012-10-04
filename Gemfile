@@ -14,6 +14,7 @@ gem 'json'
 gem 'i18n'
 gem 'sass'
 gem 'RedCloth'
+gem 'rake'
 
 group :test do
   gem 'rspec'
