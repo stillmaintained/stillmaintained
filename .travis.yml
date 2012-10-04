@@ -2,3 +2,5 @@ language: ruby
 services: mongodb
 rvm:
   - 1.9.3
+before_script:
+  - 'cp config/settings.yml.example config/settings.yml'
