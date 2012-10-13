@@ -8,6 +8,7 @@ require 'will_paginate/array'
 
 require File.join(File.dirname(__FILE__), 'lib', 'user')
 require File.join(File.dirname(__FILE__), 'lib', 'project')
+require File.join(File.dirname(__FILE__), 'lib', 'github_importer')
 Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
 
 
@@ -82,7 +83,7 @@ class Application < Sinatra::Base
     login = request.env['omniauth.auth']['info']['nickname']
 
     user = User.find_or_create_by(:login => login)
-    user.update_projects_from_github
+    GithubImporter.update_user_and_projects user
 
     redirect "/users/#{user.id}/edit"
   end
