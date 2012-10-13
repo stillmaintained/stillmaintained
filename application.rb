@@ -81,25 +81,8 @@ class Application < Sinatra::Base
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['info']['nickname']
 
-    result = HTTParty.get("https://api.github.com/users/#{login}/repos")
-
-    result.each do |repo|
-      Project.create_or_update_from_github_response(repo)
-    end
-
-    result = HTTParty.get("https://api.github.com/users/#{login}/orgs")
-    organizations = result.map{|organization| organization['login'] }
-
-    organizations.each do |organization|
-      result = HTTParty.get("https://api.github.com/orgs/#{organization}/repos")
-
-      result.each do |repo|
-        Project.create_or_update_from_github_response(repo)
-      end
-    end
-
     user = User.find_or_create_by(:login => login)
-    user.update_attributes(organizations: organizations)
+    user.update_projects_from_github
 
     redirect "/users/#{user.id}/edit"
   end
