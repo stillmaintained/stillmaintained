@@ -5,13 +5,16 @@ class GithubImporter
     update_github_login user.login, 'users'
 
     result = HTTParty.get("https://api.github.com/users/#{user.login}/orgs")
+    rate_limit = result.headers['X-RateLimit-Remaining']
     organizations = result.map{|organization| organization['login'] }
 
     organizations.each do |organization|
-      update_github_login organization, 'orgs'
+      rate_limit = update_github_login organization, 'orgs'
     end
 
     user.update_attributes(:organizations => organizations)
+
+    rate_limit.to_i
   end
 
   private
@@ -27,5 +30,7 @@ class GithubImporter
     Project.where(:user => login).select { |project| not projects.include?(project) }.each do |project|
       project.destroy
     end
+
+    result.headers['X-RateLimit-Remaining']
   end
 end

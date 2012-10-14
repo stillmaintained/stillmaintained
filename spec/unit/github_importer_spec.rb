@@ -37,6 +37,15 @@ describe GithubImporter do
 
         Project.all.should have(0).project
       end
+
+      it 'returns remaining rate limit' do
+        mock_github_api '/users/alice/repos', [], rate_limit: 5000
+        mock_github_api '/users/alice/orgs', [], rate_limit: 4999
+
+        rate_limit = GithubImporter.update_user_and_projects user
+
+        rate_limit.should == 4999
+      end
     end
 
     context 'for user with organization' do
@@ -80,6 +89,15 @@ describe GithubImporter do
         GithubImporter.update_user_and_projects user
 
         Project.all.should have(0).project
+      end
+
+      it 'returns remaining rate limit' do
+        mock_github_api '/users/alice/repos', [], rate_limit: 5000
+        mock_github_api '/users/alice/orgs', [{login: 'organization'}], rate_limit: 4999
+        mock_github_api '/orgs/organization/repos', [{name: 'organization_project', owner: {login: 'organization'}}], rate_limit: 4998
+
+        rate_limit = GithubImporter.update_user_and_projects user
+        rate_limit.should == 4998
       end
     end
   end

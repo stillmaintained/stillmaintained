@@ -11,14 +11,16 @@ set :environment, :test
 RSpec.configure do |config|
 
   config.before(:each) do
+    FakeWeb.clean_registry
     [User, Project].each { |model| model.delete_all }
   end
 
 end
 
 # Helper method
-def mock_github_api(uri, json)
-  FakeWeb.register_uri(:get, "https://api.github.com" + uri, body: json.to_json, content_type: 'text/json')
+def mock_github_api(uri, json, options={})
+  options[:rate_limit] ||= 5000
+  FakeWeb.register_uri(:get, "https://api.github.com" + uri, body: json.to_json, content_type: 'text/json', 'X-RateLimit-Remaining' => options[:rate_limit])
 end
 
 User.blueprint {}
