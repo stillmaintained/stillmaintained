@@ -4,9 +4,9 @@ require 'rspec'
 require 'machinist/mongoid'
 require 'fakeweb'
 
-require File.join(File.dirname(__FILE__), '..', 'application.rb')
+ENV['RACK_ENV'] = 'test'
 
-set :environment, :test
+require File.join(File.dirname(__FILE__), '..', 'application.rb')
 
 RSpec.configure do |config|
 

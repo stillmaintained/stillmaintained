@@ -32,7 +32,7 @@ feature 'Users', %q{
     end
 
     scenario 'log in via Github after new organizations are added' do
-      mock_github_api '/orgs/organization/repos', []
+      mock_github_api '/orgs/other_organization/repos', []
       mock_github_api '/users/alice/orgs', [{login: 'organization'}, {login: 'other_organization'}]
 
       visit '/auth/github/callback'

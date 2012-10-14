@@ -55,12 +55,12 @@ GEM
     machinist_mongo (1.2.0)
       machinist (~> 1.0.6)
     mime-types (1.19)
-    mongo (1.7.0)
-      bson (~> 1.7.0)
-    mongoid (2.5.0)
+    mongoid (3.0.9)
       activemodel (~> 3.1)
-      mongo (~> 1.7)
+      moped (~> 1.1)
+      origin (~> 1.0)
       tzinfo (~> 0.3.22)
+    moped (1.2.7)
     multi_json (1.3.6)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
@@ -80,6 +80,7 @@ GEM
     omniauth-oauth2 (1.1.0)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    origin (1.0.9)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -122,7 +123,6 @@ DEPENDENCIES
   RedCloth
   airbrake
   bson_ext
-  builder (~> 3.0.0)
   capybara
   fakeweb
   fuubar
@@ -132,7 +132,7 @@ DEPENDENCIES
   json
   launchy
   machinist_mongo
-  mongoid (~> 2.0)
+  mongoid (~> 3.0)
   omniauth
   omniauth-github
   rack-test

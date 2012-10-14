@@ -11,8 +11,8 @@ require File.join(File.dirname(__FILE__), 'lib', 'project')
 require File.join(File.dirname(__FILE__), 'lib', 'github_importer')
 Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
 
-
 class Application < Sinatra::Base
+  set :environment, ENV['RACK_ENV'] || 'development'
   set :root, File.dirname(__FILE__)
 
   use Airbrake::Rack
@@ -24,10 +24,7 @@ class Application < Sinatra::Base
   end
 
   configure do
-    Mongoid.database = Mongo::Connection.new(
-      config['database']['host'],
-      config['database']['port']
-    ).db(config['database']['database'])
+    Mongoid.load! File.join(File.dirname(__FILE__), 'config/mongoid.yml')
   end
 
   use Rack::Session::Cookie
@@ -90,9 +87,9 @@ class Application < Sinatra::Base
 
   get '/users/:id/edit' do
     @user = User.find(params[:id])
-    @projects = Project.all(:conditions => {:user => @user.login})
+    @projects = Project.where(user: @user.login)
     @user.organizations.each do |organization|
-      @projects |= Project.all(:conditions => {:user => organization})
+      @projects |= Project.where(user: organization)
     end
     haml :'users/edit'
   end
@@ -100,7 +97,7 @@ class Application < Sinatra::Base
   post '/users/:id' do
     params['projects'].each do |user, projects|
       projects.each do |name, state|
-        project = Project.first(:conditions => {:user => user, :name => name})
+        project = Project.where(user: user, name: name).first
         project.update_attributes(:state => state, :visible => state != 'hide')
       end
     end
@@ -110,9 +107,7 @@ class Application < Sinatra::Base
 
   ['/:user.json', '/:user'].each do |path|
     get path do
-      @projects = Project.all(
-        :conditions => {:user => params[:user]}
-      ).visible.order_by([:watchers, :desc])
+      @projects = Project.where(user: params[:user]).visible.order_by([:watchers, :desc])
 
       @title = params[:user]
 
@@ -125,7 +120,7 @@ class Application < Sinatra::Base
 
   ['/:user/:project.png', '/:user/:project.json', '/:user/:project'].each do |path|
     get path do
-      @project = Project.first(:conditions => {:user => params[:user], :name => params[:project], :visible => true})
+      @project = Project.where(user: params[:user], name: params[:project], visible: true).first
 
       case path
       when /\.png$/
