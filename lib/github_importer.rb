@@ -1,5 +1,6 @@
 class GithubImporter
-  # Updates user and user's projects from github
+  # Updates user and user's projects from github, and returns remaining github
+  # rate limit (how many requests we can perform to github api).
   def self.update_user_and_projects(user)
     update_github_login user.login, 'users'
 

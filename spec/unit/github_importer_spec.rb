@@ -2,16 +2,15 @@ require 'spec_helper'
 
 describe GithubImporter do
   describe '.update_user' do
-    let(:user) { User.create!(:login => 'alice') }
+    let(:user) { User.create!(login: 'alice') }
 
     context 'for user without organizations' do
       before do
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return([])
+        mock_github_api '/users/alice/orgs', []
       end
 
       it 'creates new project' do
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return(
-          [{'name' => 'fetched_project', 'owner' => {'login' => 'alice'}}])
+        mock_github_api '/users/alice/repos', [{name: 'fetched_project', owner: {login: 'alice'}}]
 
         GithubImporter.update_user_and_projects user
 
@@ -21,9 +20,8 @@ describe GithubImporter do
       end
 
       it 'updates already existing project' do
-        Project.create!(:name => 'fetched_project', :user => 'alice')
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return(
-          [{'name' => 'fetched_project', 'owner' => {'login' => 'alice'}, 'description' => 'new description'}])
+        Project.create!(name: 'fetched_project', user: 'alice')
+        mock_github_api '/users/alice/repos', [{name: 'fetched_project', owner: {login: 'alice'}, description: 'new description'}]
 
         GithubImporter.update_user_and_projects user
 
@@ -32,8 +30,8 @@ describe GithubImporter do
       end
 
       it 'removes non existing projects' do
-        Project.create!(:name => 'fetched_project', :user => 'alice')
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return([])
+        Project.create!(name: 'fetched_project', user: 'alice')
+        mock_github_api '/users/alice/repos', []
 
         GithubImporter.update_user_and_projects user
 
@@ -43,13 +41,12 @@ describe GithubImporter do
 
     context 'for user with organization' do
       before do
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return([])
-        HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
-          [{'login' => 'organization'}])
+        mock_github_api '/users/alice/repos', []
+        mock_github_api '/users/alice/orgs', [{login: 'organization'}]
       end
 
       it 'updates users organizations list' do
-        HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return([])
+        mock_github_api '/orgs/organization/repos', []
 
         GithubImporter.update_user_and_projects user
 
@@ -57,9 +54,7 @@ describe GithubImporter do
       end
 
       it 'creates organization project' do
-        HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return(
-          [{'name' => 'organization_project', 'owner' => {'login' => 'organization'}}]
-        )
+        mock_github_api '/orgs/organization/repos', [{name: 'organization_project', owner: {login: 'organization'}}]
 
         GithubImporter.update_user_and_projects user
 
@@ -69,9 +64,8 @@ describe GithubImporter do
       end
 
       it 'updates organization project' do
-        Project.create!(:name => 'fetched_project', :user => 'organization')
-        HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return(
-          [{'name' => 'fetched_project', 'owner' => {'login' => 'organization'}, 'description' => 'new description'}])
+        Project.create!(name: 'fetched_project', user: 'organization')
+        mock_github_api '/orgs/organization/repos', [{name: 'organization_project', owner: {login: 'organization'}, description: 'new description'}]
 
         GithubImporter.update_user_and_projects user
 
@@ -81,7 +75,7 @@ describe GithubImporter do
 
       it 'removes the non existing organization projects' do
         Project.create!(:name => 'fetched_project', :user => 'organization')
-        HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return([])
+        mock_github_api '/orgs/organization/repos', []
 
         GithubImporter.update_user_and_projects user
 

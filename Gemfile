@@ -25,4 +25,5 @@ group :test do
   gem 'fuubar'
   gem 'fakeweb'
   gem 'machinist_mongo'
+  gem 'fakeweb'
 end
