@@ -17,6 +17,13 @@ class GithubImporter
     rate_limit.to_i
   end
 
+  def self.update_users
+    User.where(:updated_at.lt => Time.now - 7.days).each do |user|
+      rate_limit = update_user_and_projects user
+      break if rate_limit < 3000
+    end
+  end
+
   private
 
   def self.update_github_login login, type

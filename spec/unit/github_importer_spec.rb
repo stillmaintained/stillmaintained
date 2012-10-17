@@ -103,5 +103,49 @@ describe GithubImporter do
   end
 
   describe '.update_users' do
+
+    it 'does not updates user that were updated within week' do
+      user = User.create!
+
+      GithubImporter.should_receive(:update_user_and_projects).never
+
+      GithubImporter.update_users
+    end
+    context 'when user was not updated for a week' do
+      let!(:user) do
+        user = User.new
+        user.updated_at = Time.now - 8.days
+        user.save!
+        user
+      end
+
+      let!(:other_user) do
+        user = User.new
+        user.updated_at = Time.now - 8.days
+        user.save!
+        user
+      end
+
+      it 'updates users updated later than week ago' do
+        GithubImporter.should_receive(:update_user_and_projects).with(user).once.and_return(5000)
+        GithubImporter.should_receive(:update_user_and_projects).with(other_user).once.and_return(5000)
+
+        GithubImporter.update_users
+      end
+
+      it 'updates user when rate limit remaining is greater than or equal to 3000' do
+        GithubImporter.should_receive(:update_user_and_projects).with(user).and_return(3000)
+        GithubImporter.should_receive(:update_user_and_projects).with(other_user).once.and_return(2900)
+
+        GithubImporter.update_users
+      end
+
+      it 'does not update users when rate limit remaining is less than 3000' do
+        GithubImporter.should_receive(:update_user_and_projects).with(user).and_return(2999)
+        GithubImporter.should_receive(:update_user_and_projects).with(other_user).never
+
+        GithubImporter.update_users
+      end
+    end
   end
 end
