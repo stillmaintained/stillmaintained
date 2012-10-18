@@ -14,6 +14,8 @@ gem 'i18n'
 gem 'sass'
 gem 'RedCloth'
 gem 'rake'
+gem 'whenever'
+gem 'capistrano'
 
 group :test do
   gem 'rspec'
