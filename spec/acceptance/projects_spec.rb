@@ -36,8 +36,8 @@ feature 'Projects', %q{
       visit '/projects.json'
 
       json = JSON.parse(page.source)
-      json.map {|j| j['name']}.should ==  ['project1', 'project2']
-      json.map {|j| j['user']}.should ==  ['alice', 'bob']
+      json.map {|j| j['name']}.should =~ ['project1', 'project2']
+      json.map {|j| j['user']}.should =~ ['alice', 'bob']
     end
 
     scenario 'do not show any invisible projects' do

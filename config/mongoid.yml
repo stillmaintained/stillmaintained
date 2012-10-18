@@ -1,0 +1,18 @@
+development:
+  sessions:
+    default:
+      database: stillmaintained_dev
+      hosts:
+        - localhost:27017
+test:
+  sessions:
+    default:
+      database: stillmaintained_test
+      hosts:
+        - localhost:27017
+production:
+  sessions:
+    default:
+      database: stillmaintained
+      hosts:
+        - localhost:27017

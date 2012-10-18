@@ -21,7 +21,7 @@ class Project
   }
 
   def self.create_or_update_from_github_response(data)
-    if project = first(:conditions => { :name => data['name'], :user => data['owner']['login'] })
+    if project = where(name: data['name'], user: data['owner']['login']).first
       project.update_attributes!(
         :description => data['description'],
         :watchers => data['watchers']

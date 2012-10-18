@@ -1,10 +1,7 @@
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps::Updated
 
   field :login
-  field :organizations, :type => Array
-
-  def organizations
-    read_attribute(:organizations) || []
-  end
+  field :organizations, :type => Array, :default => []
 end

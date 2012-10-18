@@ -7,4 +7,12 @@ RSpec::Core::RakeTask.new do |t|
   t.verbose = false
 end
 
+namespace :github do
+  desc "Refresh users and projects from github"
+  task :refresh do
+    require './application'
+    GithubImporter.update_users
+  end
+end
+
 task :default => [:spec]
