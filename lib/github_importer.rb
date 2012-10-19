@@ -12,6 +12,7 @@ class GithubImporter
       rate_limit = update_github_login organization, 'orgs'
     end
 
+    user.touch
     user.update_attributes(:organizations => organizations)
 
     rate_limit.to_i
