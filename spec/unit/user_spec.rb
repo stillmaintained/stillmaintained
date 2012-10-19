@@ -6,7 +6,7 @@ describe User do
   end
 
   describe '#organizations' do
-    it 'should return an array or organization namese' do
+    it 'should return an array or organization names' do
       user = User.make(:organizations => %w{one two three})
       user.organizations.should == %w{one two three}
     end
@@ -15,5 +15,4 @@ describe User do
       User.make.organizations.should == []
     end
   end
-
 end

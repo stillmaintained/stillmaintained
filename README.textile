@@ -1,4 +1,4 @@
-h1. Still Maintained? "!http://stillmaintained.com/stillmaintained/stillmaintained.png!":http://stillmaintained.com/stillmaintained/stillmaintained
+h1. Still Maintained? "!https://travis-ci.org/stillmaintained/stillmaintained.png!":https://travis-ci.org/stillmaintained/stillmaintained "!http://stillmaintained.com/stillmaintained/stillmaintained.png!":http://stillmaintained.com/stillmaintained/stillmaintained
 
 Finally a place to mark your open source project as abandoned or looking for a new maintainer.
 

@@ -19,17 +19,10 @@ feature 'Users', %q{
 
   context 'getting the projects from github' do
     background do
-      HTTParty.stub!(:get).with('https://api.github.com/users/alice/repos').and_return(
-        [{'name' => 'fetched_project', 'owner' => {'login' => 'alice'}}]
-      )
-
-      HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
-        [{'login' => 'organization'}]
-      )
-
-      HTTParty.stub!(:get).with('https://api.github.com/orgs/organization/repos').and_return(
-        [{'name' => 'organization_project', 'owner' => {'login' => 'organization'}}]
-      )
+      mock_github_api '/users/alice/repos', [{name: 'fetched_project', owner: {login: 'alice'}}]
+      mock_github_api '/users/alice/orgs', [{login: 'organization'}]
+      mock_github_api '/orgs/organization/repos',
+        [{name: 'organization_project', owner: {login: 'organization'}}]
 
       visit '/auth/github/callback'
     end
@@ -39,10 +32,11 @@ feature 'Users', %q{
     end
 
     scenario 'log in via Github after new organizations are added' do
-      HTTParty.stub!(:get).with('https://api.github.com/users/alice/orgs').and_return(
-        [{'login' => 'organization'}, {'login' => 'other_organization'}]
-      )
+      mock_github_api '/orgs/other_organization/repos', []
+      mock_github_api '/users/alice/orgs', [{login: 'organization'}, {login: 'other_organization'}]
+
       visit '/auth/github/callback'
+
       User.count.should == 1
     end
 
