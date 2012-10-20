@@ -18,8 +18,9 @@ gem 'whenever'
 gem 'capistrano'
 gem 'rvm-capistrano'
 
+gem 'rspec'
+
 group :test do
-  gem 'rspec'
   gem 'rack-test'
   gem 'steak', '~> 1.0'
   gem 'capybara'
