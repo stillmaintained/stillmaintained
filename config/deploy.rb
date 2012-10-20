@@ -1,5 +1,13 @@
-set :whenever_command, "bundle exec whenever"
 require 'whenever/capistrano'
+set :whenever_command, "bundle exec whenever"
+
+require "rvm/capistrano"
+set :rvm_type, :system
+set :rvm_ruby_string, '1.9.3-p194'
+
+require "bundler/capistrano"
+
+set :normalize_asset_timestamps, false
 
 set :application, 'stillmaintained'
 
@@ -28,6 +36,10 @@ after 'deploy:update_code', 'deploy:symlink_settings'
 namespace :deploy do
   task :start, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"
+  end
+
+  task :ttt do
+    run "ruby -v"
   end
 
   task :stop, :roles => :app do

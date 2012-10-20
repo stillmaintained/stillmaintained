@@ -19,10 +19,13 @@ class GithubImporter
   end
 
   def self.update_users
+    updated_user_count = 0
     User.where(:updated_at.lt => Time.now - 7.days).each do |user|
       rate_limit = update_user_and_projects user
+      updated_user_count = 0
       break if rate_limit < 3000
     end
+    puts "#{updated_user_count} users updated"
   end
 
   private

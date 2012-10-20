@@ -12,6 +12,7 @@ require File.join(File.dirname(__FILE__), 'lib', 'github_importer')
 Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
 
 class Application < Sinatra::Base
+  set :logging, true
   set :environment, ENV['RACK_ENV'] || 'development'
   set :root, File.dirname(__FILE__)
 

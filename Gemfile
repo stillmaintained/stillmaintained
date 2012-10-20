@@ -16,6 +16,7 @@ gem 'RedCloth'
 gem 'rake'
 gem 'whenever'
 gem 'capistrano'
+gem 'rvm-capistrano'
 
 group :test do
   gem 'rspec'
