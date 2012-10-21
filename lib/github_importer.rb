@@ -1,10 +1,15 @@
 class GithubImporter
+  def self.config client_id, client_server
+    @client_id = client_id
+    @client_server = client_server
+  end
+
   # Updates user and user's projects from github, and returns remaining github
   # rate limit (how many requests we can perform to github api).
   def self.update_user_and_projects(user)
     update_github_login user.login, 'users'
 
-    result = HTTParty.get("https://api.github.com/users/#{user.login}/orgs")
+    result = github_request "https://api.github.com/users/#{user.login}/orgs"
     rate_limit = result.headers['X-RateLimit-Remaining']
     organizations = result.map{|organization| organization['login'] }
 
@@ -30,8 +35,12 @@ class GithubImporter
 
   private
 
+  def self.github_request(url)
+    HTTParty.get(url + "?client_id=#{@client_id}&client_server=#{@client_server}")
+  end
+
   def self.update_github_login login, type
-    result = HTTParty.get("https://api.github.com/#{type}/#{login}/repos")
+    result = github_request("https://api.github.com/#{type}/#{login}/repos")
 
     projects = []
     result.each do |repo|

@@ -33,6 +33,7 @@ class Application < Sinatra::Base
   use OmniAuth::Builder do
     provider :github, config['github']['id'], config['github']['secret']
   end
+  GithubImporter.config config['github']['id'], config['github']['secret']
 
   error { haml :error }
 

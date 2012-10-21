@@ -20,7 +20,7 @@ end
 # Helper method
 def mock_github_api(uri, json, options={})
   options[:rate_limit] ||= 5000
-  FakeWeb.register_uri(:get, "https://api.github.com" + uri, body: json.to_json, content_type: 'text/json', 'X-RateLimit-Remaining' => options[:rate_limit])
+  FakeWeb.register_uri(:get, %r|https://api.github.com#{uri}|, body: json.to_json, content_type: 'text/json', 'X-RateLimit-Remaining' => options[:rate_limit])
 end
 
 User.blueprint {}
