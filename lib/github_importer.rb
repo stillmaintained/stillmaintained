@@ -30,7 +30,7 @@ class GithubImporter
       updated_user_count += 1
       break if rate_limit < 3000
     end
-    puts "#{updated_user_count} users updated"
+    puts "[#{Time.now}] #{updated_user_count} users updated"
   end
 
   private
