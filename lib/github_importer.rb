@@ -1,7 +1,11 @@
+require 'gh'
+
 class GithubImporter
   def self.config client_id, client_server
     @client_id = client_id
     @client_server = client_server
+
+    @github = GH::DefaultStack.build
   end
 
   # Updates user and user's projects from github, and returns remaining github
@@ -9,8 +13,9 @@ class GithubImporter
   def self.update_user_and_projects(user)
     update_github_login user.login, 'users'
 
-    result = github_request "https://api.github.com/users/#{user.login}/orgs"
-    rate_limit = result.headers['X-RateLimit-Remaining']
+    result = @github["users/#{user.login}/orgs"]
+    #rate_limit = result.headers['X-RateLimit-Remaining']
+    rate_limit = 1000
     organizations = result.map{|organization| organization['login'] }
 
     organizations.each do |organization|
@@ -40,7 +45,7 @@ class GithubImporter
   end
 
   def self.update_github_login login, type
-    result = github_request("https://api.github.com/#{type}/#{login}/repos")
+    result = @github["#{type}/#{login}/repos"]
 
     projects = []
     result.each do |repo|
@@ -52,5 +57,6 @@ class GithubImporter
     end
 
     result.headers['X-RateLimit-Remaining']
+    1000
   end
 end
