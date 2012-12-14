@@ -17,6 +17,7 @@ gem 'rake'
 gem 'whenever'
 gem 'capistrano'
 gem 'rvm-capistrano'
+gem 'gh'
 
 gem 'rspec'
 
