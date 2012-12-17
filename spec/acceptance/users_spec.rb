@@ -14,7 +14,10 @@ feature 'Users', %q{
     Project.make(:name => 'project4', :user => 'alice', :visible => false)
 
     OmniAuth.config.test_mode = true
-    OmniAuth.config.add_mock(:github, {'info' => {'nickname' => 'alice'}})
+    OmniAuth.config.add_mock(
+      :github,
+      {'info' => {'nickname' => 'alice', 'email' => 'alice@gmail.com'},
+       'credentials' => {'token' => '8236598716398123' }})
   end
 
   context 'getting the projects from github' do

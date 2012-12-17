@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 describe GithubImporter do
   describe '.update_user' do
@@ -38,7 +38,7 @@ describe GithubImporter do
         Project.all.should have(0).project
       end
 
-      pending 'returns remaining rate limit' do
+      it 'returns remaining rate limit' do
         mock_github_api '/users/alice/repos', [], rate_limit: 5000
         mock_github_api '/users/alice/orgs', [], rate_limit: 4999
 
@@ -91,7 +91,7 @@ describe GithubImporter do
         Project.all.should have(0).project
       end
 
-      pending 'returns remaining rate limit' do
+      it 'returns remaining rate limit' do
         mock_github_api '/users/alice/repos', [], rate_limit: 5000
         mock_github_api '/users/alice/orgs', [{login: 'organization'}], rate_limit: 4999
         mock_github_api '/orgs/organization/repos', [{name: 'organization_project', owner: {login: 'organization'}}], rate_limit: 4998

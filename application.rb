@@ -81,7 +81,12 @@ class Application < Sinatra::Base
   get '/auth/github/callback' do
     login = request.env['omniauth.auth']['info']['nickname']
 
-    user = User.find_or_create_by(:login => login)
+    token = request.env['omniauth.auth']['credentials']['token']
+    email = request.env['omniauth.auth']['info']['email']
+
+    user = User.find_or_create_by(login: login)
+    user.update_attributes!(token: token, email: email)
+
     GithubImporter.update_user_and_projects user
 
     redirect "/users/#{user.id}/edit"

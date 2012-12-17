@@ -14,8 +14,7 @@ class GithubImporter
     update_github_login user.login, 'users'
 
     result = @github["users/#{user.login}/orgs"]
-    #rate_limit = result.headers['X-RateLimit-Remaining']
-    rate_limit = 1000
+    rate_limit = result.headers['x-ratelimit-remaining']
     organizations = result.map{|organization| organization['login'] }
 
     organizations.each do |organization|
@@ -56,7 +55,6 @@ class GithubImporter
       project.destroy
     end
 
-    result.headers['X-RateLimit-Remaining']
-    1000
+    result.headers['x-ratelimit-remaining']
   end
 end
