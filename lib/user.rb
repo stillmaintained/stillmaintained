@@ -4,6 +4,8 @@ class User
 
   field :login
   field :email
-  field :organizations, :type => Array, :default => []
+  field :organizations, type: Array, default: []
   field :token
+
+  has_and_belongs_to_many :projects
 end

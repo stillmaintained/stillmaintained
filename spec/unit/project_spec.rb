@@ -38,18 +38,21 @@ describe Project do
   describe '.create_or_update_from_github_response' do
 
     describe 'when this project does not exist yet' do
-
       it 'should create a new project' do
         lambda {
           Project.create_or_update_from_github_response({
-            'owner' => {'login' => 'alice'}, 'name' => 'project1'
+            'owner' => {'login' => 'alice'},
+            'name' => 'project1',
+            'permissions' => {'admin' => true}
           })
         }.should change(Project, :count).by(1)
       end
 
       it 'should save the user and project names' do
         project = Project.create_or_update_from_github_response({
-          'owner' => {'login' => 'alice'}, 'name' => 'project1'
+          'owner' => {'login' => 'alice'},
+          'name' => 'project1',
+          'permissions' => {'admin' => true}
         })
         project.reload
         project.user.should == 'alice'
@@ -61,11 +64,23 @@ describe Project do
           'owner' => {'login' => 'alice'},
           'name' => 'project1',
           'description' => 'description1',
-          'watchers' => 123
+          'watchers' => 123,
+          'permissions' => {'admin' => true}
         })
 
         project.description.should == 'description1'
         project.watchers.should == 123
+      end
+
+      it 'should not save project if user does not have permissions' do
+        project = Project.create_or_update_from_github_response({
+          'owner' => {'login' => 'alice'},
+          'name' => 'project1',
+          'description' => 'description1',
+          'watchers' => 123,
+          'permissions' => {'admin' => false}
+        })
+        project.should be_nil
       end
 
       describe 'when the project is a fork' do
@@ -75,7 +90,8 @@ describe Project do
             'name' => 'project1',
             'fork' => true,
             'source' => 'source/project1',
-            'parent' => 'parent/project1'
+            'parent' => 'parent/project1',
+            'permissions' => {'admin' => true}
           })
         end
 
@@ -102,7 +118,9 @@ describe Project do
       it 'should not create a new project' do
         lambda {
           Project.create_or_update_from_github_response({
-            'owner' => {'login' => 'alice'}, 'name' => 'project1'
+            'owner' => {'login' => 'alice'},
+            'name' => 'project1',
+            'permissions' => {'admin' => true}
           })
         }.should_not change(Project, :count)
       end
@@ -112,14 +130,13 @@ describe Project do
           'owner' => {'login' => 'alice'},
           'name' => 'project1',
           'description' => 'description1',
-          'watchers' => 123
+          'watchers' => 123,
+          'permissions' => {'admin' => true}
         })
 
         project.description.should == 'description1'
         project.watchers.should == 123
       end
-
-
     end
   end
 

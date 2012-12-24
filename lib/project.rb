@@ -12,6 +12,8 @@ class Project
   field :state
   field :visible, :type => Boolean
 
+  has_and_belongs_to_many :users
+
   scope :visible, where(:visible => true)
   scope :no_forks, where(:fork.ne => true)
 
@@ -21,6 +23,7 @@ class Project
   }
 
   def self.create_or_update_from_github_response(data)
+    return nil unless data['permissions']['admin']
     if project = where(name: data['name'], user: data['owner']['login']).first
       project.update_attributes!(
         :description => data['description'],

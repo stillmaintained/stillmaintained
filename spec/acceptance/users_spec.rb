@@ -12,6 +12,7 @@ feature 'Users', %q{
     Project.make(:name => 'project2', :user => 'alice', :visible => false)
     Project.make(:name => 'project3', :user => 'alice', :visible => false)
     Project.make(:name => 'project4', :user => 'alice', :visible => false)
+    @user.projects = Project.all
 
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
@@ -22,10 +23,10 @@ feature 'Users', %q{
 
   context 'getting the projects from github' do
     background do
-      mock_github_api '/users/alice/repos', [{name: 'fetched_project', owner: {login: 'alice'}}]
-      mock_github_api '/users/alice/orgs', [{login: 'organization'}]
+      mock_github_api '/user/repos', [{name: 'fetched_project', owner: {login: 'alice'}, permissions: {admin: true}}]
+      mock_github_api '/user/orgs', [{login: 'organization'}]
       mock_github_api '/orgs/organization/repos',
-        [{name: 'organization_project', owner: {login: 'organization'}}]
+        [{name: 'organization_project', owner: {login: 'organization'}, permissions: {admin: true}}]
 
       visit '/auth/github/callback'
     end
@@ -36,7 +37,7 @@ feature 'Users', %q{
 
     scenario 'log in via Github after new organizations are added' do
       mock_github_api '/orgs/other_organization/repos', []
-      mock_github_api '/users/alice/orgs', [{login: 'organization'}, {login: 'other_organization'}]
+      mock_github_api '/user/orgs', [{login: 'organization'}, {login: 'other_organization'}]
 
       visit '/auth/github/callback'
 
@@ -100,5 +101,4 @@ feature 'Users', %q{
     visit "/users/#{@user.id}/edit"
     page.should have_css('input#project1_maintained[checked]')
   end
-
 end

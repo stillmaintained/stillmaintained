@@ -33,7 +33,6 @@ class Application < Sinatra::Base
   use OmniAuth::Builder do
     provider :github, config['github']['id'], config['github']['secret']
   end
-  GithubImporter.config config['github']['id'], config['github']['secret']
 
   error { haml :error }
 
@@ -87,17 +86,14 @@ class Application < Sinatra::Base
     user = User.find_or_create_by(login: login)
     user.update_attributes!(token: token, email: email)
 
-    GithubImporter.update_user_and_projects user
+    GithubImporter.new(user).update_user_and_projects
 
     redirect "/users/#{user.id}/edit"
   end
 
   get '/users/:id/edit' do
     @user = User.find(params[:id])
-    @projects = Project.where(user: @user.login)
-    @user.organizations.each do |organization|
-      @projects |= Project.where(user: organization)
-    end
+    @projects = @user.projects
     haml :'users/edit'
   end
 
