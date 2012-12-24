@@ -1,0 +1,24 @@
+%fieldset
+  %h2
+    Is
+    %a{:href => "https://github.com/#{project.user}/#{project.name}"}= project.name
+    still being maintained?
+
+  %label
+    %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
+    Yes.
+  %br
+
+  %label
+    %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
+    No, I'm looking for a new maintainer.
+  %br
+
+  %label
+    %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
+    No, the project is abandoned.
+  %br
+
+  %label
+    %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
+    Don't list this project

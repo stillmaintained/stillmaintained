@@ -34,6 +34,12 @@ class Application < Sinatra::Base
     provider :github, config['github']['id'], config['github']['secret']
   end
 
+  helpers do
+    def partial(page, options={})
+      haml page.to_sym, options.merge!(layout: false)
+    end
+  end
+
   error { haml :error }
 
   get '/' do
@@ -94,6 +100,7 @@ class Application < Sinatra::Base
   get '/users/:id/edit' do
     @user = User.find(params[:id])
     @projects = @user.projects
+    @projects_by_owner = @projects.group_by { |project| project.user }
     haml :'users/edit'
   end
 
@@ -143,5 +150,4 @@ class Application < Sinatra::Base
 
     end
   end
-
 end

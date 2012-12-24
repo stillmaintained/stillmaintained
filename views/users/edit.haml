@@ -5,30 +5,14 @@
 
   %form{:action => "/users/#{@user.id}", :method => 'post'}
 
-    - @projects.each do |project|
-      %fieldset
+    - @projects_by_owner[@user.login].each do |project|
+      = partial 'users/_project', locals: {project: project}
+    - @user.organizations.each do |organization|
+      - if @projects_by_owner.has_key? organization
         %h2
-          Is
-          %a{:href => "https://github.com/#{project.user}/#{project.name}"}= project.name
-          still being maintained?
-
-        %label
-          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'maintained', :id => "#{project.name}_maintained", :checked => project.state == 'maintained'}
-          Yes.
-        %br
-
-        %label
-          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'searching', :id => "#{project.name}_searching", :checked => project.state == 'searching'}
-          No, I'm looking for a new maintainer.
-        %br
-
-        %label
-          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'abandoned', :id => "#{project.name}_abandoned", :checked => project.state == 'abandoned'}
-          No, the project is abandoned.
-        %br
-
-        %label
-          %input{:type => 'radio', :name => "projects[#{project.user}][#{project.name}]", :value => 'hide', :id => "#{project.name}_hide", :checked => !project.visible }
-          Don't list this project
+          Organization
+          %b= organization
+        - @projects_by_owner[organization].each do |project|
+          = partial 'users/_project', locals: {project: project}
 
     %input{:type => 'submit', :value => 'Submit', :class => 'small button'}
