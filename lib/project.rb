@@ -7,8 +7,6 @@ class Project
   field :description
   field :watchers, :type => Integer
   field :fork, :type => Boolean
-  field :source
-  field :parent
   field :state
   field :visible, :type => Boolean
 
@@ -35,9 +33,7 @@ class Project
         :user => data['owner']['login'],
         :description => data['description'],
         :watchers => data['watchers'],
-        :fork => data['fork'],
-        :source => data['source'],
-        :parent => data['parent']
+        :fork => data['fork']
       )
     end
     project
