@@ -89,22 +89,12 @@ describe Project do
             'owner' => {'login' => 'alice'},
             'name' => 'project1',
             'fork' => true,
-            'source' => 'source/project1',
-            'parent' => 'parent/project1',
             'permissions' => {'admin' => true}
           })
         end
 
         it 'should set the fork boolean' do
           @project.fork.should be_true
-        end
-
-        it 'should store the source' do
-          @project.source.should == 'source/project1'
-        end
-
-        it 'should store the parent' do
-          @project.parent.should == 'parent/project1'
         end
       end
 
@@ -159,5 +149,4 @@ describe Project do
       projects.should include @projects[2]
     end
   end
-
 end
