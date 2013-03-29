@@ -2,7 +2,10 @@ h1. Still Maintained? "!https://travis-ci.org/stillmaintained/stillmaintained.pn
 
 Finally a place to mark your open source project as abandoned or looking for a new maintainer.
 
-Be sure to read the "announcement article":http://jeffkreeftmeijer.com/2010/finally-a-way-to-mark-your-github-project-as-abandoned/.
+Be sure to read:
+
+- the "announcement article":http://jeffkreeftmeijer.com/2010/finally-a-way-to-mark-your-github-project-as-abandoned/
+- the "how-to add a status image":https://github.com/stillmaintained/stillmaintained/wiki/Adding-status-image-to-README-file
 
 h2. Contributing
 
