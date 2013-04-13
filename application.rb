@@ -38,6 +38,10 @@ class Application < Sinatra::Base
     def partial(page, options={})
       haml page.to_sym, options.merge!(layout: false)
     end
+
+    def h(text)
+      Rack::Utils.escape_html(text)
+    end
   end
 
   error { haml :error }
