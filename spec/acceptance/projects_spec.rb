@@ -60,6 +60,14 @@ feature 'Projects', %q{
     end
 
     scenario 'show the project descriptions' do
+      Project.first.update_attributes!(description: '<b>test</b>')
+      visit '/projects'
+
+      page.body.include?('<b>test</b>').should be_false
+      page.body.include?('&lt;b&gt;test&lt;/b&gt;').should be_true
+    end
+
+    scenario 'the project description is HTML escaped' do
       visit '/projects'
 
       page.should have_content 'project1 description'
