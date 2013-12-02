@@ -64,7 +64,7 @@ feature 'Projects', %q{
       visit '/projects'
 
       page.body.include?('<b>test</b>').should be_false
-      page.body.include?('&lt;b&gt;test&lt;/b&gt;').should be_true
+      page.body.include?('&lt;b&gt;test&lt;&#x2F;b&gt;').should be_true
     end
 
     scenario 'the project description is HTML escaped' do
