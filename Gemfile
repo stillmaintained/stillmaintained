@@ -18,7 +18,7 @@ gem 'whenever'
 gem 'capistrano'
 gem 'rvm-capistrano'
 gem 'gh'
-gem'haml-contrib'
+gem 'haml-contrib'
 
 gem 'rspec'
 
