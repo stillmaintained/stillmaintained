@@ -1,11 +1,11 @@
+require "bundler/capistrano"
+
 require 'whenever/capistrano'
 set :whenever_command, "bundle exec whenever"
 
 require "rvm/capistrano"
 set :rvm_type, :system
 set :rvm_ruby_string, '1.9.3-p194'
-
-require "bundler/capistrano"
 
 set :normalize_asset_timestamps, false
 
