@@ -18,7 +18,8 @@ class GithubImporter
     @user.touch
     @user.update_attributes!(organizations: organizations, projects: projects)
 
-    Project.destroy_all(user_ids: nil)
+    Project.destroy_all(user_ids: [], user: @user.login)
+    Project.where(user_ids: []).in(user: organizations).destroy_all
   end
 
   private

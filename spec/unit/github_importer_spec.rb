@@ -51,12 +51,22 @@ describe GithubImporter do
       end
 
       it 'should remove projects removed from github' do
-        Project.create!(name: 'fetched_project', user: 'alice')
+        Project.create!(name: 'fetched_project', user: 'alice', users: [])
         mock_github_api '/user/repos', []
 
         GithubImporter.new(user).update_user_and_projects
 
         Project.all.should have(0).project
+      end
+
+      it 'should remove projects removed from github from active user only' do
+        Project.create!(name: 'fetched_project', user: 'alice', users: [])
+        Project.create!(name: 'fetched_project', user: 'bob', users: [])
+        mock_github_api '/user/repos', []
+
+        GithubImporter.new(user).update_user_and_projects
+
+        Project.all.should have(1).project
       end
     end
 
@@ -102,7 +112,7 @@ describe GithubImporter do
       end
 
       it 'should remove projects removed from github' do
-        Project.create!(name: 'organization_project', user: 'organization')
+        Project.create!(name: 'organization_project', user: 'organization', users: [])
         mock_github_api '/orgs/organization/repos', []
 
         GithubImporter.new(user).update_user_and_projects
