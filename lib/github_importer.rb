@@ -17,6 +17,8 @@ class GithubImporter
 
     @user.touch
     @user.update_attributes!(organizations: organizations, projects: projects)
+
+    Project.destroy_all(user_ids: nil)
   end
 
   private

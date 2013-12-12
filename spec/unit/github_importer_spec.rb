@@ -49,6 +49,15 @@ describe GithubImporter do
         user.projects.should be_empty
         Project.count.should == 0
       end
+
+      it 'should remove projects removed from github' do
+        Project.create!(name: 'fetched_project', user: 'alice')
+        mock_github_api '/user/repos', []
+
+        GithubImporter.new(user).update_user_and_projects
+
+        Project.all.should have(0).project
+      end
     end
 
     context 'for user with organization' do
@@ -90,6 +99,15 @@ describe GithubImporter do
 
         Project.all.should have(1).project
         Project.first.description.should == 'new description'
+      end
+
+      it 'should remove projects removed from github' do
+        Project.create!(name: 'organization_project', user: 'organization')
+        mock_github_api '/orgs/organization/repos', []
+
+        GithubImporter.new(user).update_user_and_projects
+
+        Project.all.should have(0).project
       end
     end
   end

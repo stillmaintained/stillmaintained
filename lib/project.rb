@@ -1,7 +1,9 @@
+# Represents a project on github.
 class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # :user/:name
   field :user
   field :name
   field :description
@@ -10,6 +12,8 @@ class Project
   field :state
   field :visible, :type => Boolean
 
+  # The list of users that are "admins" of this project. Once this list is
+  # empty, project should be removed.
   has_and_belongs_to_many :users
 
   scope :visible, where(:visible => true)
