@@ -5,11 +5,12 @@
 
   %form{:action => "/users/#{@user.id}", :method => 'post'}
 
-    %section
-      %h1 Owned by you
+    - if @non_forked_projects_by_owner[@user.login]
+      %section
+        %h1 Owned by you
 
-      - @non_forked_projects_by_owner[@user.login].each do |project|
-        = partial 'users/_project', locals: {project: project}
+        - @non_forked_projects_by_owner[@user.login].each do |project|
+          = partial 'users/_project', locals: {project: project}
 
     - @user.organizations.each do |organization|
       - if @non_forked_projects_by_owner.has_key? organization
@@ -20,11 +21,12 @@
           - @non_forked_projects_by_owner[organization].each do |project|
             = partial 'users/_project', locals: {project: project}
 
-    %section
-      %h1 Fork by you
+    - if @forked_projects_by_owner[@user.login]
+      %section
+        %h1 Fork by you
 
-      - @forked_projects_by_owner[@user.login].each do |project|
-        = partial 'users/_project', locals: {project: project}
+        - @forked_projects_by_owner[@user.login].each do |project|
+          = partial 'users/_project', locals: {project: project}
 
     - @user.organizations.each do |organization|
       - if @forked_projects_by_owner.has_key? organization
