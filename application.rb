@@ -103,8 +103,10 @@ class Application < Sinatra::Base
 
   get '/users/:id/edit' do
     @user = User.find(params[:id])
-    @projects = @user.projects
-    @projects_by_owner = @projects.group_by { |project| project.user }
+    @forked_projects = @user.projects.forks
+    @non_forked_projects = @user.projects.no_forks
+    @forked_projects_by_owner = @forked_projects.group_by { |project| project.user }
+    @non_forked_projects_by_owner = @non_forked_projects.group_by { |project| project.user }
     haml :'users/edit'
   end
 

@@ -17,6 +17,7 @@ class Project
   has_and_belongs_to_many :users
 
   scope :visible, where(:visible => true)
+  scope :forks, where(:fork => true)
   scope :no_forks, where(:fork.ne => true)
 
   scope :search_by_name, lambda { |query|

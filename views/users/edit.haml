@@ -5,14 +5,28 @@
 
   %form{:action => "/users/#{@user.id}", :method => 'post'}
 
-    - @projects_by_owner[@user.login].each do |project|
+    %h2 Non-forks
+
+    - @non_forked_projects_by_owner[@user.login].each do |project|
       = partial 'users/_project', locals: {project: project}
     - @user.organizations.each do |organization|
-      - if @projects_by_owner.has_key? organization
+      - if @non_forked_projects_by_owner.has_key? organization
         %h2
           Organization
           %b= organization
-        - @projects_by_owner[organization].each do |project|
+        - @non_forked_projects_by_owner[organization].each do |project|
+          = partial 'users/_project', locals: {project: project}
+
+    %h2 Forks
+
+    - @forked_projects_by_owner[@user.login].each do |project|
+      = partial 'users/_project', locals: {project: project}
+    - @user.organizations.each do |organization|
+      - if @forked_projects_by_owner.has_key? organization
+        %h2
+          Organization
+          %b= organization
+        - @forked_projects_by_owner[organization].each do |project|
           = partial 'users/_project', locals: {project: project}
 
     %input{:type => 'submit', :value => 'Submit', :class => 'small button'}
