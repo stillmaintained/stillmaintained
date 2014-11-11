@@ -12,7 +12,7 @@ GEM
     airbrake (3.1.14)
       builder
       json
-    backports (3.3.5)
+    backports (3.6.3)
     bson (1.9.2)
     bson_ext (1.9.2)
       bson (~> 1.9.2)
