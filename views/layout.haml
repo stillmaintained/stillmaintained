@@ -8,6 +8,9 @@
     Still Maintained?
 %body{:onload => "window.scrollTo(0,1)"}
   %div{:id => 'container'}
+    - if readonly?
+      %div{style: "color:red;font-size:16px"}
+        The site is under maintainance and is in readonly mode.
     = yield
 
   %a{:href => 'http://github.com/stillmaintained/stillmaintained', :id => 'forkme'} Fork me on GitHub

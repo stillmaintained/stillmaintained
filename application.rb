@@ -11,6 +11,9 @@ require File.join(File.dirname(__FILE__), 'lib', 'project')
 require File.join(File.dirname(__FILE__), 'lib', 'github_importer')
 Rack::Mime::MIME_TYPES.merge!(".safariextz" => "application/x-safari-extension")
 
+# If set to true, the application is in read-only mode.
+READONLY=true
+
 class Application < Sinatra::Base
   set :logging, true
   set :environment, ENV['RACK_ENV'] || 'development'
@@ -41,6 +44,10 @@ class Application < Sinatra::Base
 
     def h(text)
       Rack::Utils.escape_html(text)
+    end
+
+    def readonly?
+      READONLY
     end
   end
 
@@ -88,6 +95,10 @@ class Application < Sinatra::Base
   end
 
   get '/auth/github/callback' do
+    if READONLY
+      redirect "/"
+      return
+    end
     login = request.env['omniauth.auth']['info']['nickname']
 
     token = request.env['omniauth.auth']['credentials']['token']
@@ -109,6 +120,11 @@ class Application < Sinatra::Base
   end
 
   post '/users/:id' do
+    if READONLY
+      redirect "/"
+      return
+    end
+
     params['projects'].each do |user, projects|
       projects.each do |name, state|
         project = Project.where(user: user, name: name).first
