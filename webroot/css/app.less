@@ -1,0 +1,110 @@
+// Core variables and mixins
+@import "../../component/bootstrap/less/variables.less";
+@import "variables.less";
+@import "mixins.less";
+
+// Reset
+@import "../../component/bootstrap/less/normalize.less";
+@import "../../component/bootstrap/less/print.less";
+
+// Core CSS
+@import "../../component/bootstrap/less/scaffolding.less";
+@import "../../component/bootstrap/less/type.less";
+@import "../../component/bootstrap/less/code.less";
+@import "../../component/bootstrap/less/grid.less";
+@import "../../component/bootstrap/less/tables.less";
+@import "../../component/bootstrap/less/forms.less";
+@import "../../component/bootstrap/less/buttons.less";
+
+// Components
+@import "../../component/bootstrap/less/component-animations.less";
+@import "../../component/bootstrap/less/glyphicons.less";
+@import "../../component/bootstrap/less/dropdowns.less";
+@import "../../component/bootstrap/less/button-groups.less";
+@import "../../component/bootstrap/less/input-groups.less";
+@import "../../component/bootstrap/less/navs.less";
+@import "../../component/bootstrap/less/navbar.less";
+@import "../../component/bootstrap/less/breadcrumbs.less";
+@import "../../component/bootstrap/less/pagination.less";
+@import "../../component/bootstrap/less/pager.less";
+@import "../../component/bootstrap/less/labels.less";
+@import "../../component/bootstrap/less/badges.less";
+@import "../../component/bootstrap/less/jumbotron.less";
+@import "../../component/bootstrap/less/thumbnails.less";
+@import "../../component/bootstrap/less/alerts.less";
+@import "../../component/bootstrap/less/progress-bars.less";
+@import "../../component/bootstrap/less/media.less";
+@import "../../component/bootstrap/less/list-group.less";
+@import "../../component/bootstrap/less/panels.less";
+@import "../../component/bootstrap/less/wells.less";
+@import "../../component/bootstrap/less/close.less";
+
+// Components w/ JavaScript
+@import "../../component/bootstrap/less/modals.less";
+@import "../../component/bootstrap/less/tooltip.less";
+@import "../../component/bootstrap/less/popovers.less";
+@import "../../component/bootstrap/less/carousel.less";
+
+// Utility classes
+@import "../../component/bootstrap/less/utilities.less";
+@import "../../component/bootstrap/less/responsive-utilities.less";
+
+.container { margin: 0;}
+
+header {
+    h1 > a:hover { text-decoration: none; }
+}
+
+footer {
+    margin-top: 30px;
+}
+
+.masonry-item { width: 20%; padding-right: 5px; }
+.masonry-item-lg { width: 40%; }
+
+.result {
+    padding: 15px;
+    background-color: @gray-lighter;
+    border-left: 2px solid;
+    margin-bottom: 5px;
+}
+
+.maintained { border-color: @brand-success; }
+.searching { border-color: @brand-warning; }
+.abandoned { border-color: @brand-danger; }
+
+.text-center,
+.text-middle    { text-align: middle;  }
+.text-left      { text-align: left;    }
+.text-right     { text-align: right;   }
+.text-justify   { text-align: justify; }
+
+.text-loud { font-size: ceil((@font-size-base * 1.5)); line-height: 1.5em; }
+.text-small { font-size: ceil((@font-size-base * 0.85)); }
+
+.block-inline { display: inline-block; }
+.block-breather { margin: 30px 0; }
+.block-spaced { line-height: 1.9em; }
+
+.icon-montreal { margin-bottom: -1px; margin-left: 1px; display: inline-block; height: 14px; width: 14px; background-image: url('/img/mtl.jpg')};
+
+.highlight {
+    padding: 1px;
+    border-bottom: 2px solid;
+    background-color: @gray-lighter;
+    text-decoration: none !important;
+}
+
+.highlight-maintained { border-color: @brand-success; }
+.highlight-searching { border-color: @brand-warning; }
+.highlight-abandoned { border-color: @brand-danger; }
+
+.highlight:hover { color: #fff; }
+.highlight-maintained:hover { background-color: @brand-success !important; }
+.highlight-searching:hover { background-color: @brand-warning !important; }
+.highlight-abandoned:hover { background-color: @brand-danger !important; }
+
+.notActive{
+    color: #3276b1;
+    background-color: #fff;
+}

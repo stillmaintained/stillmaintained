@@ -1,0 +1,4 @@
+.DS_Store
+/tags
+/vendor
+/composer.lock

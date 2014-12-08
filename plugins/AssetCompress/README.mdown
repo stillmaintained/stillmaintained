@@ -1,0 +1,53 @@
+# Asset Compress
+
+[![Build Status](https://travis-ci.org/markstory/asset_compress.svg?branch=master)](https://travis-ci.org/markstory/asset_compress)
+
+Asset Compress is CakePHP plugin for helping reduce the number of requests, and optimizing the remaining requests your application makes for Javascript and CSS files.
+
+### Features
+
+* Development mode builder that rebuilds assets on each request.
+* Command line build tool to compile static assets for deployment.
+* Built-in support for LESScss, Sass and CoffeeScript, as well as several
+  minifiers.
+* Powerful and flexible filter system allowing you to add your own
+  minifiers/pre-processors.
+* Simple configuration file.
+* Incremental builds that don't recompile assets when they don't need to
+  be.
+
+## Installing
+
+Clone or download the plugin into one of your plugin paths. Then make
+sure you load the plugin:
+
+	// in config/bootstrap.php
+	Plugin::load('AssetCompress', ['bootstrap' => true]);
+
+Copy the `Config/asset_compress.sample.ini` to `App/Config/asset_compress.ini`. From there
+read the [wiki](http://github.com/markstory/asset_compress/wiki) for more information.
+
+## Documentation
+
+Documentation for AssetCompress is available on the [github wiki pages](http://github.com/markstory/asset_compress/wiki)
+
+## Issues
+
+Please report any issues you have with the plugin to the [issue tracker](http://github.com/markstory/asset_compress/issues) on github.
+
+## License
+
+Asset Compress is offered under an [MIT license](http://www.opensource.org/licenses/mit-license.php).
+
+## Copyright
+
+2010-2014 Mark Story (http://mark-story.com)
+
+### Authors
+
+See the [github contributors list](https://github.com/markstory/asset_compress/graphs/contributors)
+
+### Changelog
+
+See CHANGELOG for changes only available on `master`. See
+[github releases](https://github.com/markstory/asset_compress/releases) for changelogs on previous releases.

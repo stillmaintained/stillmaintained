@@ -1,0 +1,5 @@
+capybara-*.html
+.bundle
+log
+config/settings.yml
+.sass-cache
