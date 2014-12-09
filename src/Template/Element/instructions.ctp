@@ -1,6 +1,6 @@
 <?php
 use \Cake\Utility\String;
-$uri = String::insert('//:host/:username/:name', ['host' => $_SERVER['HTTP_HOST']] + $project->toArray());
+$uri = String::insert('https://:host/:username/:name', ['host' => $_SERVER['HTTP_HOST']] + $project->toArray());
 
 $tpl = [
 	'image' => String::insert(':uri.svg', compact('uri')),
