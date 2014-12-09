@@ -2,7 +2,7 @@
 lock '3.3.3'
 
 set :application, 'stillmaintained'
-set :repo_url, 'git@gitlab.jadb.io:dummy/stillmaintained.git'
+set :repo_url, 'git@github.com:stillmaintained/stillmaintained.git'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/stillmaintained'
