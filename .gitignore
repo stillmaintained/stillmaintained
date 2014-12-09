@@ -1,5 +1,19 @@
-capybara-*.html
-.bundle
-log
-config/settings.yml
-.sass-cache
+# Used by package managers
+/component/*
+/node_modules/*
+/plugins/*
+/vendor/*
+composer.lock
+
+# Used for temporary storage
+/tmp/*
+/webroot/_css/*
+/webroot/_js/*
+
+# Used for sensitive/volatile config
+/.debug
+/.localconfig
+
+# Used for deployment and development
+/.capistrano/*
+/.vagrant/*
