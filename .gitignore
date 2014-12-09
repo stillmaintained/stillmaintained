@@ -9,6 +9,9 @@ composer.lock
 /tmp/*
 /webroot/_css/*
 /webroot/_js/*
+/webroot/js/bootstrap
+/webroot/js/jquery
+/webroot/js/masonry
 
 # Used for sensitive/volatile config
 /.debug
