@@ -12,7 +12,7 @@ Configure::write('Opauth', Hash::merge([
 	'debug' => (Configure::read('debug') !== 0),
 	'redirect' => Router::url(['controller' => 'Users', 'action' => 'login']),
 	'Strategy' => [
-		'Github' => [
+		'GitHub' => [
 			'client_id' => $_ENV['GITHUB_CLIENT_ID'],
 			'client_secret' => $_ENV['GITHUB_CLIENT_SECRET']
 		],
