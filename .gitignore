@@ -1,5 +1,5 @@
 # Used by package managers
-/component/*
+/bower_components/*
 /node_modules/*
 /plugins/*
 /vendor/*
