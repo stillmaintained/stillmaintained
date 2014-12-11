@@ -17,6 +17,10 @@ set :linked_files, ['tmp/.env']
 # TODO add symlinks to repository
 set :component_dirs, [
     {
+        source: 'bootstrap/fonts',
+        target: 'webroot/fonts/glyphicons'
+    },
+    {
         source: 'bootstrap/dist/js',
         target: 'webroot/js/bootstrap'
     },
