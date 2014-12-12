@@ -3,10 +3,10 @@ use \Cake\Utility\String;
 $uri = String::insert('https\://:host/:username/:name', ['host' => $_SERVER['HTTP_HOST']] + $project->toArray());
 
 $tpl = [
-	'image' => String::insert(':uri.svg', compact('uri')),
-	'markdown' => String::insert('[![Project Status](:uri.svg)](:uri)', compact('uri')),
-	'textile' => String::insert('"!:uri.svg!"::uri', compact('uri')),
-	'rdoc' => String::insert('{&lt;img src=":uri.svg" /&gt;}[:uri]', compact('uri')),
+	'image' => String::insert(':uri.png', compact('uri')),
+	'markdown' => String::insert('[![Project Status](:uri.png)](:uri)', compact('uri')),
+	'textile' => String::insert('"!:uri.png!"::uri', compact('uri')),
+	'rdoc' => String::insert('{&lt;img src=":uri.png" /&gt;}[:uri]', compact('uri')),
 	'json_request' => String::insert(':uri.json', compact('uri')),
 	'json_response' => json_encode(['status' => $project['state'], 'project' => $project->toArray()], JSON_PRETTY_PRINT)
 ];
@@ -20,6 +20,10 @@ $tpl = [
 
 	<p>
 		<?= __("Embed the status badge into your project's README or general documentation.") ?>
+	</p>
+
+	<p>
+		<em><?= __("NOTE: All PNG images can be switched to SVG (which is not supported by GitHub though).") ?></em>
 	</p>
 
 	<p class="input-group">

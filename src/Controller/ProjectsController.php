@@ -53,10 +53,10 @@ class ProjectsController extends AppController {
 		$count = $query->count();
 
 		if ($count && $project = $query->where(['name' => $params['project']])->first()) {
-			if ($this->request->is('svg')) {
+			if ($this->request->is(['png', 'svg'])) {
 				$this->autoLayout = false;
 				$this->autoRender = false;
-				$this->response->type('svg');
+				$this->response->type($this->_requestType);
 				return $this->_show($project->state);
 			} else if ($this->request->is('json')) {
 				$this->set('state', $project->state);
@@ -66,7 +66,7 @@ class ProjectsController extends AppController {
 			return;
 		}
 
-		if ($this->request->is('png')) {
+		if ($this->request->is(['png', 'svg'])) {
 			throw new NotFoundException();
 		} else if (!$this->request->is('json')) {
 			$this->render($count ? 'not_tracked' : 'not_found');
@@ -74,7 +74,7 @@ class ProjectsController extends AppController {
 	}
 
 	public function index() {
-		if ('png' == $this->_requestType) {
+		if (in_array($this->_requestType, ['png', 'svg'])) {
 			throw new NotFoundException();
 		}
 
@@ -122,7 +122,7 @@ class ProjectsController extends AppController {
 			'searching' => 'orange',
 			'abandoned' => 'red'
 		];
-		echo file_get_contents('http://img.shields.io/badge/project-' . $state . '-' . $colors[$state] . '.svg?style=flat-square');
+		echo file_get_contents('http://img.shields.io/badge/project-' . $state . '-' . $colors[$state] . '.' . $this->_requestType . '?style=flat-square');
 	}
 
 }

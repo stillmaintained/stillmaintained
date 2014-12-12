@@ -46,5 +46,5 @@ Configure::write('App', [
 		'templates' => [APP . 'Template' . DS],
 		'node_modules' => ['/usr/local/lib/node_modules/', ROOT . DS . 'node_modules' . DS],
 	],
-	'extensions' => ['json', 'svg'],
+	'extensions' => ['json', 'svg', 'png'],
 ]);
