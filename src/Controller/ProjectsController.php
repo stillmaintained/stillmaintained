@@ -19,6 +19,7 @@ class ProjectsController extends AppController {
 		foreach ((array) Configure::read('App.extensions') as $type) {
 			if ($this->request->is($type)) {
 				$this->_requestType = $type;
+				break;
 			}
 		}
 	}
