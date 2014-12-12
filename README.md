@@ -1,6 +1,6 @@
 # Still Maintained?
 
-[![Project Status](https://stillmaintained.com/stillmaintained/stillmaintained.svg)](https://stillmaintained.com/stillmaintained/stillmaintained)
+[![Project Status](https://stillmaintained.com/stillmaintained/stillmaintained.png)](https://stillmaintained.com/stillmaintained/stillmaintained)
 
 Finally a place to mark (or check) an open source project if abandoned or looking for a new maintainer.
 
