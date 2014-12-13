@@ -6,11 +6,11 @@ use Cake\ORM\Table;
 
 class CredentialsTable extends Table {
 
-    public function initialize(array $config) {
-        $this->addBehavior('Timestamp');
+	public function initialize(array $config) {
+		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Users');
-    }
+	}
 
 	public function touch($user, $data) {
 		$email = $user->email;
