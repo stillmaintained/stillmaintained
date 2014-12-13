@@ -13,15 +13,13 @@ class CredentialsTable extends Table {
 	}
 
 	public function touch($user, $data) {
-		$email = $user->email;
-		$provider = $data['provider'];
-		$query = $this->find()->where(compact('email', 'provider'));
+		$entity = ['user_id' => $user->id, 'provider' => $data['provider']];
+		$query = $this->find()->where($entity);
 
 		$cred = $query->first();
+
 		if (empty($cred)) {
-			$cred = $this->newEntity([
-				'user_id' => $user->id
-			] + compact('email', 'provider'));
+			$cred = $this->newEntity($entity);
 		}
 
 		$cred->token = $data['credentials']['token'];

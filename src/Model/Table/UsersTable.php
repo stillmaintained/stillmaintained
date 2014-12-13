@@ -16,13 +16,17 @@ class UsersTable extends Table {
 	}
 
 	public function touch($data) {
-		$email = $data['info']['email'];
-		$query = $this->find()->where(compact('email'));
+		$entity = ['username' => $data['name']];
+		$query = $this->find()->where($entity);
 
 		$user = $query->first();
 
 		if (!$user) {
-			$this->save($this->newEntity(compact('email') + ['username' => $data['name']]));
+			if (!empty($data['info']['email'])) {
+				$entity['email'] = $data['info']['email'];
+			}
+
+			$this->save($this->newEntity($entity));
 			$user = $query->first();
 		}
 
