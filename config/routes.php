@@ -24,7 +24,7 @@ Router::scope('/', function($routes) {
 
 
 	$extensions = (array) Configure::read('App.extensions');
-	$regex = '[a-zA-Z0-9\-_]{1,20}';
+	$regex = '[a-zA-Z0-9\-_]{1,50}';
 	$routes->connect('/:username/edit', ['controller' => 'Projects', 'action' => 'edit'], ['username' => $regex]);
 
 	$routes->extensions($extensions);
