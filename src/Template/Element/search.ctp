@@ -10,7 +10,7 @@ echo $this->Form->create(null, [
 		'<span class="input-group-btn">' .
 		$this->Form->button(__("Search"), ['class' => 'btn btn-primary btn-lg']) .
 		'</span></div><em class="text-muted">' .
-		__("i.e. jadb/cakephp-monolog") .
+		__("i.e. stillmaintained/stillmaintained") .
 		'</em>'
 	]
 ]);
