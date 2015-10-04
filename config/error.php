@@ -6,11 +6,11 @@ use Cake\Utility\Hash;
  * Default error configuration.
  */
 $errorConfig = consume('Error', []) + [
-	'errorLevel' => E_ALL & ~E_DEPRECATED,
-	'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
-	'skipLog' => [],
-	'log' => true,
-	'trace' => true,
+    'errorLevel' => E_ALL & ~E_DEPRECATED,
+    'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
+    'skipLog' => [],
+    'log' => true,
+    'trace' => true,
 ];
 
 /**
@@ -22,13 +22,13 @@ $errorHandler = 'Cake\Error\ErrorHandler';
  * Command-line interface error handler.
  */
 if (php_sapi_name() === 'cli') {
-	$errorHandler = 'Cake\Console\ConsoleErrorHandler';
+    $errorHandler = 'Cake\Console\ConsoleErrorHandler';
 
 /**
  * Whoops handler if available.
  */
 } elseif (class_exists('Gourmet\Whoops\Error\WhoopsHandler')) {
-	$errorHandler = 'Gourmet\Whoops\Error\WhoopsHandler';
+    $errorHandler = 'Gourmet\Whoops\Error\WhoopsHandler';
 }
 
 /**

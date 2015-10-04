@@ -8,6 +8,6 @@ use Cake\Core\Configure;
  */
 
 Configure::write('Acl', [
-	'database' => 'default',
-	'classname' => 'DbAcl',
+    'database' => 'default',
+    'classname' => 'DbAcl',
 ]);

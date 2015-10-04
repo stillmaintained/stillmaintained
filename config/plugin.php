@@ -7,5 +7,5 @@ Plugin::load('AssetCompress', ['bootstrap' => true]);
 Plugin::load('Migrations');
 
 if (Configure::read('debug')) {
-	Plugin::load('Gourmet/Whoops');
+    Plugin::load('Gourmet/Whoops');
 }

@@ -45,6 +45,6 @@ use Cake\Core\Configure;
  */
 
 Configure::write('Session', [
-	'defaults' => 'cache',
-	'timeout' => 60,
+    'defaults' => 'cache',
+    'timeout' => 60,
 ]);

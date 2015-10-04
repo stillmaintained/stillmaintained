@@ -2,12 +2,14 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class DbInit extends AbstractMigration {
+class DbInit extends AbstractMigration
+{
 
 /**
  * Migrate Up.
  */
-    public function up() {
+    public function up()
+    {
         $this->table('credentials')
             ->addColumn('user_id', 'integer', ['limit' => 11])
             ->addColumn('email', 'string', ['limit' => 100])
@@ -57,7 +59,8 @@ class DbInit extends AbstractMigration {
             ->create();
     }
 
-    public function down() {
+    public function down()
+    {
         $this->table('credentials')->drop();
         $this->table('organizations')->drop();
         $this->table('organizations_projects')->drop();
@@ -66,5 +69,4 @@ class DbInit extends AbstractMigration {
         $this->table('projects_users')->drop();
         $this->table('users')->drop();
     }
-
 }

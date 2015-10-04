@@ -6,9 +6,11 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Opauth\Opauth\Opauth;
 
-class OpauthController extends AppController {
+class OpauthController extends AppController
+{
 
-    public function beforeFilter(Event $event) {
+    public function beforeFilter(Event $event)
+    {
 
         if (is_object($this->Auth) && method_exists($this->Auth, 'allow')) {
             $this->Auth->allow();
@@ -21,7 +23,8 @@ class OpauthController extends AppController {
 
     }
 
-    public function index() {
+    public function index()
+    {
         $redirect = read('Opauth.redirect', '/');
 
         if ($this->Auth->user()) {
@@ -36,7 +39,7 @@ class OpauthController extends AppController {
             echo 'Authentication error: ' . $e->getMessage();
         }
 
-        $data = (array) $response;
+        $data = (array)$response;
 
         $this->loadModel('Users');
         $user = $this->Users->touch($data);
@@ -50,5 +53,4 @@ class OpauthController extends AppController {
             'username' => $this->Auth->user('username')
         ]);
     }
-
 }
