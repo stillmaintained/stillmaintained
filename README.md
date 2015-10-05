@@ -61,7 +61,7 @@ I'd like to thank:
 - [Linode], sponsor. Reliable and well priced hosting.
 - [@doriath88], for sticking around so long.
 - [@jkreeftmeijer], for entrusting me with this project.
-- [CakePHP contributors], [cake3][CakePHP 3.0] is dope!
+- [CakePHP contributors][contributors], [cake3][CakePHP 3.0] is dope!
 
 There are more people to thank, those are just the main ones.
 
@@ -71,7 +71,8 @@ There are more people to thank, those are just the main ones.
 [3]:/stillmaintained/stillmaintained/issues
 [4]:/stillmaintained/stillmaintained/pulls
 [@jkreeftmeijer]:http://twitter.com/jkreeftmeijer
-[CakePHP 3.0]:https://github.com/cakephp/cakephp/tree/3.0
+[CakePHP 3.0]:https://github.com/cakephp/cakephp
 [@jadb]:http://twitter.com/jadb
 [Linode]:http://linode.com
 [@doriath88]:http://twitter.com/doriath88
+[contributors]:https://github.com/cakephp/cakephp/graphs/contributors
