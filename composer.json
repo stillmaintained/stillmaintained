@@ -49,6 +49,7 @@
         , "codeception/verify": "~0.2"
         , "d11wtq/boris": "~1.0.0"
         , "gourmet/whoops": "~0.1.0"
+        , "phpfu/puphpet": "dev-master as 0.0.5"
     }
     , "autoload": {
         "psr-4": {

@@ -20,3 +20,9 @@ composer.lock
 # Used for deployment and development
 /.capistrano/*
 /.vagrant/*
+/puphpet/files/dot/
+/puphpet/puppet/
+/puphpet/ruby/
+/puphpet/shell/
+/puphpet/vagrant/
+/puphpet/config-custom.yaml
