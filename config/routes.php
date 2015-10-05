@@ -5,6 +5,8 @@ use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Routing\Router;
 
+Router::defaultRouteClass('DashedRoute');
+
 Router::scope('/', function ($routes) {
 
 /**
@@ -43,7 +45,7 @@ Router::scope('/', function ($routes) {
  * You can remove these routes once you've connected the
  * routes you want in your application.
  */
-    $routes->fallbacks();
+    $routes->fallbacks('InflectedRoute');
 
 });
 

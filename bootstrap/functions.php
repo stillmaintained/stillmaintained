@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Core\Configure;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 
 if (!function_exists('consume')) {
     function consume($key, $default = null)
@@ -62,6 +62,6 @@ if (!function_exists('pathname')) {
 if (!function_exists('___')) {
     function ___($str, $data, $options = [])
     {
-        return String::insert(__($str), $data, $options);
+        return Text::insert(__($str), $data, $options);
     }
 }

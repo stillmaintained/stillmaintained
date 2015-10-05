@@ -3,8 +3,6 @@
 /**
  * Command-line code generation utility to automate programmer chores.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,6 +15,19 @@
  * @since         2.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-include dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bootstrap' . DIRECTORY_SEPARATOR . 'start.php';
+
+$minVersion = '5.4.16';
+if (file_exists('composer.json')) {
+    $composer = json_decode(file_get_contents('composer.json'));
+    if (isset($composer->require->php)) {
+        $minVersion = preg_replace('/([^0-9\.])/', '', $composer->require->php);
+    }
+}
+if (version_compare(phpversion(), $minVersion, '<')) {
+    fwrite(STDERR, sprintf("Minimum PHP version: %s. You are using: %s.\n", $minVersion, phpversion()));
+    exit(-1);
+}
+
+include dirname(__DIR__) . '/bootstrap/start.php';
 
 exit(Cake\Console\ShellDispatcher::run($argv));

@@ -1,7 +1,6 @@
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::
-:: Bake is a shell script for running CakePHP bake script
-:: PHP 5
+:: Cake is a Windows batch script for invoking CakePHP shell commands
 ::
 :: CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
 :: Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +23,7 @@
 SET app=%0
 SET lib=%~dp0
 
-php -q "%lib%cake.php" -working "%CD% " %*
+php "%lib%cake.php" %*
 
 echo.
 

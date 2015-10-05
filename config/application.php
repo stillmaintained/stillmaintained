@@ -44,6 +44,7 @@ Configure::write('App', [
     'paths' => [
         'plugins' => [ROOT . DS . 'plugins' . DS],
         'templates' => [APP . 'Template' . DS],
+        'locales' => [APP . 'Locale' . DS],
         'node_modules' => ['/usr/local/lib/node_modules/', ROOT . DS . 'node_modules' . DS],
     ],
     'extensions' => ['json', 'svg', 'png'],

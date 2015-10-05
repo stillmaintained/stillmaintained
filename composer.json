@@ -42,14 +42,15 @@
         , "opauth/github": "~1.0"
         , "opauth/opauth": "~1.0"
         , "psr/log": "~1.0"
+        , "cakephp/plugin-installer": "*"
     }
     , "require-dev": {
         "codeception/codeception": "~2.0"
         , "codeception/specify": "~0.3"
         , "codeception/verify": "~0.2"
-        , "d11wtq/boris": "~1.0.0"
         , "gourmet/whoops": "~0.1.0"
         , "phpfu/puphpet": "dev-master as 0.0.5"
+        , "psy/psysh": "@stable"
     }
     , "autoload": {
         "psr-4": {
@@ -59,11 +60,9 @@
             , "App\\Test\\Codeception\\Module\\": "tests/_helpers"
         }
     }
-    , "minimum-stability": "dev"
-    , "config": {
-        "preferred-install": "dist"
+    , "scripts": {
+        "post-install-cmd": "App\\Console\\Installer::postInstall",
+        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
     }
-    , "bin": [
-        "./src/Console/cake"
-    ]
+    , "minimum-stability": "dev"
 }
