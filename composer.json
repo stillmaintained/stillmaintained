@@ -45,10 +45,7 @@
         , "cakephp/plugin-installer": "*"
     }
     , "require-dev": {
-        "codeception/codeception": "~2.0"
-        , "codeception/specify": "~0.3"
-        , "codeception/verify": "~0.2"
-        , "gourmet/whoops": "~0.1.0"
+        "gourmet/whoops": "~0.1.0"
         , "phpfu/puphpet": "dev-master as 0.0.5"
         , "psy/psysh": "@stable"
     }
