@@ -1,6 +1,8 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 define('ROOT', dirname(__DIR__));
 
 define('VENDOR', ROOT . DS . 'vendor' . DS);
