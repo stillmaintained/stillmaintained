@@ -64,7 +64,7 @@ try {
     require CONFIG . 'cache.php';
     require CONFIG . 'email.php';
     require CONFIG . 'log.php';
-    require CONFIG . 'opauth.php';
+    require CONFIG . 'oauth.php';
 /**
  * Load plugins.
  */
