@@ -10,8 +10,9 @@ class AppController extends Controller
 
     public $components = [
         'Auth' => [
-            'loginAction' => '/',
-            'logoutRedirect' => '/',
+            'authenticate' => [
+                'Muffin/OAuth2.OAuth',
+            ],
         ],
         'Flash',
     ];

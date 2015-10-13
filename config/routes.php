@@ -21,13 +21,15 @@ Router::scope('/', function ($routes) {
  */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
-    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-
-
     $extensions = (array)Configure::read('App.extensions');
     $regex = '[a-zA-Z0-9\-_]{1,50}';
     $routes->connect('/:username/edit', ['controller' => 'Projects', 'action' => 'edit'], ['username' => $regex]);
+
+    $routes->connect(
+        '/auth/:provider',
+        ['controller' => 'Projects', 'action' => 'edit'],
+        ['provider' => implode('|', array_keys(Configure::read('Muffin/OAuth2.providers')))]
+    );
 
     $routes->extensions($extensions);
     foreach ($extensions as $ext) {

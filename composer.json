@@ -39,10 +39,10 @@
         , "markstory/asset_compress": "^3.0.1"
         , "mobiledetect/mobiledetectlib": "~2.0"
         , "natxet/CssMin": "~3.0"
-        , "opauth/github": "~1.0"
-        , "opauth/opauth": "~1.0"
         , "psr/log": "~1.0"
         , "cakephp/plugin-installer": "*"
+        , "muffin/oauth2": "dev-master"
+        , "league/oauth2-github": "^1.0@dev"
     }
     , "require-dev": {
         "gourmet/whoops": "~0.1.0"

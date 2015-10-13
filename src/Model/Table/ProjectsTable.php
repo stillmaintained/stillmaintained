@@ -2,9 +2,10 @@
 
 namespace App\Model\Table;
 
+use App\Provider\GithubProvider as Provider;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use Github\Client as Github;
 
 class ProjectsTable extends Table
 {
@@ -60,10 +61,9 @@ class ProjectsTable extends Table
         return $query->where(['visible' => true]);
     }
 
-    public function sync($user, $data)
+    public function syncProjects(Event $event, Provider $provider, array $data)
     {
-        $method = '_' . $data['provider'] . 'Repositories';
-        $repos = $this->{$method}($user);
+        $repos = $provider->listAllRepositories($data['username']);
         $projects = [];
 
         foreach ($repos as $repo) {
@@ -71,13 +71,8 @@ class ProjectsTable extends Table
             array_push($projects, $project);
         }
 
+        $user = $this->Users->newEntity($data);
         $user->projects = $projects;
         $this->Users->save($user);
-    }
-
-    protected function _githubRepositories($user)
-    {
-        $github = new Github();
-        return $github->api('user')->repositories($user->username, 'all');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Provider\GithubProvider as Provider;
+use Cake\Event\Event;
 use Cake\ORM\Table;
 
 class UsersTable extends Table
@@ -17,22 +19,10 @@ class UsersTable extends Table
         $this->belongsToMany('Organizations');
     }
 
-    public function touch($data)
+    public function newUser(Event $event, Provider $provider, $data)
     {
-        $entity = ['username' => $data['name']];
-        $query = $this->find()->where($entity);
-
-        $user = $query->first();
-
-        if (!$user) {
-            if (!empty($data['info']['email'])) {
-                $entity['email'] = $data['info']['email'];
-            }
-
-            $this->save($this->newEntity($entity));
-            $user = $query->first();
-        }
-
-        return $user;
+        $entity = $this->newEntity($data);
+        $this->save($entity);
+        return $entity->toArray();
     }
 }
